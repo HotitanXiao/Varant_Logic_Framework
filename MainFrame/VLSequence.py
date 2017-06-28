@@ -5,6 +5,18 @@
 描述: 用于获取字符串特征值的模块
 """
 
+def string_xor(string1,string2):
+    result = ""
+    if len(string1) != len(string2):
+        raise Exception('error')
+    for i in xrange(0,len(string1)):
+        result += "0" if string1[i] == string2[i] else "1"
+    return result
+
+def string_right_shift(string,offset):
+    offset = offset % len(string)
+    return string[-offset:]+string[:-offset]
+
 def p_q_count(input_str):
     """
     参数: input_str-0-1比特的字符串
