@@ -7,15 +7,21 @@
 """
 
 
-def create_filename(**kwargs):
+def create_filename(source,m,mod,**kwargs):
     """
     参数: 
     输出: 
     描述: 文件名创建函数
+            包括文件名和相对路径
     """
     file_name = ""
+    related_dir = "%s/%s/%s/"%(source,mod,m)
     keys = kwargs.keys()
     keys.sort(reverse=True)
     for key in keys:
         file_name += "_%s=%s" %(key,kwargs[key])
-    return file_name
+    return (related_dir,file_name)
+
+def array_right_shift(string,offset):
+    offset = offset % len(string)
+    return string[-offset:]+string[:-offset]
