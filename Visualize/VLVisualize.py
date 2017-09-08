@@ -80,6 +80,25 @@ def vl_plot1d(p_array,q_array,m,mod="",source="",ylim=None,**kwargs):
 
 
 
+def plot2d(p_array,q_array,m,mod="",**kwargs):
+    """
+    参数: 
+    输出: 
+    描述: 
+    """
+    bins = [100,100]
+    plot_range = [[0,1],[0,1]]
+    # matrix,xedges,yedges = np.histogram2d(array_1,array_2,bins=bins,range=plot_range)
+    matrix,xedges,yedges = np.histogram2d(p_array,q_array,bins=bins,range=plot_range)
+    plt.hist2d(p_array,q_array,bins=bins,range=plot_range,normed=True)
+    kwargs["m"] = m
+    kwargs["mod"] = mod
+    related_dir,filename = utils.create_filename(**kwargs)
+    check_dir(SAVE_PATH+related_dir)
+    plt.savefig(SAVE_PATH+related_dir+filename+".png")
+    plt.close()
+
+
 def vl_plot2d(p_array,q_array,m,mod="",**kwargs):
     """
     参数:
@@ -130,6 +149,8 @@ def vl_plot2d(p_array,q_array,m,mod="",**kwargs):
     # 找出其中的最大值并返回
     max_count = HeapSort.VLHeapSort(matrix).top(1)
     return max_count[0]["value"] 
+
+
 
     
 

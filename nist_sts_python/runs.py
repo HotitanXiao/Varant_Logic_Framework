@@ -1,0 +1,31 @@
+# coding:utf-8
+"""
+作者: H.Y
+日期: 
+描述: 游程检测
+"""
+import math 
+def runs(input_str,n):
+    S = 0;
+    for k in xrange(0,len(input_str)):
+        if (input_str[k] == "1"):
+            S += 1
+    pi = float(S)/n
+    if (math.fabs(pi - 0.5) > (2.0 / math.sqrt(n))):
+        p_value = 0.0
+    else:
+        V = 1
+        for k in xrange(1,n):
+            if(input_str[k] != input_str[k-1] ):
+                V += 1
+        erfc_arg = math.fabs(V - 2.0 * n * pi * (1-pi)) / (2.0 * pi * (1-pi) * math.sqrt(2*n))
+        p_value = math.erfc(erfc_arg)
+    return p_value
+
+
+# def main():
+#     a = "1100100100001111110110101010001000100001011010001100001000110100110001001100011001100010100010111000"
+#     print runs(a,100)
+
+# if __name__ == '__main__':
+#     main()

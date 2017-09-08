@@ -14,6 +14,8 @@ def string_xor(string1,string2):
     return result
 
 def string_right_shift(string,offset):
+    if offset == 0:
+        return string
     offset = offset % len(string)
     return string[-offset:]+string[:-offset]
 
