@@ -119,7 +119,7 @@ def universal(input_str):
     # fprintf(stats[TEST_UNIVERSAL], "\t\t(i) WARNING:  %d bits were discarded.\n", n-(Q+K)*L)
     # fprintf(stats[TEST_UNIVERSAL], "\t\t-----------------------------------------\n")
 
-def universal_all(input_str,coordinates):
+def universal_all(input_str,coordinates,input_dict=None):
     """
     参数: N=8，m=4
     输出: 
@@ -129,6 +129,8 @@ def universal_all(input_str,coordinates):
     for coordinate in coordinates:
         p_value = universal(input_str)
         result.append(p_value)
+    if input_dict:
+        input_dict["cache"] = result
     return result
 
 def main():

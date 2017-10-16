@@ -115,7 +115,7 @@ def NonOverlappingTemplateMatchings(input_str,m):
                 fp.seek(2*m*(skip-1),1)
     return np.average(pvalue_array)
 
-def NonOverlappingTemplateMatchings_all(input_str,coordinates):
+def NonOverlappingTemplateMatchings_all(input_str,coordinates,input_dict):
     """
     参数: N=8，m=4
     输出: 
@@ -125,6 +125,8 @@ def NonOverlappingTemplateMatchings_all(input_str,coordinates):
     for coordinate in coordinates:
         p_value = NonOverlappingTemplateMatchings(input_str,4)
         result.append(p_value)
+    if input_dict:
+        input_dict["cache"] = result
     return result
 
 

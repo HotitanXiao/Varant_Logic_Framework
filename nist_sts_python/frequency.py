@@ -22,10 +22,12 @@ def frequency(input_str):
     return p_value
 
 
-def frequency_all(input_str,coordinates):
+def frequency_all(input_str,coordinates,input_dict):
     result = []
     for coordinate in coordinates:
         p_value = frequency(input_str[coordinate[0]:coordinate[1]+1])
         result.append(p_value)
+    if input_dict:
+        input_dict["cache"] = result
     return result
         
