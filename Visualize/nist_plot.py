@@ -4,7 +4,7 @@
 日期: 
 描述: 用于测试nist的可视化工具
 """
-from nist_sts_python import runs,blockFrequency,frequency,matrix,DFT,VL,NonOverlappingTemplateMatchings
+from nist_sts_python import runs,blockFrequency,frequency,matrix,DFT,VL,NonOverlappingTemplateMatchings,overlappingTemplateMatchings,NonOverlappingTemplateMatchings
 from matplotlib.colors import LogNorm
 import numpy as np
 import matplotlib.pyplot as plt
@@ -17,7 +17,7 @@ func_set = [
     {"func":frequency.frequency_all,"args":(None),"func_name":"F","cache":np.array([])},
     {"func":DFT.DiscreteFourierTransform_all,"args":(None),"func_name":"DFT","cache":np.array([])},
     {"func":NonOverlappingTemplateMatchings.NonOverlappingTemplateMatchings_all,"args":(None),"func_name":"NoTM","cache":np.array([])},
-    {"func":OverlappingTemplateMatchings.OverlappingTemplateMatchings_all,"args":(None),"func_name":"OTM","cache":np.array([])},
+    {"func":overlappingTemplateMatchings.OverlappingTemplateMatchings_all,"args":(None),"func_name":"OTM","cache":np.array([])},
     {"func":universal.universal_all,"args":(None),"func_name":"uni","cache":np.array([])},
     {"func":VL.get_p_array,"args":(None),"func_name":"VL_P","cache":np.array([])},
     {"func":VL.get_q_array,"args":(None),"func_name":"VL_q","cache":np.array([])},
