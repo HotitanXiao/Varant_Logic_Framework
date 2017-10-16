@@ -4,7 +4,7 @@
 日期: 
 描述: 用于测试nist的可视化工具
 """
-from nist_sts_python import runs,blockFrequency,frequency,matrix,DFT,VL,NonOverlappingTemplateMatchings,overlappingTemplateMatchings,NonOverlappingTemplateMatchings
+from nist_sts_python import runs,blockFrequency,frequency,matrix,DFT,VL,NonOverlappingTemplateMatchings,overlappingTemplateMatchings,NonOverlappingTemplateMatchings,universal
 from matplotlib.colors import LogNorm
 import numpy as np
 import matplotlib.pyplot as plt
