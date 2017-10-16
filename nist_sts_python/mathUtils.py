@@ -25,6 +25,15 @@ def igamc(a,x):
 
     return gammaincc(a,x)
 
+def isNegative(input):
+    if input < 0:
+        return True
+    else:
+        return False
+
+def isGreaterThanOne(input):
+    
+    return True if input>1 else False
 
 
   # Cephes Math Library Release 2.0:  April, 87 
