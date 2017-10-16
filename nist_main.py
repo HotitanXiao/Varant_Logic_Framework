@@ -10,23 +10,24 @@ from Visualize import nist_plot
 from nist_sts_python import runs,blockFrequency,frequency
 import numpy as np
 import matplotlib.pyplot as plt
+from multiprocessing import Process
 
 def main():
     runs_p_value_array = []
     freq_p_value_array = []
     #input_str = open("./TestData/test.bin.enc.char", "rb").read(1000000)
-    input_str = open("./TestData/ANU.char", "rb").read(1000000)
+    input_str = open("./TestData/test.bin.enc.char", "rb").read(1000000)
     segment_size = 1024
     coordinates = Segmentor.segmentor(input_str=input_str, segment_size=segment_size,offset=segment_size)
-    for coordinate in coordinates:
-        runs_p_value = runs.runs(input_str[coordinate[0]:coordinate[1]+1],segment_size)
-        freq_p_value = frequence.frequency(input_str[coordinate[0]:coordinate[1]+1])
-        runs_p_value_array.append(runs_p_value)
-        freq_p_value_array.append(freq_p_value)
+    # for coordinate in coordinates:
+    #     runs_p_value = runs.runs(input_str[coordinate[0]:coordinate[1]+1],segment_size)
+    #     freq_p_value = frequency.frequency(input_str[coordinate[0]:coordinate[1]+1])
+    #     runs_p_value_array.append(runs_p_value)
+    #     freq_p_value_array.append(freq_p_value)
 
-    matrix,xedges,yedges = np.histogram2d(runs_p_value_array,freq_p_value_array,bins=[100,100],range=[[0,1],[0,1]])
+    # matrix,xedges,yedges = np.histogram2d(runs_p_value_array,freq_p_value_array,bins=[100,100],range=[[0,1],[0,1]])
 
-    result = BitFilter.max_2d_filter(input_str,matrix,segment_size,segment_size)
+    # result = BitFilter.max_2d_filter(input_str,matrix,segment_size,segment_size)
     runs_p_value_array = []
     freq_p_value_array = []
     

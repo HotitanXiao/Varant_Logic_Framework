@@ -12,7 +12,7 @@ import copy
 from multiprocessing import Process,Queue
 
 func_set = [
-    {"func":runs.runs_all,"args":(None),"func_name":"runs"},
+    {"func":runs.runs_all,"args":(None),"func_name":"runs","cache":np.array([])},
     {"func":blockFrequency.block_frequency_all,"args":(None),"func_name":"BF","cache":np.array([])},
     {"func":frequency.frequency_all,"args":(None),"func_name":"F","cache":np.array([])},
     {"func":DFT.DiscreteFourierTransform_all,"args":(None),"func_name":"DFT","cache":np.array([])},
@@ -25,8 +25,6 @@ func_set = [
 
 
 
-
-
 def process_cache(input_str,coordinates,queue):
     """
     参数: 
@@ -35,6 +33,7 @@ def process_cache(input_str,coordinates,queue):
     进行特征计算的主函数
     主要用于进行进程阻塞的
     """
+    print "house-process"*10
     p_p = []
     for i in xrange(0,len(func_set)):
         p_process = Process(target=func_set[i]["func"],args=(input_str,coordinates,queue,i,))
@@ -67,20 +66,20 @@ def nist_multi_plot(input_str,coordinates,row,col,**kwargs):
             a = plt.subplot(row,col+1,(y-1)*(col+1)+x)
             a = plt.subplot(6,6,(y-1)*(col)+x)
             # 先判断是否有缓存机制
-            if func_set[y-1]["func"]["cache"].any():
-                p_array = func_set[y-1]["func"]["cache"]
+            if func_set[y-1]["cache"].any():
+                p_array = func_set[y-1]["cache"]
             else:
                 p_array = func_set[y-1]["func"](input_str,temp_coordinates)
-                func_set[y-1]["func"]["cache"] = np.array(p_array)
+                func_set[y-1]["cache"] = np.array(p_array)
             if x == y:
                 q_array = p_array
             else:
                 q_array = func_set[x-1]["func"](input_str,temp_coordinates)
-                if func_set[y-1]["func"]["cache"].any():
-                    q_array = func_set[y-1]["func"]["cache"]
+                if func_set[y-1]["cache"].any():
+                    q_array = func_set[y-1]["cache"]
                 else:
                     q_array = func_set[y-1]["func"](input_str,temp_coordinates)
-                    func_set[y-1]["func"]["cache"] = np.array(q_array)
+                    func_set[y-1]["cache"] = np.array(q_array)
             print func_set[y-1]["func_name"],len(p_array),func_set[x-1]["func_name"],len(q_array)
             matrix,xedges,yedges = np.histogram2d(p_array,q_array,bins=bins,range=plot_range)
             plt.hist2d(p_array,q_array,bins=bins,range=plot_range,norm=LogNorm())
