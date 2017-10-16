@@ -7,7 +7,7 @@
 from MainFrame import Segmentor,VLSequence,BitFilter
 from MainFrame.sort import HeapSort
 from Visualize import nist_plot
-from nist_sts_python import runs,blockFrequence,frequence
+from nist_sts_python import runs,blockFrequency,frequency
 import numpy as np
 import matplotlib.pyplot as plt
 
