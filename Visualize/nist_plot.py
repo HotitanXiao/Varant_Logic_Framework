@@ -9,6 +9,7 @@ from matplotlib.colors import LogNorm
 import numpy as np
 import matplotlib.pyplot as plt
 import copy
+from multiprocessing import Process,Queue
 
 func_set = [
     {"func":runs.runs_all,"args":(None),"func_name":"runs"},
@@ -18,12 +19,42 @@ func_set = [
     {"func":NonOverlappingTemplateMatchings.NonOverlappingTemplateMatchings_all,"args":(None),"func_name":"NoTM","cache":np.array([])},
     {"func":OverlappingTemplateMatchings.OverlappingTemplateMatchings_all,"args":(None),"func_name":"OTM","cache":np.array([])},
     {"func":universal.universal_all,"args":(None),"func_name":"uni","cache":np.array([])},
-
     {"func":VL.get_p_array,"args":(None),"func_name":"VL_P","cache":np.array([])},
     {"func":VL.get_q_array,"args":(None),"func_name":"VL_q","cache":np.array([])},
 ]
 
+
+
+
+
+def process_cache(input_str,coordinates,queue):
+    """
+    参数: 
+    输出: 
+    描述: 进行并发运算，快速处理各个处理方法的值
+    进行特征计算的主函数
+    主要用于进行进程阻塞的
+    """
+    p_p = []
+    for i in xrange(0,len(func_set)):
+        p_process = Process(target=func_set[i]["func"],args=(input_str,coordinates,queue,i,))
+        p_process.daemon = True
+        p_p.append(p_process)
+    for p in p_p:
+        p.start()
+
+
 def nist_multi_plot(input_str,coordinates,row,col,**kwargs):
+    q = Queue()
+    # 一进来就直接进行处理
+    p = Process(target=process_cache,args=(input_str,coordinates,q,))
+    p.start()
+    p.join()
+
+    for i in xrange(0,q.qsize()):
+        result = q.get()
+        func_set[result[1]]["cache"] = result[0]
+
     bins = [100,100]
     plot_range = [[0,1],[0,1]]
     temp_coordinates = list(coordinates)
@@ -41,8 +72,6 @@ def nist_multi_plot(input_str,coordinates,row,col,**kwargs):
             else:
                 p_array = func_set[y-1]["func"](input_str,temp_coordinates)
                 func_set[y-1]["func"]["cache"] = np.array(p_array)
-
-            
             if x == y:
                 q_array = p_array
             else:

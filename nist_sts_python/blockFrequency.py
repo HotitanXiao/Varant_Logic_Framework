@@ -25,12 +25,12 @@ def block_frequency(input_str,M,n):
     p_value = igamc(N/2.0,chi_squared/2.0)
     return p_value
 
-def block_frequency_all(input_str,coordinates,M=100,input_str=None):
+def block_frequency_all(input_str,coordinates,M=100,input_queue=None,func_name=None):
     result = []
     for coordinate in coordinates:
         test_str = input_str[coordinate[0]:coordinate[1]+1]
         p_value = block_frequency(test_str,M,len(test_str))
         result.append(p_value)
-    if input_dict:
-        input_dict["cache"] = result
+    if input_queue and func_name:
+        input_queue.put((result,func_name))
     return result

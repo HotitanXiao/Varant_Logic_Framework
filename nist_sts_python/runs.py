@@ -22,12 +22,14 @@ def runs(input_str,n):
         p_value = math.erfc(erfc_arg)
     return p_value
 
-def runs_all(input_str,coordinates):
+def runs_all(input_str,coordinates,result_queue=None,func_name=None):
     result = []
     for coordinate in coordinates:
         test_str = input_str[coordinate[0]:coordinate[1]+1]
         p_value = runs(input_str[coordinate[0]:coordinate[1]+1],len(test_str))
         result.append(p_value)
+    if result_queue and func_name:
+        result_queue.put((result,func_name))
     return result
 
 # def main():

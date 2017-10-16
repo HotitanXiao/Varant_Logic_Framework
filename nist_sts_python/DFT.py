@@ -40,13 +40,13 @@ def DiscreteFourierTransform(input_str):
     p_value = math.erfc(math.fabs(d)/math.sqrt(2.0));
     return p_value
 
-def DiscreteFourierTransform_all(input_str,coordinates,input_dict=None):
+def DiscreteFourierTransform_all(input_str,coordinates,input_queue=None,func_name=None):
     result = []
     for coordinate in coordinates:
         p_value = DiscreteFourierTransform(input_str[coordinate[0]:coordinate[1]+1])
         result.append(p_value)
-    if input_dict:
-        input_dict["cache"] = result
+    if input_queue and func_name:
+        input_queue.put((result,func_name))
     return result
 
 

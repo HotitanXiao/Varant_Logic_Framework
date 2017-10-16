@@ -196,7 +196,7 @@ def Pr(u,eta):
     return p;
 
 
-def OverlappingTemplateMatchings_all(input_str,coordinates,input_dict=None):
+def OverlappingTemplateMatchings_all(input_str,coordinates,input_queue=None,func_name=None):
     """
     参数: N=8，m=4
     输出: 
@@ -206,8 +206,8 @@ def OverlappingTemplateMatchings_all(input_str,coordinates,input_dict=None):
     for coordinate in coordinates:
         p_value = NonOverlappingTemplateMatchings(input_str,4)
         result.append(p_value)
-    if input_dict:
-        input_dict["cache"] = result
+    if input_queue and func_name:
+        input_queue.put((result,func_name))
     return result
 
 

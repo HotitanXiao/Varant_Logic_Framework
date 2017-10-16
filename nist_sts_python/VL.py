@@ -7,7 +7,7 @@
 from MainFrame import VLSequence
 import numpy as np
 
-def get_p_array(input_str,coordinates,input_dict=None):
+def get_p_array(input_str,coordinates,input_queue=None,func_name=None):
     result = np.array([])
     for coordinate in coordinates:
         test_str = input_str[coordinate[0]:coordinate[1]+1]
@@ -15,18 +15,18 @@ def get_p_array(input_str,coordinates,input_dict=None):
         result = np.append(result,p)
     
     result = result/len(test_str)
-    if input_dict:
-        input_dict["cache"] = result
+    if input_queue and func_name:
+        input_queue.put((result,func_name))
     return result
     
 
-def get_q_array(input_str,coordinates,input_dict=None):
+def get_q_array(input_str,coordinates,input_queue=None,func_name=None):
     result = np.array([])
     for coordinate in coordinates:
         test_str = input_str[coordinate[0]:coordinate[1]+1]
         p,q = VLSequence.p_q_count(test_str)
         result = np.append(result,q)
     result = result/(len(test_str)/2)
-    if input_dict:
-        input_dict["cache"] = result
+    if input_queue and func_name:
+        input_queue.put((result,func_name))
     return result

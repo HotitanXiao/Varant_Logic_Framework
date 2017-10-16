@@ -22,12 +22,17 @@ def frequency(input_str):
     return p_value
 
 
-def frequency_all(input_str,coordinates,input_dict):
+def frequency_all(input_str,coordinates,input_queue=None,func_name=None):
+    """
+    参数: 
+    输出: 
+    描述: func_name可以是index，也是func的name
+    """
     result = []
     for coordinate in coordinates:
         p_value = frequency(input_str[coordinate[0]:coordinate[1]+1])
         result.append(p_value)
-    if input_dict:
-        input_dict["cache"] = result
+    if input_queue and func_name:
+        input_queue.put((result,func_name))
     return result
         
