@@ -119,6 +119,18 @@ def universal(input_str):
     # fprintf(stats[TEST_UNIVERSAL], "\t\t(i) WARNING:  %d bits were discarded.\n", n-(Q+K)*L)
     # fprintf(stats[TEST_UNIVERSAL], "\t\t-----------------------------------------\n")
 
+def universal_all(input_str,coordinates):
+    """
+    参数: N=8，m=4
+    输出: 
+    描述: 
+    """ 
+    result = []
+    for coordinate in coordinates:
+        p_value = universal(input_str)
+        result.append(p_value)
+    return result
+
 def main():
     input_str = open("../TestData/data.sha1.char","rb").read()
     print len(input_str)

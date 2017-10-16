@@ -36,8 +36,7 @@ DiscreteFourierTransform(int n)
 	__ogg_fdrffti(n, wsave, ifac);		/* INITIALIZE WORK ARRAYS */
 	__ogg_fdrfftf(n, X, wsave, ifac);	/* APPLY FORWARD FFT */
 	
-	m[0] = sqrt(X[0]*X[0]);	    /* COMPUTE MAGNITUDE */
-	
+	m[0] = sqrt(X[0]*X[0]);	    /* COMPUTE MAGNITUDE */ 
 	for ( i=0; i<n/2; i++ )
 		m[i+1] = sqrt(pow(X[2*i+1],2)+pow(X[2*i+2],2)); 
 	count = 0;				       /* CONFIDENCE INTERVAL */

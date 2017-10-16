@@ -33,7 +33,6 @@ Runs(int n)
 		for ( k=1; k<n; k++ )
 			if ( epsilon[k] != epsilon[k-1] )
 				V++;
-	
 		erfc_arg = fabs(V - 2.0 * n * pi * (1-pi)) / (2.0 * pi * (1-pi) * sqrt(2*n));
 		p_value = erfc(erfc_arg);
 		
