@@ -204,7 +204,7 @@ def OverlappingTemplateMatchings_all(input_str,coordinates,input_queue=None,func
     """ 
     result = []
     for coordinate in coordinates:
-        p_value = NonOverlappingTemplateMatchings(input_str,4)
+        p_value = OverlappingTemplateMatchings(input_str,4)
         result.append(p_value)
     if input_queue and func_name:
         input_queue.put((result,func_name))
