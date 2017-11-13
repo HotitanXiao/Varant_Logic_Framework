@@ -17,7 +17,7 @@ def main():
     freq_p_value_array = []
     #input_str = open("./TestData/test.bin.enc.char", "rb").read(1000000)
     input_str = open("./TestData/test.bin.enc.char", "rb").read(1000000)
-    segment_size = 1024
+    segment_size = 2048
     coordinates = Segmentor.segmentor(input_str=input_str, segment_size=segment_size,offset=segment_size)
     # for coordinate in coordinates:
     #     runs_p_value = runs.runs(input_str[coordinate[0]:coordinate[1]+1],segment_size)
@@ -46,35 +46,7 @@ def main():
         # for i in xrange(0,m+1):
         #     shifted_str = VLSequence.string_right_shift(input_str,i)
         coordinates = Segmentor.segmentor(input_str=input_str, segment_size=m,offset=m)
-        nist_plot.nist_multi_plot(input_str,coordinates,6,6)
-
-    # for m in m_set:
-    #     for i in xrange(0,m+1):
-    #         shifted_str = VLSequence.string_right_shift(input_str,i)
-    #         coordinates = Segmentor.segmentor(input_str=shifted_str, segment_size=m,offset=m)
-    #         for coordinate in coordinates:
-    #             runs_p_value = runs.runs(input_str[coordinate[0]:coordinate[1]+1],segment_size)
-    #             freq_p_value = frequence.frequency(input_str[coordinate[0]:coordinate[1]+1])
-    #             runs_p_value_array.append(runs_p_value)
-    #             freq_p_value_array.append(freq_p_value)
-    #         p_temp = VLVisualize.plot2d(p_array=freq_p_value_array,q_array=freq_p_value_array,m=m,mod="freq",source="AES-256-CBC",ylim=1,rs=i)
-    #         q_temp = VLVisualize.plot2d(p_array=runs_p_value_array,q_array=runs_p_value_array,m=m,mod="runs",source="AES-256-CBC",ylim=1,rs=i)
-    #         pq_temp = VLVisualize.plot2d(p_array=freq_p_value_array,q_array=runs_p_value_array,m=m,mod="rf",source="AES-256-CBC",rs=i)
-            # if i == 0:
-            #     p_count_max = p_temp
-            # p_count_array.append(p_temp)
-            # q_count_array.append(q_temp)
-            # pq_count_array.append(pq_temp)
-
-            # # VLVisualize.vl_plot1d(p_array,q_array,m=segment_size,mod="q",rs=i)
-            # p_array = []
-            # q_array = []
-        # VLVisualize.plot1d(range(0,m+1),p_count_array,{"mod":"p_count","rs":i,"source":"AES-256-CBC","m":m})
-        # VLVisualize.plot1d(range(0,m+1),q_count_array,{"mod":"q_count","rs":i,"source":"AES-256-CBC","m":m})
-        # VLVisualize.plot1d(range(0,m+1),pq_count_array,{"mod":"pq_count","rs":i,"source":"AES-256-CBC","m":m})
-        # p_count_array = []
-        # q_count_array = []
-        # pq_count_array = []
+        nist_plot.nist_multi_plot(input_str,coordinates)
 
 if __name__ == '__main__':
     main()

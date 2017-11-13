@@ -12,7 +12,7 @@ from mathUtils import *
 import numpy as np
 MAXNUMOFTEMPLATES = 149.
 
-def OverlappingTemplateMatchings_house_diy(input_str,m):
+def OverlappingTemplateMatchings_house_diy(input_str,m,M=1032):
     """
     参数: 
     输出: 
@@ -25,7 +25,7 @@ def OverlappingTemplateMatchings_house_diy(input_str,m):
     varWj = 0
     chi2 = 0
     n = len(input_str)
-    M = 1032
+    # 这个M得考虑考虑
     N = n/M
     K = 5
     
@@ -114,18 +114,18 @@ def OverlappingTemplateMatchings_house_diy(input_str,m):
     return np.average(pvalue_array)
 
 
-def OverlappingTemplateMatchings(input_str,m):
+def OverlappingTemplateMatchings(input_str,m,M=64):
     """
     参数: 
     输出: 
     描述: 重叠模块检测，NIST改写
+        M是内部的分段的大小
     """
     all_sum = 0
     p_value = 0
     varWj = 0
     chi2 = 0
     n = len(input_str)
-    M = 1032
     N = n/M
     K = 5
     pi = [ 0.364091, 0.185659, 0.139381, 0.100571, 0.0704323, 0.139865 ]
@@ -168,6 +168,7 @@ def OverlappingTemplateMatchings(input_str,m):
         all_sum = 0;
         chi2 = 0.0;        
         for i in xrange(0,K+1):
+            print N,pi[i]
             chi2 += pow(float(nu[i]) - float(N*pi[i]), 2)/(float(N*pi[i]));
             all_sum += nu[i]                  
 
@@ -204,17 +205,24 @@ def OverlappingTemplateMatchings_all(input_str,coordinates,input_queue=None,func
     """ 
     result = []
     for coordinate in coordinates:
-        p_value = OverlappingTemplateMatchings(input_str,4)
+        test_str = input_str[coordinate[0]:coordinate[1]+1]
+        # print test_str
+        p_value = OverlappingTemplateMatchings(test_str,8)
         result.append(p_value)
-    if input_queue and func_name:
-        input_queue.put((result,func_name))
+    if input_queue!=None and func_name!=None:
+        # input_queue.put((result,func_name))
+        input_queue.append((result,func_name))
     return result
 
 
 def main():
-    input_str = open("../TestData/data.e").read(1000000)
-    # print len(input_str)
-    print OverlappingTemplateMatchings(input_str,9)
+    # input_file = open("../TestData/data.e")
+    # input_str = input_file.read(2048)
+    # # print len(input_str)
+    # print OverlappingTemplateMatchings(input_str,8)
+    # print OverlappingTemplateMatchings(input_file.read(2048),8)
+    a = "0101001101100001011011000111010001100101011001000101111101011111111111000111111000001001011101011100010011100111011111000110101001111001010001011101010111111100100110111001011111110011100110001010100010011010001110001100101110110101000101111010100001110101111011100000110110101011110100010010001001000110001101000011111110110101010110110100011010110110111111100000010100111101111111000110000111100001110011111011001011010011000100111101110001110011001000011010001110001101101000010010010111000001000111000011100000110010101000001111101101111001111001010111110101101001111011110011111110111110100011011010001111001111010010001001001100111100100001000111111010100000011111010100100001001011010110000100101110011011110101110100101011010001111110001000001111100001001001011011011101000100001110011011000011011000011111000001001100001111011111110011000110110100001011101110100100000110010110100001101110111111111111110101010011010000000001010000110100000011001011101011000101001010000011010100111010100000100101110010100010111010"
+    print OverlappingTemplateMatchings(a,4,32)
 
 if __name__ == '__main__':
     main()

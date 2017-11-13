@@ -71,9 +71,9 @@ def linearComplexity(input_str,M):
                 for j in xrange(0,M):
                     # 这里有问题，需要好好的修改修改
                     if N_-m >= M:
-                        print "C",C
-                        print "B",B_
-                        print "P",P
+                        # print "C",C
+                        # print "B",B_
+                        # print "P",P
                         break;
                     if B_[j] == 1:
                         # print j+N_-m,j,N_,m
@@ -136,8 +136,9 @@ def linearComplexity_all(input_str,coordinates,input_queue=None,func_name=None):
     for coordinate in coordinates:
         p_value = linearComplexity(input_str[coordinate[0]:coordinate[1]+1],8)
         result.append(p_value)
-    if input_queue and func_name:
-        input_queue.put((result,func_name))
+    if input_queue!=None and func_name!=None:
+        # input_queue.put((result,func_name))
+        input_queue.append((result,func_name))      
     return result
 
 

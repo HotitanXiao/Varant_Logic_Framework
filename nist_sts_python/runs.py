@@ -28,8 +28,9 @@ def runs_all(input_str,coordinates,result_queue=None,func_name=None):
         test_str = input_str[coordinate[0]:coordinate[1]+1]
         p_value = runs(input_str[coordinate[0]:coordinate[1]+1],len(test_str))
         result.append(p_value)
-    if result_queue and func_name:
-        result_queue.put((result,func_name))
+    if result_queue!=None and func_name!=None:
+        # result_queue.put((result,func_name))
+        result_queue.append((result,func_name))
     return result
 
 # def main():

@@ -1,10 +1,18 @@
 # coding:utf-8
-#include <stdio.h>
-#include <math.h>
-#include <string.h>
-#include <stdlib.h>
-#include "../include/externs.h"
-#include "../include/cephes.h"  
+"""
+参数: 
+输出: 
+描述: 
+The focus of this test is the frequency of all possible overlapping m-bit patterns across the entire
+sequence. 
+The purpose of this test is to determine whether the number of occurrences of the 2m m-bit
+overlapping patterns is approximately the same as would be expected for a random sequence. 
+Random sequences have uniformity; that is, every m-bit pattern has the same chance of appearing as every other
+m-bit pattern. Note that for m = 1, the Serial test is equivalent to the Frequency test of Section 2.1.
+
+
+"""
+
 
 from mathUtils import *
 
@@ -70,18 +78,21 @@ def serial_all(input_str,coordinates,input_queue=None,func_name=None):
     默认调用serial的m为8，不知道大点有没有效果
     """
     result = []
+
     for coordinate in coordinates:
         p_value = serial(input_str[coordinate[0]:coordinate[1]+1],8)
         result.append(p_value)
-    if input_queue and func_name:
-        input_queue.put((result,func_name))
+
+    if input_queue!=None and func_name!=None:
+        # input_queue.put((result,func_name))
+        input_queue.append((result,func_name))
     return result
 
 
 
 def main():
     input_str = open("../TestData/data.e").read(100000)
-    print serial(input_str,16)
+    print serial(input_str,8)
 
 if __name__ == '__main__':
     main()

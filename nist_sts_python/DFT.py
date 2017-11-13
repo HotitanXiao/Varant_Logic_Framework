@@ -45,8 +45,9 @@ def DiscreteFourierTransform_all(input_str,coordinates,input_queue=None,func_nam
     for coordinate in coordinates:
         p_value = DiscreteFourierTransform(input_str[coordinate[0]:coordinate[1]+1])
         result.append(p_value)
-    if input_queue and func_name:
-        input_queue.put((result,func_name))
+    if input_queue!=None and func_name!=None:
+        # input_queue.put((result,func_name))
+        input_queue.append((result,func_name))
     return result
 
 

@@ -125,16 +125,17 @@ def universal_all(input_str,coordinates,input_queue=None,func_name=None):
     输出: 
     描述: 
     """ 
+
     result = []
     for coordinate in coordinates:
         p_value = universal(input_str)
         result.append(p_value)
-    if input_queue and func_name:
-        input_queue.put((result,func_name))
+    if input_queue!=None and func_name:
+        input_queue.append((result,func_name))
     return result
 
 def main():
-    input_str = open("../TestData/data.sha1.char","rb").read()
+    input_str = open("../TestData/data.sha1.char","rb").read(387840)
     print len(input_str)
     print universal(input_str)
 

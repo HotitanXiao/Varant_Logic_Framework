@@ -21,7 +21,7 @@ def igamc(a,x):
         return( 1.0 )
 
     if ( (x < 1.0) or (x < a) ):
-		return( 1.e0 - gammainc(a,x) )
+        return( 1.e0 - gammainc(a,x) )
 
     return gammaincc(a,x)
 
@@ -34,6 +34,22 @@ def isNegative(input):
 def isGreaterThanOne(input):
     
     return True if input>1 else False
+
+
+
+def normal(x):
+
+    arg=0.
+    result=0.
+    sqrt2=1.414213562373095048801688724209698078569672;
+
+    if x > 0:
+        arg = x/sqrt2;
+        result = 0.5 * ( 1 + math.erf(arg) )
+    else:
+        arg = -x/sqrt2
+        result = 0.5 * ( 1 - math.erf(arg) )
+    return result 
 
 
   # Cephes Math Library Release 2.0:  April, 87 

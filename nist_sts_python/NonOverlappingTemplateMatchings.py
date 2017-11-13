@@ -29,9 +29,10 @@ def NonOverlappingTemplateMatchings(input_str,m):
     M = n/N;
     K = 5
     pi = [0]*6
-    print M-m+1
+    # print M-m+1
     var_lambda = (M-m+1)/pow(2, m);
     varWj = M*(1.0/pow(2.0, m) - (2.0*m-1.0)/pow(2.0, 2.0*m));
+    # template_file = open("./nist_sts_python/templates/template"+str(m),"r")
     template_file = open("./nist_sts_python/templates/template"+str(m),"r")
     Wj = [0] * N
     if var_lambda < 0 and var_lambda==0:
@@ -42,15 +43,15 @@ def NonOverlappingTemplateMatchings(input_str,m):
         print "\tInsufficient memory for required work space.\n"
         return  
     else:
-        print "\t\t  NONPERIODIC TEMPLATES TEST\n"
-        print "-------------------------------------------------------------------------------------\n"
-        print "\t\t  COMPUTATIONAL INFORMATION\n"
-        print "-------------------------------------------------------------------------------------\n"
-        print "\tLAMBDA = %f\tM = %d\tN = %d\tm = %d\tn = %d\n" % (var_lambda, M, N, m, n)
-        print "-------------------------------------------------------------------------------------\n"
-        print "\t\tF R E Q U E N C Y\n"
-        print "Template   W_1  W_2  W_3  W_4  W_5  W_6  W_7  W_8    Chi^2   P_value Assignment Index\n"
-        print "-------------------------------------------------------------------------------------\n"
+        # print "\t\t  NONPERIODIC TEMPLATES TEST\n"
+        # print "-------------------------------------------------------------------------------------\n"
+        # print "\t\t  COMPUTATIONAL INFORMATION\n"
+        # print "-------------------------------------------------------------------------------------\n"
+        # print "\tLAMBDA = %f\tM = %d\tN = %d\tm = %d\tn = %d\n" % (var_lambda, M, N, m, n)
+        # print "-------------------------------------------------------------------------------------\n"
+        # print "\t\tF R E Q U E N C Y\n"
+        # print "Template   W_1  W_2  W_3  W_4  W_5  W_6  W_7  W_8    Chi^2   P_value Assignment Index\n"
+        # print "-------------------------------------------------------------------------------------\n"
 
         # 这里是干什么的？ 
         if ( numOfTemplates[m] < MAXNUMOFTEMPLATES ):
@@ -113,7 +114,7 @@ def NonOverlappingTemplateMatchings(input_str,m):
             if skip > 1:
                 # 从当前位置向后偏移
                 fp.seek(2*m*(skip-1),1)
-    return np.average(pvalue_array)
+    return min(pvalue_array)
 
 def NonOverlappingTemplateMatchings_all(input_str,coordinates,input_queue=None,func_name=None):
     """
@@ -123,17 +124,19 @@ def NonOverlappingTemplateMatchings_all(input_str,coordinates,input_queue=None,f
     """ 
     result = []
     for coordinate in coordinates:
-        p_value = NonOverlappingTemplateMatchings(input_str,4)
+        test_str = input_str[coordinate[0]:coordinate[1]+1]
+        p_value = NonOverlappingTemplateMatchings(test_str,4)
         result.append(p_value)
-    if input_queue and func_name:
-        input_queue.put((result,func_name))
+    if input_queue!=None and func_name!=None:
+        # input_queue.put((result,func_name))
+        input_queue.append((result,func_name))
     return result
 
 
-# def main():
-#     input_str = open("../TestData/data.sha1.char").read(1024)
-#     # print len(input_str)
-#     print NonOverlappingTemplateMatchings(input_str,4)
+def main():
+    input_str = open("../TestData/data.sha1.char").read(1024)
+    # print len(input_str)
+    print NonOverlappingTemplateMatchings(input_str,4)
 
 if __name__ == '__main__':
     main()
