@@ -119,20 +119,23 @@ def universal(input_str):
     # fprintf(stats[TEST_UNIVERSAL], "\t\t(i) WARNING:  %d bits were discarded.\n", n-(Q+K)*L)
     # fprintf(stats[TEST_UNIVERSAL], "\t\t-----------------------------------------\n")
 
-def universal_all(input_str,coordinates,input_queue=None,func_name=None):
+def universal_all(input_str,coordinates,queue=None,func_name=None):
     """
     参数: N=8，m=4
     输出: 
     描述: 
     """ 
+    print "universal_all"
 
     result = []
     for coordinate in coordinates:
         p_value = universal(input_str)
+        print "universal",p_value
         result.append(p_value)
-    if input_queue!=None and func_name:
-        input_queue.append((result,func_name))
-    return result
+    if queue!=None and func_name:
+        queue.append((result,func_name))
+    print "universal_end"
+    return (result,func_name)
 
 def main():
     input_str = open("../TestData/data.sha1.char","rb").read(387840)

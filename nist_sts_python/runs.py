@@ -22,16 +22,18 @@ def runs(input_str,n):
         p_value = math.erfc(erfc_arg)
     return p_value
 
-def runs_all(input_str,coordinates,result_queue=None,func_name=None):
+def runs_all(input_str,coordinates,queue=None,func_name=None):
+    print "runs"
     result = []
     for coordinate in coordinates:
         test_str = input_str[coordinate[0]:coordinate[1]+1]
         p_value = runs(input_str[coordinate[0]:coordinate[1]+1],len(test_str))
         result.append(p_value)
-    if result_queue!=None and func_name!=None:
-        # result_queue.put((result,func_name))
-        result_queue.append((result,func_name))
-    return result
+    if queue!=None and func_name!=None:
+        # queue.put((result,func_name))
+        queue.append((result,func_name))
+    print "runs end"
+    return (result,func_name)
 
 # def main():
 #     a = "1100100100001111110110101010001000100001011010001100001000110100110001001100011001100010100010111000"

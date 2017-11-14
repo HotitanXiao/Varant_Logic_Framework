@@ -116,21 +116,23 @@ def NonOverlappingTemplateMatchings(input_str,m):
                 fp.seek(2*m*(skip-1),1)
     return min(pvalue_array)
 
-def NonOverlappingTemplateMatchings_all(input_str,coordinates,input_queue=None,func_name=None):
+def NonOverlappingTemplateMatchings_all(input_str,coordinates,queue=None,func_name=None):
     """
     参数: N=8，m=4
     输出: 
     描述: 
     """ 
+    print "NonOverlappingTemplateMatchings_all"
     result = []
     for coordinate in coordinates:
         test_str = input_str[coordinate[0]:coordinate[1]+1]
         p_value = NonOverlappingTemplateMatchings(test_str,4)
         result.append(p_value)
-    if input_queue!=None and func_name!=None:
-        # input_queue.put((result,func_name))
-        input_queue.append((result,func_name))
-    return result
+    if queue!=None and func_name!=None:
+        # queue.put((result,func_name))
+        queue.append((result,func_name))
+    print "NonOverlappingTemplateMatchings_all end"
+    return (result,func_name)
 
 
 def main():

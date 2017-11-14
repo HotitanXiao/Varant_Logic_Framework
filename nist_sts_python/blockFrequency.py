@@ -25,13 +25,15 @@ def block_frequency(input_str,M,n):
     p_value = igamc(N/2.0,chi_squared/2.0)
     return p_value
 
-def block_frequency_all(input_str,coordinates,input_queue=None,func_name=None,M=100,):
+def block_frequency_all(input_str,coordinates,queue=None,func_name=None,M=100,):
+    print "block_frequency_all"
     result = []
     for coordinate in coordinates:
         test_str = input_str[coordinate[0]:coordinate[1]+1]
         p_value = block_frequency(test_str,M,len(test_str))
         result.append(p_value)
-    if input_queue!=None and func_name!=None:
-        # input_queue.put((result,func_name))
-        input_queue.append((result,func_name))
-    return result
+    if queue!=None and func_name!=None:
+        # queue.put((result,func_name))
+        queue.append((result,func_name))
+    print "block_frequency_all end"
+    return (result,func_name)

@@ -70,23 +70,25 @@ def psi2(input_str,m,n):
     return all_sum
 
 
-def serial_all(input_str,coordinates,input_queue=None,func_name=None):
+def serial_all(input_str,coordinates,queue=None,func_name=None):
     """
     参数: 
     输出: 
     描述: 
     默认调用serial的m为8，不知道大点有没有效果
     """
+    print "serial_all"
     result = []
 
     for coordinate in coordinates:
         p_value = serial(input_str[coordinate[0]:coordinate[1]+1],8)
         result.append(p_value)
 
-    if input_queue!=None and func_name!=None:
-        # input_queue.put((result,func_name))
-        input_queue.append((result,func_name))
-    return result
+    if queue!=None and func_name!=None:
+        # queue.put((result,func_name))
+        queue.append((result,func_name))
+    print "serial_all end"
+    return (result,func_name)
 
 
 

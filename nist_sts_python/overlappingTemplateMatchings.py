@@ -168,7 +168,7 @@ def OverlappingTemplateMatchings(input_str,m,M=64):
         all_sum = 0;
         chi2 = 0.0;        
         for i in xrange(0,K+1):
-            print N,pi[i]
+            # print N,pi[i]
             chi2 += pow(float(nu[i]) - float(N*pi[i]), 2)/(float(N*pi[i]));
             all_sum += nu[i]                  
 
@@ -197,22 +197,24 @@ def Pr(u,eta):
     return p;
 
 
-def OverlappingTemplateMatchings_all(input_str,coordinates,input_queue=None,func_name=None):
+def OverlappingTemplateMatchings_all(input_str,coordinates,queue=None,func_name=None):
     """
     参数: N=8，m=4
     输出: 
     描述: 
     """ 
+    print "OverlappingTemplateMatchings_all"
     result = []
     for coordinate in coordinates:
         test_str = input_str[coordinate[0]:coordinate[1]+1]
         # print test_str
         p_value = OverlappingTemplateMatchings(test_str,8)
         result.append(p_value)
-    if input_queue!=None and func_name!=None:
-        # input_queue.put((result,func_name))
-        input_queue.append((result,func_name))
-    return result
+    if queue!=None and func_name!=None:
+        # queue.put((result,func_name))
+        queue.append((result,func_name))
+    print "OverlappingTemplateMatchings_all end"
+    return (result,func_name)
 
 
 def main():

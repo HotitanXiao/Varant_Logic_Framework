@@ -7,7 +7,7 @@
 from MainFrame import VLSequence
 import numpy as np
 
-def get_p_array(input_str,coordinates,input_queue=None,func_name=None):
+def get_p_array(input_str,coordinates,queue=None,func_name=None):
     result = np.array([])
     test_str = ""
     for coordinate in coordinates:
@@ -16,13 +16,13 @@ def get_p_array(input_str,coordinates,input_queue=None,func_name=None):
         result = np.append(result,p)
     
     result = result/len(test_str)
-    if input_queue!=None and func_name!=None:
-        # input_queue.put((result,func_name))   
-        input_queue.append((result,func_name))    
-    return result
+    if queue!=None and func_name!=None:
+        # queue.put((result,func_name))   
+        queue.append((result,func_name))    
+    return (result,func_name)
     
 
-def get_q_array(input_str,coordinates,input_queue=None,func_name=None):
+def get_q_array(input_str,coordinates,queue=None,func_name=None):
     result = np.array([])
     test_str = ""
     for coordinate in coordinates:
@@ -30,7 +30,7 @@ def get_q_array(input_str,coordinates,input_queue=None,func_name=None):
         p,q = VLSequence.p_q_count(test_str)
         result = np.append(result,q)
     result = result/(len(test_str)/2)
-    if input_queue!=None and func_name!=None:
-        # input_queue.put((result,func_name))
-        input_queue.append((result,func_name))    
-    return result
+    if queue!=None and func_name!=None:
+        # queue.put((result,func_name))
+        queue.append((result,func_name))    
+    return (result,func_name)
