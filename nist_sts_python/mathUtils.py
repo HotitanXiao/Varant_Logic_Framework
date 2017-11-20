@@ -49,7 +49,7 @@ def normal(x):
     else:
         arg = -x/sqrt2
         result = 0.5 * ( 1 - math.erf(arg) )
-    return (result,func_name) 
+    return result
 
 
   # Cephes Math Library Release 2.0:  April, 87 

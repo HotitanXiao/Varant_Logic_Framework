@@ -100,22 +100,22 @@ def CumulativeSums(input_str):
 
     # fprintf(stats[TEST_CUSUM], "%s\t\tp_value = %f\n\n", p_value < ALPHA ? "FAILURE" : "SUCCESS", p_value); fflush(stats[TEST_CUSUM]);
     # fprintf(results[TEST_CUSUM], "%f\n", p_value); fflush(results[TEST_CUSUM]);
-def CumulativeSums_all(input_str,coordinates,queue=None,func_name=None):
-    """
-    参数: 
-    输出: 
-    描述: 
-    """
-    result = []
+# def CumulativeSums_all(input_str,coordinates,queue=None,func_name=None):
+#     """
+#     参数: 
+#     输出: 
+#     描述: 
+#     """
+#     result = []
     
-    for coordinate in coordinates:
-        p_value = CumulativeSums(input_str[coordinate[0]:coordinate[1]+1])
-        result.append(p_value)
-    print func_name
-    if queue!=None and func_name!=None:
-        # queue.put((result,func_name))
-        queue.append((result,func_name))
-    return (result,func_name)
+#     for coordinate in coordinates:
+#         p_value = CumulativeSums(input_str[coordinate[0]:coordinate[1]+1])
+#         result.append(p_value)
+#     print func_name
+#     if queue!=None and func_name!=None:
+#         # queue.put((result,func_name))
+#         queue.append((result,func_name))
+#     return (result,func_name)
 
 
 def main():
