@@ -17,26 +17,19 @@ def DiscreteFourierTransform(input_str):
     input_array = map(lambda x:2*int(x)-1,input_str)
     input_array = np.array(input_array)
     S = np.fft.fft(input_array)
-    m = [0]*(len(S)/2+1)
-    m[0] = math.sqrt(S[0].real*S[0].real)
-    S = np.append(S,[0])
-    # 这里估计也是计算错的 应该是这里的计算值有错误
-    # print S[0]
-    # print type(S[0])
-    for i in xrange(1,len(S)/2):
-		#m[i+1] = math.sqrt(math.pow(S[2*i+1],2)+math.pow(S[2*i+2],2))
-        m[i] = math.sqrt(math.pow(S[i].real,2)+math.pow(S[i].imag,2))
+    m = abs(S)[:n/2]
     count = 0
     upperBound = math.sqrt(2.995732274*n);
-    # 这里计算的有点不对
     for i in xrange(0,len(S)/2):
-        if ( m[i] < upperBound ):
+        if ( m[i] < upperBound):
             count += 1;
     # count -= 1
     percentile = float(count)/(n/2)*100;
     N_l = float(count);
     N_o = float(0.95)*n/2.0;
-    d = (N_l - N_o)/math.sqrt(n/4.0*0.95*0.05);
+    print N_l,N_o
+   
+    d = (N_l - N_o)/math.sqrt((n*0.95*0.05)/4.0);
     p_value = math.erfc(math.fabs(d)/math.sqrt(2.0));
     return p_value
 
@@ -56,8 +49,17 @@ def DiscreteFourierTransform_all(input_str,coordinates,queue=None,func_name=None
 def main():
     # a = "101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010"
     # a = "1100100100001111110110101010001000100001011010001100001000110100110001001100011001100010100010111000"
-    a = "1100100100001111110110101010001000100001011010001100001000110100110001001100011001100010100010111000"
+    # a = "1100100100001111110110101010001000100001011010001100001000110100110001001100011001100010100010111000"
+    a = "1001010011"
     print DiscreteFourierTransform(a)
+
+    # a = [0.00000,1.61803,1.38197,-0.61803,3.61803,-2.00000,3.61803,-0.61803,1.38197,1.61803]
+
+    # b = [0.00000,1.17557,4.25325,1.90211,2.62866,0.00000,2.62866,1.90211,4.25325,1.17557]
+    # print dft_test(a)
+    # print math.sqrt(2.995732274*10)
+    # for(x,y) in zip(a,b):
+    #     print math.sqrt(math.pow(x,2)+math.pow(y,2))
 
 if __name__ == '__main__':
     main()
