@@ -25,94 +25,102 @@ def randomExcursions(input_str):
 
     """
     n = len(input_str)
+    x = list()             # Convert to +1,-1
+    for bit in input_str:
+        #if bit == 0:
+        x.append((int(bit)*2)-1)
 
-    cycleStart = 0
-    cycleStop = 0
-    cycle = [0] * max(1000, int(n/100))
-    S_k = [0] * n
-    stateX = [ -4, -3, -2, -1, 1, 2, 3, 4 ]
-    counter = [ 0, 0, 0, 0, 0, 0, 0, 0]
-
-    nu = [[0]*8]*6 
-    pi = [ [0.0000000000, 0.00000000000, 0.00000000000, 0.00000000000, 0.00000000000, 0.0000000000], 
-                         [0.5000000000, 0.25000000000, 0.12500000000, 0.06250000000, 0.03125000000, 0.0312500000],
-                         [0.7500000000, 0.06250000000, 0.04687500000, 0.03515625000, 0.02636718750, 0.0791015625],
-                         [0.8333333333, 0.02777777778, 0.02314814815, 0.01929012346, 0.01607510288, 0.0803755143],
-                         [0.8750000000, 0.01562500000, 0.01367187500, 0.01196289063, 0.01046752930, 0.0732727051] ]
+    #print "x=",x
+    # Build the partial sums
+    pos = 0
+    s = list()
+    for e in x:
+        pos = pos+e
+        s.append(pos)    
+    sprime = [0]+s+[0] # Add 0 on each end
     
-    J = 0
-    S_k[0] = 2*int(input_str[0]) -1
-    for i in xrange(1,n):
-        S_k[i] = S_k[i-1] + 2*int(input_str[i]) - 1
-        if S_k[i] == 0:
-            J += 1
-            if J > max(1000,n/100):
-                print "ERROR IN FUNCTION randomExcursions:  EXCEEDING THE MAX NUMBER OF CYCLES EXPECTED\n."
-                return 0
-            cycle[J] = i
-    if S_k[n-1] != 0:
-        J += 1
+    #print "sprime=",sprime
+    # Build the list of cycles
+    pos = 1
+    cycles = list()
+    while (pos < len(sprime)):
+        cycle = list()
+        cycle.append(0)
+        while sprime[pos]!=0:
+            cycle.append(sprime[pos])
+            pos += 1
+        cycle.append(0)
+        cycles.append(cycle)
+        pos = pos + 1
     
-    cycle[J] = n
-    # print cycle
+    J = len(cycles)
+    print "J="+str(J)    
+    
+    vxk = [['a','b','c','d','e','f'] for y in [-4,-3,-2,-1,1,2,3,4] ]
 
-    # fprintf(stats[TEST_RND_EXCURSION], "\t\t\t  RANDOM EXCURSIONS TEST\n");
-    # fprintf(stats[TEST_RND_EXCURSION], "\t\t--------------------------------------------\n");
-    # fprintf(stats[TEST_RND_EXCURSION], "\t\tCOMPUTATIONAL INFORMATION:\n");
-    # fprintf(stats[TEST_RND_EXCURSION], "\t\t--------------------------------------------\n");
-    # fprintf(stats[TEST_RND_EXCURSION], "\t\t(a) Number Of Cycles (J) = %04d\n", J);
-    # fprintf(stats[TEST_RND_EXCURSION], "\t\t(b) Sequence Length (n)  = %d\n", n);
-
-    constraint = max(0.005*pow(n, 0.5), 500);
-
-    if J < constraint:
-        print "\t\t---------------------------------------------\n"
-        print "\t\tWARNING:  TEST NOT APPLICABLE.  THERE ARE AN\n"
-        print "\t\t\t  INSUFFICIENT NUMBER OF CYCLES.\n"
-        print "\t\t---------------------------------------------\n"
-        for i in xrange(0, 8):
-            print  "%f\n" % 0.0
-        return 
-
-    else:
-
-        cycleStart = 0
-        cycleStop  = cycle[1]
-        for k in xrange(0,6):
-            for i in xrange(0,8):
-                nu[k][i] = 0.
-        for j in xrange(1,J+1):
-            for i in xrange(0,8):
-                counter[i] = 0
-            for i in xrange(cycleStart,cycleStop):
-                if (S_k[i] >= 1 and S_k[i] <=4 ) or (S_k[i] >= -4 and S_k[i] <= -1):
-                    if S_k[i] < 0:
-                        b = 4
-                    else:
-                        b = 3
-                    counter[S_k[i]+b] += 1
-
-            cycleStart = cycle[j] + 1
-            if j < J:
-                cycleStop = cycle[j+1]
-            for i in xrange(0,8):
-                # print counter
-                if counter[i] >= 0 and counter[i]<=4:
-                    nu[counter[i]][i] += 1
-                elif counter[i] >= 5:
-                    nu[5][i] += 1
-                # print nu
-        for i in xrange(0,8):
-            x = stateX[i]
-            all_sum = 0
-            for k in xrange(0,6):
-                all_sum += pow(nu[k][i] - J*pi[int(math.fabs(x))][k],2) / (J*pi[int(math.fabs(x))][k])
-            p_value = igamc(2.5, all_sum/2.0)
-            print p_value,all_sum
+    # Count Occurances  
+    for k in xrange(6):
+        for index in xrange(8):
+            mapping = [-4,-3,-2,-1,1,2,3,4]
+            x = mapping[index]
+            cyclecount = 0
+            #count how many cycles in which x occurs k times
+            for cycle in cycles:
+                oc = 0
+                #Count how many times x occurs in the current cycle
+                for pos in cycle:
+                    if (pos == x):
+                        oc += 1
+                # If x occurs k times, increment the cycle count
+                if (k < 5):
+                    if oc == k:
+                        cyclecount += 1
+                else:
+                    if k == 5:
+                        if oc >=5:
+                            cyclecount += 1
+            vxk[index][k] = cyclecount
+    
+    # Table for reference random probabilities
+    pixk=[[0.5     ,0.25   ,0.125  ,0.0625  ,0.0312 ,0.0312],
+          [0.75    ,0.0625 ,0.0469 ,0.0352  ,0.0264 ,0.0791],
+          [0.8333  ,0.0278 ,0.0231 ,0.0193  ,0.0161 ,0.0804],
+          [0.875   ,0.0156 ,0.0137 ,0.012   ,0.0105 ,0.0733],
+          [0.9     ,0.01   ,0.009  ,0.0081  ,0.0073 ,0.0656],
+          [0.9167  ,0.0069 ,0.0064 ,0.0058  ,0.0053 ,0.0588],
+          [0.9286  ,0.0051 ,0.0047 ,0.0044  ,0.0041 ,0.0531]]
+    
+    success = True
+    plist = list()
+    for index in xrange(8):
+        mapping = [-4,-3,-2,-1,1,2,3,4]
+        x = mapping[index]
+        chisq = 0.0
+        for k in xrange(6):
+            top = float(vxk[index][k]) - (float(J) * (pixk[abs(x)-1][k]))
+            top = top*top
+            bottom = J * pixk[abs(x)-1][k]
+            chisq += top/bottom
+        p = gammaincc(5.0/2.0,chisq/2.0)
+        plist.append(p)
+        if p < 0.01:
+            err = " Not Random"
+            success = False
+        else:
+            err = ""
+    #     print "x = %1.0f\tchisq = %f\tp = %f %s"  % (x,chisq,p,err)
+    # if (J < 500):
+    #     print "J too small (J < 500) for result to be reliable"
+    # elif success:
+    #     print "PASS"
+    # else:    
+    #     print "FAIL: Data not random"
+    return min(plist)
 
 def main():
-    input_str = open("../TestData/data.e").read(1000000)
-    randomExcursions(input_str)
+    input_str = open("/Users/houseyoung/TestData/data.e").read(1000000)
+    # input_str = "0110110101"
+    print randomExcursions(input_str)
 
 if __name__ == '__main__':
     main()
