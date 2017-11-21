@@ -117,7 +117,7 @@ def randomExcursions(input_str):
     #     print "FAIL: Data not random"
     return min(plist)
 
-def randomExcursions_all(nput_str,coordinates,queue=None,func_name=None,):
+def randomExcursions_all(input_str,coordinates,queue=None,func_name=None,):
     print "randomExcursions_all"
     result = []
     for coordinate in coordinates:
