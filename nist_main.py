@@ -15,9 +15,9 @@ from multiprocessing import Process
 def main():
     runs_p_value_array = []
     freq_p_value_array = []
-    #input_str = open("./TestData/test.bin.enc.char", "rb").read(1000000)
-    input_str = open("./TestData/test.bin.enc.char", "rb").read(1000000)
-    segment_size = 2048
+    input_str = open("/home/dm007/TestData/ANU.char", "rb").read()
+    # input_str = open('/home/dm007/TestData/TYUT_8bit_10.txt', "rb").read()
+    segment_size = 1024
     coordinates = Segmentor.segmentor(input_str=input_str, segment_size=segment_size,offset=segment_size)
     # for coordinate in coordinates:
     #     runs_p_value = runs.runs(input_str[coordinate[0]:coordinate[1]+1],segment_size)

@@ -89,7 +89,7 @@ def randomExcursions(input_str):
           [0.9     ,0.01   ,0.009  ,0.0081  ,0.0073 ,0.0656],
           [0.9167  ,0.0069 ,0.0064 ,0.0058  ,0.0053 ,0.0588],
           [0.9286  ,0.0051 ,0.0047 ,0.0044  ,0.0041 ,0.0531]]
-    
+    randomExcursions
     success = True
     plist = list()
     for index in xrange(8):
@@ -116,6 +116,18 @@ def randomExcursions(input_str):
     # else:    
     #     print "FAIL: Data not random"
     return min(plist)
+
+def randomExcursions_all(nput_str,coordinates,queue=None,func_name=None,):
+    print "randomExcursions_all"
+    result = []
+    for coordinate in coordinates:
+        p_value = randomExcursions(input_str[coordinate[0]:coordinate[1]+1])
+        result.append(p_value)
+    if queue!=None and func_name!=None:
+        # queue.put((result,func_name))
+        queue.append((result,func_name))
+    print "randomExcursions_all end"
+    return (result,func_name)
 
 def main():
     input_str = open("/Users/houseyoung/TestData/data.e").read(1000000)
