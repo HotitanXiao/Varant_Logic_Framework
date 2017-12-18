@@ -18,7 +18,7 @@ def main():
     #input_str = open("/home/dm007/TestData/ANU.char", "rb").read()
     #bbb = "/home/dm007/TestData/DES_house.e.char"/home/dm007/TestData/A.txt-vl.enc
     #bbb = "/home/dm007/TestData/A.txt-openssl-aes128cbc.enc.char"
-    bbb = "/home/dm007/TestData/20171217/A.txt-vl-sbox1.enc.char"
+    bbb = "/home/dm007/TestData/20171217/B.aes-vl-sbox1.enc.char"
     input_str = open(bbb, "rb").read()
     print len(input_str)
     # input_str = open('/home/dm007/TestData/TYUT_8bit_10.txt', "rb").read()
