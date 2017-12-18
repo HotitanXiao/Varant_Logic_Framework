@@ -40,7 +40,7 @@ int FileBinToChar(char *filename, char *outfilename)
 	int keysize = 8;
 	int keyslength = BUFFER_SIZE / keysize;
 	int readlength = 0;
-	errno_t err;
+	int err;
 	char *strbuffer = (char *)malloc(4096 * sizeof(char));
 	unsigned char *keybuffer = (unsigned char *)malloc(keyslength * sizeof(char));
 	FILE *file = NULL;

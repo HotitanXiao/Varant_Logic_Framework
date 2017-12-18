@@ -14,13 +14,13 @@ import copy
 from multiprocessing import Process,Queue,Pool
 
 func_set = [
-    {"func":runs.runs_all,"args":(None),"func_name":"runs","cache":np.array([])},
+    #{"func":runs.runs_all,"args":(None),"func_name":"runs","cache":np.array([])},
     {"func":blockFrequency.block_frequency_all,"args":(None),"func_name":"BF","cache":np.array([])},
     {"func":frequency.frequency_all,"args":(None),"func_name":"F","cache":np.array([])},
     {"func":DFT.DiscreteFourierTransform_all,"args":(None),"func_name":"DFT","cache":np.array([])},
     {"func":NonOverlappingTemplateMatchings.NonOverlappingTemplateMatchings_all,"args":(None),"func_name":"NoTM","cache":np.array([])},
     {"func":overlappingTemplateMatchings.OverlappingTemplateMatchings_all,"args":(None),"func_name":"OTM","cache":np.array([])},
-    {"func":universal.universal_all,"args":(None),"func_name":"uni","cache":np.array([])},
+    #{"func":universal.universal_all,"args":(None),"func_name":"uni","cache":np.array([])},
     {"func":linearComplexity.linearComplexity_all,"args":(None),"func_name":"lc","cache":np.array([])},
     {"func":serial.serial_all,"args":(None),"func_name":"serial","cache":np.array([])},
     {"func":approximateEntropy.approximateEntropy_all,"args":(None),"func_name":"AE","cache":np.array([])},
