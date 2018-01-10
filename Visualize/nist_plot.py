@@ -20,7 +20,7 @@ func_set = [
     {"func":DFT.DiscreteFourierTransform_all,"args":(None),"func_name":"DFT","cache":np.array([])},
     {"func":NonOverlappingTemplateMatchings.NonOverlappingTemplateMatchings_all,"args":(None),"func_name":"NoTM","cache":np.array([])},
     {"func":overlappingTemplateMatchings.OverlappingTemplateMatchings_all,"args":(None),"func_name":"OTM","cache":np.array([])},
-    {"func":universal.universal_all,"args":(None),"func_name":"uni","cache":np.array([])},
+    # {"func":universal.universal_all,"args":(None),"func_name":"uni","cache":np.array([])},
     {"func":linearComplexity.linearComplexity_all,"args":(None),"func_name":"lc","cache":np.array([])},
     {"func":serial.serial_all,"args":(None),"func_name":"serial","cache":np.array([])},
     {"func":approximateEntropy.approximateEntropy_all,"args":(None),"func_name":"AE","cache":np.array([])},
@@ -76,7 +76,7 @@ def process_cache(input_str,coordinates,queue):
         func_set[i]["func"](input_str,coordinates,queue,i)
 
 
-def nist_multi_plot(input_str,coordinates,row=len(func_set),col=len(func_set),**kwargs):
+def nist_multi_plot(input_str,coordinates,row=len(func_set),col=len(func_set),save_filename="test.png",**kwargs):
     # q = Queue()
     # 一进来就直接进行处理
     # p = Process(target=process_cache,args=(input_str,coordinates,q,))
@@ -137,8 +137,7 @@ def nist_multi_plot(input_str,coordinates,row=len(func_set),col=len(func_set),**
 
     log_file.close()
     plt.tight_layout()
-    plt.savefig("test.png")
-    fig.savefig('test2png.png', dpi=100)
+    fig.savefig(save_filename, dpi=100)
 
 # def nist_list_plot(input_str,coordinates,**kwargs):
 #     """

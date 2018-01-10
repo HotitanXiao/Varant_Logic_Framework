@@ -12,10 +12,36 @@ import numpy as np
 import matplotlib.pyplot as plt
 from multiprocessing import Process
 
-def main():
+
+import os,sys
+
+def list_file(path):
+    """
+    """
+    dir_list = os.listdir(path)
+    result = []
+    for line in dir_list:
+        if os.path.isfile(line) and\
+            os.path.splitext(line)[1] == ".char" :
+            result.append(line)
+
+    return result
+
+def process():
+    """
+        批量处理文件
+    """
+    basepath = "D:/TestData/2018-01-11/"
+    file_list = list_file(basepath)
+
+
+
+def go(basepath="",filename=""):
     runs_p_value_array = []
     freq_p_value_array = []
-    input_str = open("/home/dm007/TestData/ANU.char", "rb").read()
+    # input_str = open("/home/dm007/TestData/ANU.char", "rb").read()
+    input_str = open("D:/TestData/2018-01-11/ANU.char", "rb").read()
+
     # input_str = open('/home/dm007/TestData/TYUT_8bit_10.txt', "rb").read()
     segment_size = 1024
     coordinates = Segmentor.segmentor(input_str=input_str, segment_size=segment_size,offset=segment_size)
@@ -49,4 +75,4 @@ def main():
         nist_plot.nist_multi_plot(input_str,coordinates)
 
 if __name__ == '__main__':
-    main()
+    go()
