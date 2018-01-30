@@ -14,7 +14,7 @@ import copy
 from multiprocessing import Process,Queue,Pool
 
 func_set = [
-    {"func":runs.runs_all,"args":(None),"func_name":"runs","cache":np.array([])},
+    #{"func":runs.runs_all,"args":(None),"func_name":"runs","cache":np.array([])},
     {"func":blockFrequency.block_frequency_all,"args":(None),"func_name":"BF","cache":np.array([])},
     {"func":frequency.frequency_all,"args":(None),"func_name":"F","cache":np.array([])},
     {"func":DFT.DiscreteFourierTransform_all,"args":(None),"func_name":"DFT","cache":np.array([])},

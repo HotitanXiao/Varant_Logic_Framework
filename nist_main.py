@@ -46,6 +46,17 @@ def go(basepath="",filename=""):
     # input_str = open('/home/dm007/TestData/TYUT_8bit_10.txt', "rb").read()
     # segment_size = 1024
     # coordinates = Segmentor.segmentor(input_str=input_str, segment_size=segment_size,offset=segment_size)
+
+    #input_str = open("/home/dm007/TestData/ANU.char", "rb").read()
+    #bbb = "/home/dm007/TestData/DES_house.e.char"/home/dm007/TestData/A.txt-vl.enc
+    #bbb = "/home/dm007/TestData/A.txt-openssl-aes128cbc.enc.char"
+    # bbb = "/home/dm007/TestData/20171217/B.aes-vl-sbox1.enc.char"
+    # input_str = open(bbb, "rb").read()
+    # print len(input_str)
+    # input_str = open('/home/dm007/TestData/TYUT_8bit_10.txt', "rb").read()
+    segment_size = 1024
+    #coordinates = Segmentor.segmentor(input_str=input_str, segment_size=segment_size,offset=segment_size)
+
     # for coordinate in coordinates:
     #     runs_p_value = runs.runs(input_str[coordinate[0]:coordinate[1]+1],segment_size)
     #     freq_p_value = frequency.frequency(input_str[coordinate[0]:coordinate[1]+1])
