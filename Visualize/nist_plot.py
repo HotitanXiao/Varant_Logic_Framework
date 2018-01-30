@@ -138,6 +138,7 @@ def nist_multi_plot(input_str,coordinates,row=len(func_set),col=len(func_set),sa
     log_file.close()
     plt.tight_layout()
     fig.savefig(save_filename, dpi=100)
+    plt.close('all')
 
 # def nist_list_plot(input_str,coordinates,**kwargs):
 #     """
