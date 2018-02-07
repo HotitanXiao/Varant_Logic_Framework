@@ -12,25 +12,31 @@ import numpy as np
 import matplotlib.pyplot as plt
 import copy
 from multiprocessing import Process,Queue,Pool
-
+import copy
 func_set = [
-    {"func":runs.runs_all,"args":(None),"func_name":"runs","cache":np.array([]),"runtime"::np.array([])},
-    {"func":blockFrequency.block_frequency_all,"args":(None),"func_name":"BF","cache":np.array([]),"runtime"::np.array([])},
-    {"func":frequency.frequency_all,"args":(None),"func_name":"F","cache":np.array([]),"runtime"::np.array([])},
-    {"func":DFT.DiscreteFourierTransform_all,"args":(None),"func_name":"DFT","cache":np.array([]),"runtime"::np.array([])},
-    {"func":NonOverlappingTemplateMatchings.NonOverlappingTemplateMatchings_all,"args":(None),"func_name":"NoTM","cache":np.array([]),"runtime"::np.array([])},
-    {"func":overlappingTemplateMatchings.OverlappingTemplateMatchings_all,"args":(None),"func_name":"OTM","cache":np.array([]),"runtime"::np.array([])},
+    {"func":runs.runs_all,"args":(None),"func_name":"runs","cache":np.array([]),"runtime":np.array([])},
+    {"func":blockFrequency.block_frequency_all,"args":(None),"func_name":"BF","cache":np.array([]),"runtime":np.array([])},
+    {"func":frequency.frequency_all,"args":(None),"func_name":"F","cache":np.array([]),"runtime":np.array([])},
+    {"func":DFT.DiscreteFourierTransform_all,"args":(None),"func_name":"DFT","cache":np.array([]),"runtime":np.array([])},
+    {"func":NonOverlappingTemplateMatchings.NonOverlappingTemplateMatchings_all,"args":(None),"func_name":"NoTM","cache":np.array([]),"runtime":np.array([])},
+    {"func":overlappingTemplateMatchings.OverlappingTemplateMatchings_all,"args":(None),"func_name":"OTM","cache":np.array([]),"runtime":np.array([])},
     # {"func":universal.universal_all,"args":(None),"func_name":"uni","cache":np.array([])},
-    {"func":linearComplexity.linearComplexity_all,"args":(None),"func_name":"lc","cache":np.array([]),"runtime"::np.array([])},
-    {"func":serial.serial_all,"args":(None),"func_name":"serial","cache":np.array([]),"runtime"::np.array([])},
-    {"func":approximateEntropy.approximateEntropy_all,"args":(None),"func_name":"AE","cache":np.array([]),"runtime"::np.array([])},
-    {"func":cusum.CumulativeSums_all,"args":(None),"func_name":"cusum","cache":np.array([]),"runtime"::np.array([])},
-    {"func":randomExcursions.randomExcursions_all,"args":(None),"func_name":"re","cache":np.array([]),"runtime"::np.array([])},
-    {"func":VL.get_p_array,"args":(None),"func_name":"VL_P","cache":np.array([]),"runtime"::np.array([])},
-    {"func":VL.get_q_array,"args":(None),"func_name":"VL_q","cache":np.array([]),"runtime"::np.array([])},
+    {"func":linearComplexity.linearComplexity_all,"args":(None),"func_name":"lc","cache":np.array([]),"runtime":np.array([])},
+    {"func":serial.serial_all,"args":(None),"func_name":"serial","cache":np.array([]),"runtime":np.array([])},
+    {"func":approximateEntropy.approximateEntropy_all,"args":(None),"func_name":"AE","cache":np.array([]),"runtime":np.array([])},
+    {"func":cusum.CumulativeSums_all,"args":(None),"func_name":"cusum","cache":np.array([]),"runtime":np.array([])},
+    {"func":randomExcursions.randomExcursions_all,"args":(None),"func_name":"re","cache":np.array([]),"runtime":np.array([])},
+    {"func":VL.get_p_array,"args":(None),"func_name":"VL_P","cache":np.array([]),"runtime":np.array([])},
+    {"func":VL.get_q_array,"args":(None),"func_name":"VL_q","cache":np.array([]),"runtime":np.array([])},
 ]
 
 func_set_index={}
+
+    
+
+        
+
+
 
 def call_process_func(func_info_dict):
     return func_info_dict[0]["func"](func_info_dict[1],func_info_dict[2],queue=None,func_name=func_info_dict[0]["func_name"])
@@ -134,7 +140,7 @@ def nist_multi_plot(input_str,coordinates,row=len(func_set),col=len(func_set),sa
     #plt.close('all')
 
 
-def nist_multi_plot_single(input_str,coordinates,save_filename="test.png",**kwargs):
+def nist_multi_plot_single(input_str,coordinates,save_path=".",**kwargs):
     """
     每个方法输出一个文件
     """
@@ -148,7 +154,8 @@ def nist_multi_plot_single(input_str,coordinates,save_filename="test.png",**kwar
     bins = [100,100]
     plot_range = [[0,1],[0,1]]
     temp_coordinates = list(coordinates)
-
+    # print temp_coordinates
+    # import pdb;pdb.set_trace()
     # process_cache(input_str,temp_coordinates,q)
     # # print len(q)
     # for i in xrange(0,len(q)):
@@ -158,31 +165,39 @@ def nist_multi_plot_single(input_str,coordinates,save_filename="test.png",**kwar
 
     log_file = open("log.txt","wb")
     fig = plt.gcf()
-    fig.set_size_inches(18.5*5, 10.5*5)
+    fig.set_size_inches(8.5*5, 5.5*5)
     
     for y in xrange(0,len(func_set)):
         # a = plt.subplot(row,col+1,(y-1)*(col+1)+x)
         # 先判断是否有缓存机制
-        if func_set[y-1]["cache"].any():
-            print "has_cache %s" % func_set[y-1]["func_name"]
-            p_array = func_set[y-1]["cache"]
+        save_filename=save_path+"/"+func_set[y]["func_name"]
+        if func_set[y]["cache"].any():
+            print "has_cache %s" % func_set[y]["func_name"]
+            p_array = func_set[y]["cache"]
         else:
-            print "has_no_cache %s" % func_set[y-1]["func_name"]
-            p_array = func_set[y-1]["func"](input_str,temp_coordinates)
-            func_set[y-1]["cache"] = np.array(p_array)
+            print "has_no_cache %s" % func_set[y]["func_name"]
+            p_array = func_set[y]["func"](input_str,temp_coordinates)
+            func_set[y]["cache"] = np.array(p_array)
 
         # 绘画单独的hist图样
-        p_array = func_set[y-1]["cache"]
+        p_array = func_set[y]["cache"]
         # print type(p_array),len(p_array)
         plt.hist(p_array,bins=100)
-        a.set_title(func_set[y-1]["func_name"])
+        plt.title(func_set[y]["func_name"])
         plt.tight_layout()
-        fig.savefig(save_filename, dpi=100)
-        plt.close('all') 
-
+        plt.savefig(save_path+"/"+func_set[y]["func_name"]+".png", dpi=100)
+        print "save fig done %s" % save_filename
+        plt.close()
+    plt.close('all') 
     log_file.close()
     
-    
+
+def clean_cache():
+    """
+     清空缓存的数据
+    """  
+    for item in func_set:
+        item["cache"] = np.array([])
      
 
 def close_all():
@@ -193,3 +208,13 @@ def close_all():
 #     输出: 
 #     描述: 列出所有的hist图样
 #     """
+
+def get_result():
+    results = {}
+    for item in func_set:
+        new_item = {}
+        new_item["func_name"] = copy.deepcopy(item["func_name"])
+        new_item["cache"] = copy.deepcopy(item["cache"])
+        results[new_item["func_name"]]=new_item
+    return results
+
