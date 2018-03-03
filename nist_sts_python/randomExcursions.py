@@ -54,7 +54,7 @@ def randomExcursions(input_str):
         pos = pos + 1
     
     J = len(cycles)
-    print "J="+str(J)    
+    # print "J="+str(J)    
     
     vxk = [['a','b','c','d','e','f'] for y in [-4,-3,-2,-1,1,2,3,4] ]
 

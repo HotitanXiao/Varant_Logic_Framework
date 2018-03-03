@@ -27,7 +27,7 @@ def DiscreteFourierTransform(input_str):
     percentile = float(count)/(n/2)*100;
     N_l = float(count);
     N_o = float(0.95)*n/2.0;
-    print N_l,N_o
+    # print N_l,N_o
    
     d = (N_l - N_o)/math.sqrt((n*0.95*0.05)/4.0);
     p_value = math.erfc(math.fabs(d)/math.sqrt(2.0));

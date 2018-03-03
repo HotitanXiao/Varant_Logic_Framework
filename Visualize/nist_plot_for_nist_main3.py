@@ -12,7 +12,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import copy
 from multiprocessing import Process,Queue,Pool
-import copy
+
 func_set = [
     # {"func":runs.runs_all,"args":(None),"func_name":"runs","cache":np.array([]),"runtime":np.array([])},
     # {"func":blockFrequency.block_frequency_all,"args":(None),"func_name":"BF","cache":np.array([]),"runtime":np.array([])},
@@ -77,67 +77,14 @@ def process_cache(input_str,coordinates,queue):
         func_set[i]["func"](input_str,coordinates,queue,i)
 
 
-def nist_multi_plot(input_str,coordinates,row=len(func_set),col=len(func_set),save_filename="test.png",**kwargs):
-    # q = Queue()
-    # 一进来就直接进行处理
-    # p = Process(target=process_cache,args=(input_str,coordinates,q,))
-    # p.start()
-    # p.join()
-    q = []
-
-    bins = [100,100]
-    plot_range = [[0,1],[0,1]]
-    temp_coordinates = list(coordinates)
-
-    # process_cache(input_str,temp_coordinates,q)
-    # # print len(q)
-    # for i in xrange(0,len(q)):
-    #     result = q[i]
-    #     func_set[result[1]]["cache"] = np.array(result[0])
-    process_cache_multi_processing(input_str,temp_coordinates)
-
-    log_file = open("log.txt","wb")
-    fig = plt.gcf()
-    # fig.set_size_inches(18.5*5, 10.5*5)
-    
-    for y in xrange(1,row+1):
-        # a = plt.subplot(row,col+1,(y-1)*(col+1)+x)
-        # 先判断是否有缓存机制
-        if func_set[y-1]["cache"].any():
-            print "has_cache %s" % func_set[y-1]["func_name"]
-            p_array = func_set[y-1]["cache"]
-        else:
-            print "has_no_cache %s" % func_set[y-1]["func_name"]
-            p_array = func_set[y-1]["func"](input_str,temp_coordinates)
-            func_set[y-1]["cache"] = np.array(p_array)
-        # if x == y:
-        #     q_array = p_array
-        # else:
-        #     # q_array = func_set[x-1]["func"](input_str,temp_coordinates)
-        #     if func_set[x-1]["cache"].any():
-        #         q_array = func_set[x-1]["cache"]
-        #         print "has_cache %s" % func_set[x-1]["func_name"]
-        #     else:
-        #         print "has_no_cache %s" % func_set[y-1]["func_name"]
-        #         q_array = func_set[x-1]["func"](input_str,temp_coordinates)
-        #         func_set[x-1]["cache"] = np.array(q_array)
-
-        # 绘画单独的hist图样
-        a = plt.subplot(row,1,y)
-        p_array = func_set[y-1]["cache"]
-        # print type(p_array),len(p_array)
-        plt.hist(p_array,bins=100)
-        a.set_title(func_set[y-1]["func_name"])
-
-    log_file.close()
-    plt.tight_layout()
-    fig.savefig(save_filename, dpi=100)
-    #plt.close('all')
-
-
 def nist_multi_plot_single(input_str,coordinates,save_path=".",**kwargs):
     """
-    每个方法输出一个文件
+        每个方法输出一个文件
+        这里需要进行一个合并操作
+        例如我当前获得的统计数据长度喂7
+        [0,1,2,3,4,5,6]
+        我可以对这些数据进行相应的合并操作比如说是0，1合并，2，3合并
+        或者是0，2合并，1，3合并
     """
     # q = Queue()
     # 一进来就直接进行处理
@@ -177,9 +124,16 @@ def nist_multi_plot_single(input_str,coordinates,save_path=".",**kwargs):
         # 绘画单独的hist图样
         p_array = func_set[y]["cache"]
         # print type(p_array),len(p_array)
+        """
+            这里是数据统计部分，就是在这里进行相应的操作的
+        """
         ty,tx= np.histogram(p_array,bins=np.arange(min(p_array),max(p_array)+1,1))
-        print tx,ty
-        plt.plot(tx[0:-1],ty,"o")
+        # print tx,ty
+        gx = list(tx[0:-1])
+        gy = list(ty)
+        # 进行其他的操作
+        gx,gy = merge_cols(gx,gy,2)
+        plt.plot(gx,gy,"o")
         # plt.hist(p_array,bins=np.arange(0,1.0,0.01))
         plt.title(func_set[y]["func_name"])
         plt.tight_layout()
@@ -188,18 +142,73 @@ def nist_multi_plot_single(input_str,coordinates,save_path=".",**kwargs):
         plt.close()
     plt.close('all') 
     log_file.close()
-    
 
-def clean_cache():
+
+def merge_cols(x,y,offsets):
     """
-     清空缓存的数据
-    """  
-    for item in func_set:
-        item["cache"] = np.array([])
-     
+    参数说明：
+        x,y是输入的统计结果,是包含两个部分，y轴数据和x轴数据
+        offsets是进行合并的偏移量
+    返回值说明：返回一个新的x,y
+    功能描述：    
+
+    """
+    # 首先是判断offset是不是一个数组，如果是数组的话则需要进一步处理
+    if type(offsets) == int:
+        # x[index+offset] 会被删除掉
+        result_list = []
+        for i in xrange(0,offsets + 1):  
+            
+            tempx = copy.deepcopy(x)
+            tempy = copy.deepcopy(y)
+            if i!=0:
+                # 左移位
+                tempx = tempx[i:] + tempx[:i]
+                tempy = tempy[i:] + tempy[:i]
+            for(index,item) in enumerate(tempx):
+                print index,item,offsets,len(tempx),len(tempy)
+                if index + offsets >= len(tempx):
+                    result_list.append((tempx,tempy))
+                    break
+                tempy[index] += tempy[index+offsets]
+                tempy.pop(index+offsets)
+                tempx.pop(index+offsets)
+            else:
+                result_list.append((tempx,tempy))
+        print result_list
+        resultx = result_list[0][0]
+        resulty = [0]*len(result_list[0][1])
+        for tuple_item in result_list:
+            for (index, item) in enumerate(tuple_item[1]):
+                resulty[index] += tuple_item[1][index]
+        return resultx,resulty    
+    elif type(offsets) == list or type(offsets) == tuple:
+        for(index,item) in enumerate(x):
+            for offset in offsets:
+                # print index,item,offset,len(x),len(y)
+                if index + offset >= len(x):
+                    return x,y
+                # print "add"
+                # print y[index],y[index+offset]
+                y[index] = y[index+offset] + y[index]
+            # print x
+            # print y
+            for (t,offset) in enumerate(offsets):  
+                delta = offset if t==0 else offset - offsets[t-1]               
+                y.pop(index+delta)
+                x.pop(index+delta)
+            # print "0-"*5
+            # print x,y
+        return x,y  
+    # 如果是一个数组
+    else:
+        print "error"
+
 
 def close_all():
     plt.close('all')
+
+
 
 def get_result():
     results = {}
@@ -210,3 +219,17 @@ def get_result():
         results[new_item["func_name"]]=new_item
     return results
 
+def clean_cache():
+    """
+     清空缓存的数据
+    """  
+    for item in func_set:
+        item["cache"] = np.array([])
+
+def main():
+    a = [1,2,3,4,5,6,7]
+    offsets = [1,2]
+    print merge_cols(range(0,7),a,1)
+
+if __name__ == '__main__':
+    main()

@@ -1,21 +1,16 @@
 # coding:utf-8
 """
-作者: H.Y
-日期: 
-描述: 采用nist的方式来计算的结果
-本文件用于处理一维的结果
-每个文件生成单独的一维结果
-操作步骤
-列出文件
-创建m=x的文件夹
-创建每个文件的文件夹
-开始绘制图像
-绘制图像的时候并记录运行时间
-
+    这个文件是在获取到了所有比较精细的统计结果的基础上
+    然后进行一个合并统计的操作
+    例如我当前获得的统计数据长度喂7
+    [0,1,2,3,4,5,6]
+    我可以对这些数据进行相应的合并操作比如说是0，1合并，2，3合并
+    或者是0，2合并，1，3合并
 """
+from Visualize import nist_plot_for_nist_main3 as npnm3
+
 from MainFrame import Segmentor,VLSequence,BitFilter
 from MainFrame.sort import HeapSort
-from Visualize import nist_plot,nist_plot_1d
 from nist_sts_python import runs,blockFrequency,frequency
 import numpy as np
 import matplotlib.pyplot as plt
@@ -70,7 +65,7 @@ def process():
     file_list = list_file(basepath)
 
 
-m_set = [128,258]
+m_set = [16]
 # readlenth_set = [800000,8000000,40000000]
 readlenth_set = [5000000]
 vlfilelist = {}
@@ -90,9 +85,9 @@ def vlgo(basepath="",filename="",readlenth=None):
         if not os.path.exists(result_path):
             os.makedirs(result_path)
         vlfile.segmente(m=m_size)
-        nist_plot_1d.nist_multi_plot_single(vlfile.input_str,vlfile.segment_map[m_size]["coordinates"],save_path=result_path)
-        vlfile.segment_map[m_size]["results"] = nist_plot_1d.get_result()
-        nist_plot_1d.clean_cache()
+        npnm3.nist_multi_plot_single(vlfile.input_str,vlfile.segment_map[m_size]["coordinates"],save_path=result_path)
+        vlfile.segment_map[m_size]["results"] = npnm3.get_result()
+        npnm3.clean_cache()
 
 
 def plot_all_file_func_compare():
@@ -113,7 +108,7 @@ if __name__ == '__main__':
             |各种的函数方法
 
     """
-    basepath = "D:/TestData/2018-01-23/"
+    basepath = "D:/TestData/2018-03-01/"
     file_list = list_file(basepath)
     # 先确定读取的文件大小
     for readlenth in readlenth_set:
