@@ -6,8 +6,8 @@
 import platform
 
 base_path_config = {
-    "windows":"D:/TestData",
-    "linux":"/home/dm007/TestData",
+    "windows":"D:/TestData/",
+    "linux":"/home/dm007/TestData/",
     "macos":""
 }
 

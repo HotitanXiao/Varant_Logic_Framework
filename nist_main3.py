@@ -20,6 +20,8 @@ from multiprocessing import Process
 import os,sys
 
 
+import local_settings
+
 
 class VLFile():
     def __init__(self,filename,size=None):
@@ -108,7 +110,7 @@ if __name__ == '__main__':
             |各种的函数方法
 
     """
-    basepath = "D:/TestData/2018-03-01/"
+    basepath = local_settings.getTestDataPath() + "2018-03-01/"
     file_list = list_file(basepath)
     # 先确定读取的文件大小
     for readlenth in readlenth_set:
