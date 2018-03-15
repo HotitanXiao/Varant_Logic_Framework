@@ -1,0 +1,7 @@
+import wave_projection
+import wave_3dplot
+import matplotlib.pyplot as plt
+
+
+
+def plotAll():
