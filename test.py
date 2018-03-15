@@ -1,4 +1,7 @@
 # coding:utf-8
+from core.Gorilla import gorilla
+from decimal import Decimal
+import math
 A = [2,4,6,7,8,9,1,4,56,7]
 heap_size = 0
 PARENT = lambda i: i/2
@@ -31,8 +34,14 @@ def HEAPSORT(A):
 
 
 def main():
-    HEAPSORT(A)
-    print A
-
+    # HEAPSORT(A)
+    # print A
+    a = gorilla.GorilaBasis()
+    n=8
+    p=1
+    q=1
+    # print Decimal(str(a.redundants(n,p,q))) / Decimal(str(2**n))
+    print a.getTriangle_SingleRow(n)
+    print a.getCview(n,q)
 if __name__ == '__main__':
     main()

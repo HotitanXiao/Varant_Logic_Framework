@@ -1,0 +1,21 @@
+# -*-coding:utf-8 -*-
+# File Name: wave_3dplot.py
+# Author   : H.Y
+# Date     : 2015-11-7
+
+from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.pyplot as plt
+import numpy as np
+import wave_test
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+(x, y, z) = wave_test.main()
+hist, xedges, yedges = np.histogram2d(x, y, bins=4)
+
+
+dx = 0.5
+dy = 0.5
+
+ax.bar3d(x, y, z, dx, dy, z, color='b', zsort='average')
+
+plt.show()

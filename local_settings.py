@@ -8,7 +8,7 @@ import platform
 base_path_config = {
     "windows":"D:/TestData/",
     "linux":"/home/dm007/TestData/",
-    "macos":""
+    "macos":"/Users/houseyoung/TestData/"
 }
 
 def getTestDataPath():
@@ -20,6 +20,8 @@ def getTestDataPath():
         return base_path_config.get("windows")
     elif sysstr == "Linux":
         return base_path_config.get("linux")
+    elif sysstr == "Darwin":
+        return base_path_config.get("macos")
     else:
         return None
 

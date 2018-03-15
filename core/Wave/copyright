@@ -1,0 +1,8 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: copyright
+# key: copyright
+# binding: direct-keybinding
+# --
+# File Name: $(filename)
+# Author   : H.Y
+# Date     : $(Date)
