@@ -63,7 +63,7 @@ def process():
     """
         批量处理文件
     """
-    basepath = "D:/TestData/2018-01-23/"
+    basepath = "D:/TestData/2018-03-13/"
     file_list = list_file(basepath)
 
 
@@ -110,7 +110,7 @@ if __name__ == '__main__':
             |各种的函数方法
 
     """
-    basepath = local_settings.getTestDataPath() + "2018-03-02/"
+    basepath = local_settings.getTestDataPath() + "2018-03-13/"
     file_list = list_file(basepath)
     # 先确定读取的文件大小
     for readlenth in readlenth_set:

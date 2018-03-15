@@ -22,3 +22,9 @@ def getTestDataPath():
         return base_path_config.get("linux")
     else:
         return None
+
+def main():
+    print getTestDataPath()
+
+if __name__ == '__main__':
+    main()
