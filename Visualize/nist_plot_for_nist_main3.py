@@ -26,8 +26,8 @@ func_set = [
     # {"func":approximateEntropy.approximateEntropy_all,"args":(None),"func_name":"AE","cache":np.array([]),"runtime":np.array([])},
     # {"func":cusum.CumulativeSums_all,"args":(None),"func_name":"cusum","cache":np.array([]),"runtime":np.array([])},
     # {"func":randomExcursions.randomExcursions_all,"args":(None),"func_name":"re","cache":np.array([]),"runtime":np.array([])},
-    {"func":VL.get_p_array,"args":(None),"func_name":"VL_P","cache":np.array([]),"runtime":np.array([])},
-    {"func":VL.get_q_array,"args":(None),"func_name":"VL_q","cache":np.array([]),"runtime":np.array([])},
+    {"func":VL.get_p_array,"args":(None),"func_name":"VL_P","cache":np.array([]),"runtime":np.array([]),"merge_cache":None},
+    {"func":VL.get_q_array,"args":(None),"func_name":"VL_q","cache":np.array([]),"runtime":np.array([]),"merge_cache":None},
 ]
 
 func_set_index={}
@@ -71,10 +71,11 @@ def process_cache_multi_processing(input_str,coordinates):
     # for p in p_p:
     #     p.start()
 
-def process_cache(input_str,coordinates,queue):
+def process_cache(input_str,coordinates):
     for i in xrange(0,len(func_set)):
         print "now--processing%s" % func_set[i]["func_name"]
-        func_set[i]["func"](input_str,coordinates,queue,i)
+        result = func_set[i]["func"](input_str,coordinates,i)
+        func_set[i]["cache"] = np.array(result[0])
 
 
 def nist_multi_plot_single(input_str,coordinates,save_path=".",**kwargs):
@@ -103,8 +104,8 @@ def nist_multi_plot_single(input_str,coordinates,save_path=".",**kwargs):
     # for i in xrange(0,len(q)):
     #     result = q[i]
     #     func_set[result[1]]["cache"] = np.array(result[0])
-    process_cache_multi_processing(input_str,temp_coordinates)
-
+    # process_cache_multi_processing(input_str,temp_coordinates)
+    process_cache(input_str,temp_coordinates)
     log_file = open("log.txt","wb")
     fig = plt.gcf()
     # fig.set_size_inches(8.5*5, 5.5*5)
@@ -133,6 +134,7 @@ def nist_multi_plot_single(input_str,coordinates,save_path=".",**kwargs):
         gy = list(ty)
         # 进行其他的操作
         gx,gy = merge_cols(gx,gy,2)
+        func_set[y]["merge_cache"] = (gx,gy)
         plt.plot(gx,gy,"o")
         # plt.hist(p_array,bins=np.arange(0,1.0,0.01))
         plt.title(func_set[y]["func_name"])
@@ -216,6 +218,7 @@ def get_result():
         new_item = {}
         new_item["func_name"] = copy.deepcopy(item["func_name"])
         new_item["cache"] = copy.deepcopy(item["cache"])
+        new_item["merge_cache"] = copy.deepcopy(item["merge_cache"])
         results[new_item["func_name"]]=new_item
     return results
 

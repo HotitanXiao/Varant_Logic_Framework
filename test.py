@@ -38,10 +38,13 @@ def main():
     # print A
     a = gorilla.GorilaBasis()
     n=8
-    p=1
-    q=1
+    p=7
+    q=3
     # print Decimal(str(a.redundants(n,p,q))) / Decimal(str(2**n))
     print a.getTriangle_SingleRow(n)
-    print a.getCview(n,q)
+    for q in xrange(0,9):
+        print a.getCview(n,q)
 if __name__ == '__main__':
     main()
+    # a = gorilla.GorilaBasis()
+    # print a.chose(6,1)

@@ -5,6 +5,7 @@ import math
 import matplotlib.pyplot as plt
 import enum
 import numpy as np
+from decimal import Decimal
 import  time
 
 
@@ -16,6 +17,10 @@ class GorilaBasis(object):
         self.name='GorilaBasis'        
     def chose(self,N,n): #组合数-N选n
         """传说中的组合数学"""
+        print "in chose function N=%s,n=%s" % (N,n)
+        if n < 0 or N < 0 or N-n <0:
+            return 0
+        print N,n
         return math.factorial(N)//math.factorial(n)//math.factorial(N-n)
     
     def redundants(self,n,k,c): #一个函数,就是网上的那个
@@ -24,7 +29,7 @@ class GorilaBasis(object):
                       k 第n行的第k列
                       c circular culaster
             说明:计算某个(n,k)单元"""
-        if k < c:
+        if (k!=0 and c==0):
             return 0
         if ((n-k)<k):
             return self.redundants(n,n-k,c)
@@ -132,19 +137,24 @@ class GorilaBasis(object):
         # for i in xrange(0,)
         all_sum = 0
         for k in xrange(0,int(math.ceil(N/2.))):
-            print k
+            if k < c:
+                continue;
             all_sum += self.redundants(N,k,c)
         all_sum *=2
         if N%2==0:
             all_sum += self.redundants(N,int(math.ceil(N/2.)),c)
-        return all_sum
+        alpha = float(Decimal(str(all_sum))/Decimal(2**N))
+        print "in get C View N=%s,k=%s,c=%s,sum=%s,percent=%s" % (N,k,c,all_sum,alpha)
+        return alpha
 
     # 得到固定k的映射值
     def getKview(self,N,k):
         """
             k就是1的数量
         """
-        return self.chose(N,k)
+        
+        alpha = float(Decimal(str(self.chose(N,k)))/Decimal(2**N))
+        return alpha
     
     #使用列表推倒式的版本
     # def createBasis2(self,N):

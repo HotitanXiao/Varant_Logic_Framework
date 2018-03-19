@@ -27,8 +27,8 @@ func_set = [
     # {"func":approximateEntropy.approximateEntropy_all,"args":(None),"func_name":"AE","cache":np.array([]),"runtime":np.array([])},
     # {"func":cusum.CumulativeSums_all,"args":(None),"func_name":"cusum","cache":np.array([]),"runtime":np.array([])},
     # {"func":randomExcursions.randomExcursions_all,"args":(None),"func_name":"re","cache":np.array([]),"runtime":np.array([])},
-    {"func":VL.get_p_array,"args":(None),"func_name":"VL_P","cache":np.array([]),"runtime":np.array([])},
-    {"func":VL.get_q_array,"args":(None),"func_name":"VL_q","cache":np.array([]),"runtime":np.array([])},
+    {"func":VL.get_p_array,"args":(None),"func_name":"VL_P","cache":np.array([]),"runtime":np.array([]),"diff_cache":None},
+    {"func":VL.get_q_array,"args":(None),"func_name":"VL_q","cache":np.array([]),"runtime":np.array([]),"diff_cache":None},
 ]
 
 func_set_index={}
@@ -46,10 +46,10 @@ def process_cache_multi_processing(input_str,coordinates):
     进行特征计算的主函数
     主要用于进行进程阻塞的
     """
-    print "house-process"*10
+
     for i in xrange(0,len(func_set)):
         func_set_index[func_set[i]["func_name"]] = i
-    print func_set_index
+
     func_params = []
     for i in xrange(0,len(func_set)):
         func_params.append((func_set[i],input_str,coordinates))
@@ -72,10 +72,11 @@ def process_cache_multi_processing(input_str,coordinates):
     # for p in p_p:
     #     p.start()
 
-def process_cache(input_str,coordinates,queue):
+def process_cache(input_str,coordinates):
     for i in xrange(0,len(func_set)):
         print "now--processing%s" % func_set[i]["func_name"]
-        func_set[i]["func"](input_str,coordinates,queue,i)
+        result = func_set[i]["func"](input_str,coordinates,i)
+        func_set[i]["cache"] = np.array(result[0])
 
 
 def nist_multi_plot_single(input_str,coordinates,save_path=".",**kwargs):
@@ -109,7 +110,10 @@ def nist_multi_plot_single(input_str,coordinates,save_path=".",**kwargs):
     log_file = open("log.txt","wb")
     fig = plt.gcf()
     # fig.set_size_inches(8.5*5, 5.5*5)
-    
+    a = GorilaBasis()
+    print temp_coordinates[0]
+    N = temp_coordinates[0][1] - temp_coordinates[0][0] +1
+    # import pdb;pdb.set_trace()
     for y in xrange(0,len(func_set)):
         # a = plt.subplot(row,col+1,(y-1)*(col+1)+x)
         # 先判断是否有缓存机制
@@ -128,11 +132,18 @@ def nist_multi_plot_single(input_str,coordinates,save_path=".",**kwargs):
         """
             这里是数据统计部分，就是在这里进行相应的操作的
         """
-        ty,tx= np.histogram(p_array,bins=np.arange(min(p_array),max(p_array)+1,1))
+       
+        ty,tx= np.histogram(p_array,bins=np.arange(0,max(p_array)+2,1))
+        print ty,tx
+        if func_set[y]["func_name"] == "VL_q":
+            ty = q_differ(N,tx,ty)
+        if func_set[y]["func_name"] == "VL_p":
+            ty = p_differ(N,tx,ty)
         # print tx,ty
         # 这里进行差异比较
-        plt.plot(gx,gy,"o")
         # plt.hist(p_array,bins=np.arange(0,1.0,0.01))
+        func_set[y]["diff_cache"] = (tx[:-1],ty)
+        plt.plot(tx[:-1],ty,".")
         plt.title(func_set[y]["func_name"])
         plt.tight_layout()
         plt.savefig(save_path+"/"+func_set[y]["func_name"]+".png", dpi=100)
@@ -142,7 +153,7 @@ def nist_multi_plot_single(input_str,coordinates,save_path=".",**kwargs):
     log_file.close()
 
 
-def q_differ(N,y_array,x_array):
+def q_differ(N,x_array,y_array):
     """
         这个是q角度的值的差异
         y_array,是q的统计结果[1,2,3,4,5]
@@ -150,24 +161,32 @@ def q_differ(N,y_array,x_array):
     """
     a = GorilaBasis()
     all_sub_segments = sum(y_array)
-    t = all_sub_segments/2**N
+    t = all_sub_segments
     new_y = []
     for y,q in zip(y_array,x_array):
-        e = a.getCview(N,q) #理论值 在2^N下产生的
-        new_y.append(q - t*e)
+        # print N,q
+        alpha = a.getCview(N,q) #理论值 在2^N下产生的
+        if alpha == 0:
+            print "******---***"*10
+            print "in q_differ zeros occur N=%s,q=%s" % (N,q)
+        # print N,q,e
+        new_y.append(y - t*alpha)
+        print "-----------"
+    print y_array
+    print new_y
     return np.array(new_y)
 
-def p_differ(N,y_array,x_array):
+def p_differ(N,x_array,y_array):
     """
         这个就是二项式系数了，直接用chose来获取
     """
     a = GorilaBasis()
     all_sub_segments = sum(y_array)
-    t = all_sub_segments/2**N
+    t = all_sub_segments
     new_y = []
     for y,q in zip(y_array,x_array):
-        e = a.getCview(N,q) #理论值 在2^N下产生的
-        new_y.append(q - t*e)
+        e = a.getKview(N,q) #理论值 在2^N下产生的
+        new_y.append(y - t*e)
     return np.array(new_y)
 
 def p_q_differ():
@@ -188,6 +207,7 @@ def get_result():
         new_item = {}
         new_item["func_name"] = copy.deepcopy(item["func_name"])
         new_item["cache"] = copy.deepcopy(item["cache"])
+        new_item["diff_cache"] = copy.deepcopy(item["diff_cache"])
         results[new_item["func_name"]]=new_item
     return results
 
@@ -197,11 +217,3 @@ def clean_cache():
     """  
     for item in func_set:
         item["cache"] = np.array([])
-
-def main():
-    a = [1,2,3,4,5,6,7]
-    offsets = [1,2]
-    print merge_cols(range(0,7),a,1)
-
-if __name__ == '__main__':
-    main()
