@@ -3,6 +3,7 @@
 作者: H.Y
 日期: 
 描述: 
+主要是针对1dp，2dp，1dq，2dq，2dpq的检测图
 """
 
 from MainFrame import Segmentor,VLSequence,BitFilter
@@ -10,6 +11,7 @@ from MainFrame.sort import HeapSort
 from Visualize import VLVisualize
 import numpy as np
 import matplotlib.pyplot as plt
+import local_settings 
 
 
 def plot_lines_in_one_ax():
