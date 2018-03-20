@@ -5,7 +5,7 @@
 描述: 主要是一些辅助性的函数
     例如是：文件名的生成
 """
-
+import os
 
 def create_filename(source,m,mod,**kwargs):
     """
@@ -25,3 +25,17 @@ def create_filename(source,m,mod,**kwargs):
 def array_right_shift(string,offset):
     offset = offset % len(string)
     return string[-offset:]+string[:-offset]
+
+def list_file(path):
+    """
+        获取路径下已.char结尾的文件
+    """
+    dir_list = os.listdir(path)
+    result = []
+    for line in dir_list:
+        print line,os.path.splitext(path+line)[1],os.path.splitext(path+line)[1]
+        if os.path.splitext(path+line)[1] and\
+            os.path.splitext(path+line)[1] == ".char" :
+            result.append(line)
+
+    return result
