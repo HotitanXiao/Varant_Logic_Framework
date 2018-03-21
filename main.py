@@ -53,7 +53,7 @@ def plot(base_file_path,target_filename,read_length):
     # VLVisualize.vl_plot1d(p_array,q_array,m=segment_size,mod="p")
     p_count_max,q_count_max,twodq_count_max,twodp_count_max,pq_count_max = None,None,None,None,None
     p_temp,q_temp,twodp_temp,twodq_temp,pq_temp = None,None,None,None,None
-    m_set = [128]
+    m_set = [64]
     for m in m_set:
         for i in xrange(0,m+1):
             # shifted_str = VLSequence.string_right_shift(result[1],i)
@@ -71,6 +71,7 @@ def plot(base_file_path,target_filename,read_length):
             twodq_temp = VLVisualize.vl_plot2d(p_array=p_array,q_array=q_array,m=m,mod="2dq",source=target_filename,rs=i)
             twodp_temp = VLVisualize.vl_plot2d(p_array=p_array,q_array=q_array,m=m,mod="2dp",source=target_filename,rs=i)
             pq_temp = VLVisualize.vl_plot2d(p_array=p_array,q_array=q_array,m=m,mod="2dpq",source=target_filename,rs=i)
+
             if i == 0:
                 p_count_max = p_temp
             p_count_array.append(p_temp)
@@ -136,7 +137,7 @@ def main():
     base_path = local_settings.getTestDataPath()
     target_path = base_path+"2018-03/"
     files = utils.list_file(target_path)
-    plot(target_path,files[0],80000000)
+    plot(target_path,files[0],8000000)
 
 
 if __name__ == '__main__':

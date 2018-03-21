@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import utils
 import os
 from MainFrame.sort import HeapSort
-
+from matplotlib.colors import LogNorm
 SAVE_PATH = "./Result/"
 
 def check_dir(path):
@@ -89,7 +89,7 @@ def plot2d(p_array,q_array,m,mod="",**kwargs):
     plot_range = [[0,1],[0,1]]
     # matrix,xedges,yedges = np.histogram2d(array_1,array_2,bins=bins,range=plot_range)
     matrix,xedges,yedges = np.histogram2d(p_array,q_array,bins=bins,range=plot_range)
-    plt.hist2d(p_array,q_array,bins=bins,range=plot_range,normed=True)
+    plt.hexbin(p_array,q_array,gridsize=m,range=plot_range,bins='log')
     kwargs["m"] = m
     kwargs["mod"] = mod
     related_dir,filename = utils.create_filename(**kwargs)
@@ -115,7 +115,6 @@ def vl_plot2d(p_array,q_array,m,mod="",**kwargs):
         array_1 = p_array
         array_2 = utils.array_right_shift(p_array,1)
         # matrix,xedges,yedges = np.histogram2d(array_1,array_2,bins=bins,range=plot_range)
-
     elif mod == "2dq":
         x_lim = y_lim = (0,m/2 + 1)
         plt.xlabel("qi")
@@ -135,8 +134,9 @@ def vl_plot2d(p_array,q_array,m,mod="",**kwargs):
         array_1 = p_array
         array_2 = q_array
     matrix,xedges,yedges = np.histogram2d(array_1,array_2,bins=bins,range=plot_range)
-    
-    plt.hist2d(array_1,array_2,bins=bins,range=plot_range,normed=True)
+    plt.hist2d(array_1,array_2,bins=bins,range=plot_range,normed=LogNorm())
+    # plt.hexbin(array_1,array_2,gridsize=m,bins='log')
+    plt.colorbar()
     kwargs["m"] = m
     kwargs["mod"] = mod
     related_dir,filename = utils.create_filename(**kwargs)
