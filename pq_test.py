@@ -140,7 +140,6 @@ if __name__ == '__main__':
                     # import pdb;pdb.set_trace()
                     plt.plot(vlfile.segment_map[segment_type]["results_hist"][1],np.append(vlfile.segment_map[segment_type]["results_hist"][0],0),".",label=vlfile_name)
                     print vlfile_name,func_name,segment_type,vlfile.segment_map[segment_type]["results_hist"][0][0],len(t)
-                    
                 leg = plt.legend(loc='best', ncol=2, mode="expand", shadow=True, fancybox=True)
                 leg.get_frame().set_alpha(0.6)
                 plt.savefig("%s/results/pq-stat/len=%s/m=%s/%s.png"%(basepath,readlenth/10000,segment_type,func_name),dpi=100)
