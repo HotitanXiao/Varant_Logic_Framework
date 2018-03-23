@@ -12,7 +12,7 @@
     我可以对这些数据进行相应的合并操作比如说是0，1合并，2，3合并
     或者是0，2合并，1，3合并
 """
-from Visualize import nist_plot_for_nist_main3 as npnm3
+from Visualize import pq_plot
 
 from MainFrame import Segmentor,VLSequence,BitFilter
 from MainFrame.sort import HeapSort
@@ -72,9 +72,9 @@ def process():
     file_list = list_file(basepath)
 
 
-m_set = [16]
+m_set = [8,16,2048]
 # readlenth_set = [800000,8000000,40000000]
-readlenth_set = [5000000]
+readlenth_set = [1000000]
 vlfilelist = {}
 
 def vlgo(basepath="",filename="",readlenth=None):
@@ -92,9 +92,10 @@ def vlgo(basepath="",filename="",readlenth=None):
         if not os.path.exists(result_path):
             os.makedirs(result_path)
         vlfile.segmente(m=m_size)
-        npnm3.nist_multi_plot_single(vlfile.input_str,vlfile.segment_map[m_size]["coordinates"],save_path=result_path)
-        vlfile.segment_map[m_size]["results"] = npnm3.get_result()
-        npnm3.clean_cache()
+        print "process file ->%s" % filename
+        pq_plot.nist_multi_plot_single(vlfile.input_str,vlfile.segment_map[m_size]["coordinates"],save_path=result_path)
+        vlfile.segment_map[m_size]["results"] = pq_plot.get_result()
+        pq_plot.clean_cache()
 
 
 def plot_all_file_func_compare():
@@ -138,14 +139,14 @@ if __name__ == '__main__':
                     # vlfile.segment_map[segment_type]["results_hist"] = np.histogram(t,bins=np.arange(0,1.0,0.01))
                     vlfile.segment_map[segment_type]["results_hist"] = np.histogram(t,np.arange(min(t),max(t)+1,1))
                     # import pdb;pdb.set_trace()
-                    plt.plot(vlfile.segment_map[segment_type]["results_hist"][1],np.append(vlfile.segment_map[segment_type]["results_hist"][0],0),".",label=vlfile_name)
+                    plt.plot(vlfile.segment_map[segment_type]["results"][func_name]["diff_cache"][0],vlfile.segment_map[segment_type]["results"][func_name]["diff_cache"][1],".",label=vlfile_name)
                     print vlfile_name,func_name,segment_type,vlfile.segment_map[segment_type]["results_hist"][0][0],len(t)
                 leg = plt.legend(loc='best', ncol=2, mode="expand", shadow=True, fancybox=True)
                 leg.get_frame().set_alpha(0.6)
                 plt.savefig("%s/results/pq-stat/len=%s/m=%s/%s.png"%(basepath,readlenth/10000,segment_type,func_name),dpi=100)
                 plt.close("all")
         vlfilelist = {}
-    # plt.show()
+
 
 
     # 现在获取了所有的数据内容了，可以开始生成一些对比图

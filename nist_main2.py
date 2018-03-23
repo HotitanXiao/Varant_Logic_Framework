@@ -20,6 +20,7 @@ from nist_sts_python import runs,blockFrequency,frequency
 import numpy as np
 import matplotlib.pyplot as plt
 from multiprocessing import Process
+import local_settings
 
 
 import os,sys
@@ -70,7 +71,7 @@ def process():
     file_list = list_file(basepath)
 
 
-m_set = [128,258]
+m_set = [32,512,2048]
 # readlenth_set = [800000,8000000,40000000]
 readlenth_set = [5000000]
 vlfilelist = {}
@@ -113,7 +114,8 @@ if __name__ == '__main__':
             |各种的函数方法
 
     """
-    basepath = "D:/TestData/2018-01-23/"
+    file_list = list_file(local_settings.getTestDataPath()+"/2018-03-13")
+    basepath = local_settings.getTestDataPath()+"/2018-03-13/"
     file_list = list_file(basepath)
     # 先确定读取的文件大小
     for readlenth in readlenth_set:
@@ -138,7 +140,6 @@ if __name__ == '__main__':
                     # import pdb;pdb.set_trace()
                     plt.plot(vlfile.segment_map[segment_type]["results_hist"][1],np.append(vlfile.segment_map[segment_type]["results_hist"][0],0),".",label=vlfile_name)
                     print vlfile_name,func_name,segment_type,vlfile.segment_map[segment_type]["results_hist"][0][0],len(t)
-                    
                 leg = plt.legend(loc='best', ncol=2, mode="expand", shadow=True, fancybox=True)
                 leg.get_frame().set_alpha(0.6)
                 plt.savefig("%s/results/len=%s/m=%s/%s.png"%(basepath,readlenth/10000,segment_type,func_name),dpi=100)

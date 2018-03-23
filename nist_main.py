@@ -11,9 +11,11 @@ from nist_sts_python import runs,blockFrequency,frequency
 import numpy as np
 import matplotlib.pyplot as plt
 from multiprocessing import Process
+import local_settings
 
 
 import os,sys
+
 
 def list_file(path):
     """
@@ -21,8 +23,8 @@ def list_file(path):
     dir_list = os.listdir(path)
     result = []
     for line in dir_list:
-        print line
-        if os.path.isfile(path+line) and\
+        print line,os.path.splitext(path+line)[1],os.path.splitext(path+line)[1]
+        if os.path.splitext(path+line)[1] and\
             os.path.splitext(path+line)[1] == ".char" :
             result.append(line)
 
@@ -32,11 +34,11 @@ def process():
     """
         批量处理文件
     """
-    basepath = "D:/TestData/2018-01-23/"
+    basepath = local_settings.getTestDataPath()+"/2018-03-13/"
     file_list = list_file(basepath)
 
 
-m_set = [2048]
+m_set = [32]
 def go(basepath="",filename=""):
     runs_p_value_array = []
     freq_p_value_array = []
@@ -78,13 +80,14 @@ def go(basepath="",filename=""):
     p_count_max,q_count_max,pq_count_max = None,None,None
     p_temp,q_temp,pq_temp = None,None,None
     
-
+    
 
     for m in m_set:
         # for i in xrange(0,m+1):
         #     shifted_str = VLSequence.string_right_shift(input_str,i)
         # 创建保存测试文档得路径
         result_path = basepath+"/results/m=%s/" % m
+        print result_path
         if not os.path.exists(result_path):
             os.mkdir(result_path)
         coordinates = Segmentor.segmentor(input_str=input_str, segment_size=m,offset=m)
@@ -92,9 +95,10 @@ def go(basepath="",filename=""):
         
 
 if __name__ == '__main__':
-    basepath = "D:/TestData/2018-01-23/"
-    file_list = list_file(basepath)
-    for file in file_list: 
-        print file
-        go(basepath,file)
+    file_list = list_file(local_settings.getTestDataPath()+"/2018-03-13")
+    basepath = local_settings.getTestDataPath()+"/2018-03-13/"
+    print file_list
+    for file_name in file_list: 
+        print file_name
+        go(basepath,file_name)
     nist_plot_1d.close_all()

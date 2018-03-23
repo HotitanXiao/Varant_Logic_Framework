@@ -63,11 +63,11 @@ def process():
     """
         批量处理文件
     """
-    basepath = "D:/TestData/2018-01-23/"
+    basepath = "D:/TestData/2018-03-13/"
     file_list = list_file(basepath)
 
 
-m_set = [16]
+m_set = [2048,512,32]
 # readlenth_set = [800000,8000000,40000000]
 readlenth_set = [5000000]
 vlfilelist = {}
@@ -110,7 +110,7 @@ if __name__ == '__main__':
             |各种的函数方法
 
     """
-    basepath = local_settings.getTestDataPath() + "2018-03-02/"
+    basepath = local_settings.getTestDataPath() + "2018-03-13/"
     file_list = list_file(basepath)
     # 先确定读取的文件大小
     for readlenth in readlenth_set:
@@ -133,7 +133,8 @@ if __name__ == '__main__':
                     # vlfile.segment_map[segment_type]["results_hist"] = np.histogram(t,bins=np.arange(0,1.0,0.01))
                     vlfile.segment_map[segment_type]["results_hist"] = np.histogram(t,np.arange(min(t),max(t)+1,1))
                     # import pdb;pdb.set_trace()
-                    plt.plot(vlfile.segment_map[segment_type]["results_hist"][1],np.append(vlfile.segment_map[segment_type]["results_hist"][0],0),".",label=vlfile_name)
+                    # plt.plot(vlfile.segment_map[segment_type]["results_hist"][1],np.append(vlfile.segment_map[segment_type]["results_hist"][0],0),".",label=vlfile_name)
+                    plt.plot(vlfile.segment_map[segment_type]["results"][func_name]["merge_cache"][0],vlfile.segment_map[segment_type]["results"][func_name]["merge_cache"][1],".",label=vlfile_name)
                     print vlfile_name,func_name,segment_type,vlfile.segment_map[segment_type]["results_hist"][0][0],len(t)
                     
                 leg = plt.legend(loc='best', ncol=2, mode="expand", shadow=True, fancybox=True)
