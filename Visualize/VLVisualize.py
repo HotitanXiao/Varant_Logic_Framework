@@ -134,7 +134,7 @@ def vl_plot2d(p_array,q_array,m,mod="",**kwargs):
         array_1 = p_array
         array_2 = q_array
     matrix,xedges,yedges = np.histogram2d(array_1,array_2,bins=bins,range=plot_range)
-    plt.hist2d(array_1,array_2,bins=bins,range=plot_range,normed=LogNorm())
+    plt.hist2d(array_1,array_2,bins=bins,range=plot_range,norm=LogNorm())
     # plt.hexbin(array_1,array_2,gridsize=m,bins='log')
     plt.colorbar()
     kwargs["m"] = m

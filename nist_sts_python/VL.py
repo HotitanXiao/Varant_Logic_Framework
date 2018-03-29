@@ -9,12 +9,13 @@ import numpy as np
 
 def get_p_array(input_str,coordinates,queue=None,func_name=None):
     result = np.array([])
+    coordinates = list(coordinates)
+    len_of_subsegments = len(coordinates)
     test_str = ""
     for coordinate in coordinates:
         test_str = input_str[coordinate[0]:coordinate[1]+1]
         p,q = VLSequence.p_q_count(test_str)
         result = np.append(result,p)
-    
     # result = result/len(test_str)
     if queue!=None and func_name!=None:
         # queue.put((result,func_name))   
@@ -24,6 +25,8 @@ def get_p_array(input_str,coordinates,queue=None,func_name=None):
 
 def get_q_array(input_str,coordinates,queue=None,func_name=None):
     result = np.array([])
+    coordinates = list(coordinates)
+    len_of_subsegments = len(coordinates)
     test_str = ""
     for coordinate in coordinates:
         test_str = input_str[coordinate[0]:coordinate[1]+1]

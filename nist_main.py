@@ -7,6 +7,7 @@
 from MainFrame import Segmentor,VLSequence,BitFilter
 from MainFrame.sort import HeapSort
 from Visualize import nist_plot,nist_plot_1d
+from Visualize.utils import create_path
 from nist_sts_python import runs,blockFrequency,frequency
 import numpy as np
 import matplotlib.pyplot as plt
@@ -38,12 +39,13 @@ def process():
     file_list = list_file(basepath)
 
 
-m_set = [32]
+m_set = [1024]
 def go(basepath="",filename=""):
     runs_p_value_array = []
     freq_p_value_array = []
     # input_str = open("/home/dm007/TestData/ANU.char", "rb").read()
-    input_str = open(basepath+filename, "rb").read(8000000)
+    read_length = 80000000
+    input_str = open(basepath+filename, "rb").read(read_length)
 
     # input_str = open('/home/dm007/TestData/TYUT_8bit_10.txt', "rb").read()
     # segment_size = 1024
@@ -80,7 +82,6 @@ def go(basepath="",filename=""):
     p_count_max,q_count_max,pq_count_max = None,None,None
     p_temp,q_temp,pq_temp = None,None,None
     
-    
 
     for m in m_set:
         # for i in xrange(0,m+1):
@@ -91,14 +92,15 @@ def go(basepath="",filename=""):
         if not os.path.exists(result_path):
             os.mkdir(result_path)
         coordinates = Segmentor.segmentor(input_str=input_str, segment_size=m,offset=m)
-        nist_plot_1d.nist_multi_plot(input_str,coordinates,save_filename=result_path+filename+".png")
+        save_path = basepath + "results/"+ filename + "/len=%s/m=%s" %(read_length/10000,m)
+        save_path = create_path(save_path)
+        nist_plot.nist_multi_plot(input_str,coordinates,save_filename=filename,save_path=save_path)
         
 
 if __name__ == '__main__':
-    file_list = list_file(local_settings.getTestDataPath()+"/2018-03-13")
-    basepath = local_settings.getTestDataPath()+"/2018-03-13/"
+    file_list = list_file(local_settings.getTestDataPath()+"/2018-03/RC4/") 
+    basepath = local_settings.getTestDataPath()+"/2018-03/RC4/"
     print file_list
     for file_name in file_list: 
         print file_name
         go(basepath,file_name)
-    nist_plot_1d.close_all()

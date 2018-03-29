@@ -39,3 +39,14 @@ def list_file(path):
             result.append(line)
 
     return result
+
+def create_path(path):
+    """
+        检查当前路径是否存在，如果不存在得话创建该路径
+    """
+    if not os.path.isdir(path):
+        os.makedirs(path)
+        return path
+    else:
+        return path
+    
