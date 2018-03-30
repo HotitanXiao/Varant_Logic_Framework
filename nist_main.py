@@ -44,7 +44,7 @@ def go(basepath="",filename=""):
     runs_p_value_array = []
     freq_p_value_array = []
     # input_str = open("/home/dm007/TestData/ANU.char", "rb").read()
-    read_length = 80000000
+    read_length = 20000000
     input_str = open(basepath+filename, "rb").read(read_length)
 
     # input_str = open('/home/dm007/TestData/TYUT_8bit_10.txt', "rb").read()
@@ -98,8 +98,8 @@ def go(basepath="",filename=""):
         
 
 if __name__ == '__main__':
-    file_list = list_file(local_settings.getTestDataPath()+"/2018-03/RC4/") 
-    basepath = local_settings.getTestDataPath()+"/2018-03/RC4/"
+    file_list = list_file(local_settings.getTestDataPath()+"/2018-03/AES/") 
+    basepath = local_settings.getTestDataPath()+"/2018-03/AES/"
     print file_list
     for file_name in file_list: 
         print file_name
