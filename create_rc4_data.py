@@ -18,6 +18,7 @@ def main():
             224,226,228,230,232,234,236,240,242,244,246,248,250,252,254]
     vrc4.PyVLRC4SaveKeyStreamToFile_Sbox(sboxArray=sbox,size=20000,key=key,fileName="d:/vrc4_nist_8bit.char")
     # TODO: 创建基于基于变值三角分布的sbox的rc4数据
+    vrc4.PyVLRC4SaveKeyStreamToFile_MultiSeed(pArray=[1,2,3,4,5,6],qArray=[],size=20000,key=key,fileName="d:/vrc4_nist_8bit.char")
 
 
 if __name__ == '__main__':

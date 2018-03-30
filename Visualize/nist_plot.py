@@ -12,20 +12,21 @@ import numpy as np
 import matplotlib.pyplot as plt
 import copy
 from multiprocessing import Process,Queue,Pool
+from MainFrame.VLSequence import string_right_shift
 
 func_set = [
-    {"func":runs.runs_all,"args":(None),"func_name":"runs","cache":np.array([])},
-    {"func":blockFrequency.block_frequency_all,"args":(None),"func_name":"BF","cache":np.array([])},
-    {"func":frequency.frequency_all,"args":(None),"func_name":"F","cache":np.array([])},
-    {"func":DFT.DiscreteFourierTransform_all,"args":(None),"func_name":"DFT","cache":np.array([])},
-    {"func":NonOverlappingTemplateMatchings.NonOverlappingTemplateMatchings_all,"args":(None),"func_name":"NoTM","cache":np.array([])},
-    {"func":overlappingTemplateMatchings.OverlappingTemplateMatchings_all,"args":(None),"func_name":"OTM","cache":np.array([])},
-    # {"func":universal.universal_all,"args":(None),"func_name":"uni","cache":np.array([])},
-    {"func":linearComplexity.linearComplexity_all,"args":(None),"func_name":"lc","cache":np.array([])},
-    {"func":serial.serial_all,"args":(None),"func_name":"serial","cache":np.array([])},
-    {"func":approximateEntropy.approximateEntropy_all,"args":(None),"func_name":"AE","cache":np.array([])},
-    {"func":cusum.CumulativeSums_all,"args":(None),"func_name":"cusum","cache":np.array([])},
-    {"func":randomExcursions.randomExcursions_all,"args":(None),"func_name":"re","cache":np.array([])},
+    # {"func":runs.runs_all,"args":(None),"func_name":"runs","cache":np.array([])},
+    # {"func":blockFrequency.block_frequency_all,"args":(None),"func_name":"BF","cache":np.array([])},
+    # {"func":frequency.frequency_all,"args":(None),"func_name":"F","cache":np.array([])},
+    # {"func":DFT.DiscreteFourierTransform_all,"args":(None),"func_name":"DFT","cache":np.array([])},
+    # {"func":NonOverlappingTemplateMatchings.NonOverlappingTemplateMatchings_all,"args":(None),"func_name":"NoTM","cache":np.array([])},
+    # {"func":overlappingTemplateMatchings.OverlappingTemplateMatchings_all,"args":(None),"func_name":"OTM","cache":np.array([])},
+    # # {"func":universal.universal_all,"args":(None),"func_name":"uni","cache":np.array([])},
+    # {"func":linearComplexity.linearComplexity_all,"args":(None),"func_name":"lc","cache":np.array([])},
+    # {"func":serial.serial_all,"args":(None),"func_name":"serial","cache":np.array([])},
+    # {"func":approximateEntropy.approximateEntropy_all,"args":(None),"func_name":"AE","cache":np.array([])},
+    # {"func":cusum.CumulativeSums_all,"args":(None),"func_name":"cusum","cache":np.array([])},
+    # {"func":randomExcursions.randomExcursions_all,"args":(None),"func_name":"re","cache":np.array([])},
     {"func":VL.get_p_array,"args":(None),"func_name":"VL_P","cache":np.array([])},
     {"func":VL.get_q_array,"args":(None),"func_name":"VL_q","cache":np.array([])},
 ]
@@ -76,7 +77,7 @@ def process_cache(input_str,coordinates,queue):
         func_set[i]["func"](input_str,coordinates,queue,i)
 
 
-def nist_multi_plot(input_str,coordinates,row=len(func_set),col=len(func_set),save_filename="test.png",save_path=".",**kwargs):
+def nist_multi_plot(input_str,coordinates,row=len(func_set),col=len(func_set),save_filename="test.png",save_path=".",filename="",**kwargs):
     """
         需要将最终生成得图示结果，放到savepath下面
     """
@@ -85,7 +86,7 @@ def nist_multi_plot(input_str,coordinates,row=len(func_set),col=len(func_set),sa
     bins = [100,100]
     plot_range = [[0,1],[0,1]]
     temp_coordinates = list(coordinates)
-    m = temp_coordinates[0][1] - temp_coordinates[0][0]
+    m = temp_coordinates[0][1] - temp_coordinates[0][0] + 1
 
     # process_cache(input_str,temp_coordinates,q)
     # # print len(q)
@@ -97,7 +98,7 @@ def nist_multi_plot(input_str,coordinates,row=len(func_set),col=len(func_set),sa
     log_file = open("log.txt","wb")
     fig = plt.figure(0)
     fig = plt.gcf()
-    fig.set_size_inches(18.5*2, 10.5*2)
+    fig.set_size_inches(18.5*3, 10.5*3)
     
     for y in xrange(1,row+1):
         """
@@ -132,23 +133,29 @@ def nist_multi_plot(input_str,coordinates,row=len(func_set),col=len(func_set),sa
                 p_array
             print func_set[y-1]["func_name"],len(p_array),func_set[x-1]["func_name"],len(q_array),"cache_len=%s" % len(func_set[y-1]["cache"])
             if func_set[y-1]["func_name"] == "VL_P" :
-                plot_range[0] = [0,m]
-                bins[0] = range(0,m+1)
+                plot_range[0] = [0,m+2]
+                bins[0] = range(0,m+2)
             if func_set[y-1]["func_name"] == "VL_q" :
-                plot_range[0] = [0,m/2]
-                bins[0] = range(0,m/2+1)
+                plot_range[0] = [0,m/2+2]
+                bins[0] = range(0,m/2+2)
             if func_set[x-1]["func_name"] == "VL_P" :
-                plot_range[1] = [0,m]
-                bins[1] = range(0,m+1)
+                plot_range[1] = [0,m+2]
+                bins[1] = range(0,m+2)
             if func_set[x-1]["func_name"] == "VL_q" :
-                plot_range[1] = [0,m/2]
-                bins[1] = range(0,m/2+1)
-            print plot_range
+                plot_range[1] = [0,m/2+2]
+                bins[1] = range(0,m/2+2)
+            
+            if func_set[y-1]["func_name"] == func_set[x-1]["func_name"]:
+                print q_array.size
+                q_array = np.array(string_right_shift(q_array,1))
+                print q_array.size,p_array.size,len(q_array),len(p_array),bins,plot_range
+
+            print plot_range,bins
             matrix,xedges,yedges = np.histogram2d(p_array,q_array,bins=bins,range=plot_range)
             plt.hist2d(p_array,q_array,bins=bins,range=plot_range,norm=LogNorm())
             #plt.hist2d(p_array,q_array,bins=bins,range=plot_range)
             # 单独将结果输出出来
-            plt.colorbar()
+            # plt.colorbar()
             single_figure = plt.figure((y-1)*(col+1)+x)
             # 增加一个判断，判断 如果是vl逻辑的结果的话需要 range就是0到m 或者 0到m/2
             # if func_set[y-1]["func_name"] == "VL_P" :
@@ -159,22 +166,43 @@ def nist_multi_plot(input_str,coordinates,row=len(func_set),col=len(func_set),sa
             #     plot_range[0] = [0,m/2]
             # if func_set[y-1]["func_name"] == "VL_q" :
             #     plot_range[1] = [0,m/2]
+            # plot_range = [[0,m+1],[0,m+1]]
             plt.hist2d(p_array,q_array,bins=bins,range=plot_range,norm=LogNorm())
             # plt.colorbar() 
-            plt.savefig(save_path+"/x=%s,y=%s.png"%(func_set[x-1]["func_name"], func_set[y-1]["func_name"]))
-            print "save file x=%s,y=%s.png"%(func_set[x-1]["func_name"], func_set[y-1]["func_name"])
+            plt.title(filename+"_x=%s,y=%s" %(func_set[y-1]["func_name"], func_set[x-1]["func_name"]) )
+            plt.savefig(save_path+"/x=%s,y=%s.png"%(func_set[y-1]["func_name"], func_set[x-1]["func_name"]))
+            print "save file x=%s,y=%s.png"%(func_set[y-1]["func_name"], func_set[x-1]["func_name"])
             plt.close((y-1)*(col+1)+x)
+            cb  = plt.colorbar()
             # 切换回全局模式
             fig = plt.figure(0)
+            cb.remove()
 
             a.set_title(func_set[y-1]["func_name"]+"_"+func_set[x-1]["func_name"])
         # 绘画单独的hist图样
+        # 保存到文件的
+        fig = plt.figure((y-1)*(col+1)+col+1)
+        p_array = func_set[y-1]["cache"]
+        if func_set[y-1]["func_name"] == "VL_P":
+            plt.hist(p_array,bins=range(0,m+2))
+        elif func_set[y-1]["func_name"] == "VL_q":
+            plt.hist(p_array,bins=range(0,m/2+2))
+        else:
+            # 绘制的是0-1 步长为0.01的histgram
+            plt.hist(p_array,bins=100)
+        
+        plt.title(filename+"_%s" %(func_set[y-1]["func_name"]))
+        plt.savefig(save_path + "/%s" %(func_set[y-1]["func_name"]))
+        plt.close((y-1)*(col+1)+col+1)
+        
+        # 总绘图的
+        fig = plt.figure(0)
         a = plt.subplot(row,col+1,(y-1)*(col+1)+col+1)
         p_array = func_set[y-1]["cache"]
         if func_set[y-1]["func_name"] == "VL_P":
-            plt.hist(p_array,bins=range(0,m+1))
+            plt.hist(p_array,bins=range(0,m+2))
         elif func_set[y-1]["func_name"] == "VL_q":
-            plt.hist(p_array,bins=range(0,m/2+1))
+            plt.hist(p_array,bins=range(0,m/2+2))
         else:
             # 绘制的是0-1 步长为0.01的histgram
             plt.hist(p_array,bins=100)

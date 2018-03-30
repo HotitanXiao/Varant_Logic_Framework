@@ -1,4 +1,7 @@
 # coding:utf-8
+"""
+    这个图是专门用来生成变值图示
+"""
 from MainFrame import Segmentor,VLSequence,BitFilter
 from MainFrame.sort import HeapSort
 from nist_sts_python import VL
