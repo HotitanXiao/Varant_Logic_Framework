@@ -32,7 +32,7 @@ def universal(input_str):
     expected_value = [0, 0, 0, 0, 0, 0, 5.2177052, 6.1962507, 7.1836656,
                 8.1764248, 9.1723243, 10.170032, 11.168765,
                 12.168070, 13.167693, 14.167488, 15.167379 ]
-    variance = [ 0, 0, 0, 0, 0, 0, 2.954, 3.125, 3.238, 3.311, 3.356, 3.384,
+    variance = [ 0,0.690,1.338,1.901,2.358,2.705, 2.954, 3.125, 3.238, 3.311, 3.356, 3.384,
                 3.401, 3.410, 3.416, 3.419, 3.421 ]
     n = len(input_str)
     
@@ -40,33 +40,41 @@ def universal(input_str):
     #  * THE FOLLOWING REDEFINES L, SHOULD THE CONDITION:     n >= 1010*2^L*L       *
     #  * NOT BE MET, FOR THE BLOCK LENGTH L.                                        *
     #  * * * * * * * * * * ** * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-    L = 5
-    if n >= 387840:
-        L = 6
-    if n >= 904960:
-        L = 7
-    if n >= 2068480:
-        L = 8
-    if n >= 4654080:
-        L = 9
-    if n >= 10342400:
-        L = 10
-    if n >= 22753280:
-        L = 11
-    if n >= 49643520:
-        L = 12
-    if n >= 107560960:
-        L = 13
-    if n >= 231669760:
-        L = 14
-    if n >= 496435200:
-        L = 15
-    if n >= 1059061760:
-        L = 16
-    
-    Q = 10*pow(2, L)
+
+    if n <1024:
+        L = 2
+        Q = 4
+    else:
+        if n >= 2048:
+            L = 3
+        if n >= 166450:
+            L = 5
+        if n >= 387840:
+            L = 6
+        if n >= 904960:
+            L = 7
+        if n >= 2068480:
+            L = 8
+        if n >= 4654080:
+            L = 9
+        if n >= 10342400:
+            L = 10
+        if n >= 22753280:
+            L = 11
+        if n >= 49643520:
+            L = 12
+        if n >= 107560960:
+            L = 13
+        if n >= 231669760:
+            L = 14
+        if n >= 496435200:
+            L = 15
+        if n >= 1059061760:
+            L = 16
+        
+        Q = 10*pow(2, L)
+
     K = int(math.floor(n/L) - Q	 )		    #/* BLOCKS TO TEST */
-    
     p = pow(2, L)
     T = [0]*p
     # if ( (L < 6) || (L > 16) || ((double)Q < 10*pow(2, L)) ||
@@ -80,8 +88,10 @@ def universal(input_str):
     # }
     
     # /* COMPUTE THE EXPECTED:  Formula 16, in Marsaglia's Paper */
-    c = 0.7 - 0.8/L + (4 + 32/L)*pow(K, -3/L)/15
+    c = 0.7 - 0.8/L + (4 + 32./L)*(math.pow(K, -3./L)/15.)
+    # print L,Q,K,c
     sigma = c * math.sqrt(variance[L]/K)
+
     sqrt2 = math.sqrt(2)
     sum = 0.0
     for i in range(0,p):
@@ -90,6 +100,7 @@ def universal(input_str):
     for i in xrange(1,Q+1):
         decRep = 0
         for j in xrange(0,L):
+            # print (i-1)*L+j
             decRep += int(input_str[(i-1)*L+j]) * pow(2, L-1-j)		
         T[decRep] = i
     # /* PROCESS BLOCKS */
@@ -99,9 +110,13 @@ def universal(input_str):
             decRep += int(input_str[(i-1)*L+j]) * pow(2, L-1-j)
         sum += math.log(i - T[decRep])/math.log(2)
         T[decRep] = i
-
+    # print "  sum =", sum
     phi = sum/K
-    arg = math.fabs(phi-expected_value[L])/(sqrt2 * sigma)
+    # print "  fn =",phi
+    # print "  sigma=",sigma
+    arg = math.fabs(
+            (phi-expected_value[L])/(math.sqrt(sigma)*sqrt2)
+        )
     p_value = math.erfc(arg)
     return p_value
     # fprintf(stats[TEST_UNIVERSAL], "\t\tUNIVERSAL STATISTICAL TEST\n")
@@ -128,9 +143,11 @@ def universal_all(input_str,coordinates,queue=None,func_name=None):
     print "universal_all"
 
     result = []
+    bits = map(lambda x:int(x),input_str)
     for coordinate in coordinates:
+        input_str = bits[coordinate[0]:coordinate[1]+1]
         p_value = universal(input_str)
-        print "universal",p_value
+        # print "universal",p_value
         result.append(p_value)
     if queue!=None and func_name:
         queue.append((result,func_name))
@@ -138,7 +155,8 @@ def universal_all(input_str,coordinates,queue=None,func_name=None):
     return (result,func_name)
 
 def main():
-    input_str = open("../TestData/data.sha1.char","rb").read(387840)
+    input_str = open("../TestData/data.sha1.char","rb").read(1048576)
+    input_str = map(lambda x:int(x),input_str)
     print len(input_str)
     print universal(input_str)
 

@@ -43,17 +43,17 @@ def linearComplexity(input_str,M):
         B_ = [0] * M
         C = [0] * M
 
-        L = 0;
+        L = 0
         # m is the number of iterations since L, B(x), and b were updated and initialized to 1.
-        m = -1;
-        d = 0;
-        C[0] = 1;
+        m = -1
+        d = 0
+        C[0] = 1
         # b is a copy of the last discrepancy d (explained below) since L was updated and initialized to 1.
         # B(x) is a copy of the last C(x) since L was updated and initialized to 1.
-        B_[0] = 1;
+        B_[0] = 1
         
     #    计算线性复杂度
-        N_ = 0;
+        N_ = 0
         while ( N_ < M ):
             # 线性移位寄存器
             d = int(input_str[ii*M+N_])
@@ -61,12 +61,12 @@ def linearComplexity(input_str,M):
             for i in xrange(1,L+1):
                 d += C[i] * int(input_str[ii*M+N_-i])
             # print d
-            d = d%2;
+            d = d%2
 
             if d == 1:
                 for i in xrange(0,M):
                     T[i] = C[i]
-                    P[i] = 0;
+                    P[i] = 0
                 
                 for j in xrange(0,M):
                     # 这里有问题，需要好好的修改修改
@@ -119,15 +119,15 @@ def linearComplexity(input_str,M):
         else:
             nu[6]+=1
 
-    chi2 = 0.00;
+    chi2 = 0.00
     # for i in xrange(0,K+1):
 
     # for ( i=0; i<K+1; i++ ) 
     #     fprintf(stats[TEST_LINEARCOMPLEXITY], "%4d ", (int)nu[i]);
     for i in xrange(0, K+1):
-        chi2 += pow(nu[i]-N*pi[i], 2) / (N*pi[i]);
+        chi2 += pow(nu[i]-N*pi[i], 2) / (N*pi[i])
 
-    p_value = igamc(K/2.0, chi2/2.0);
+    p_value = igamc(K/2.0, chi2/2.0)
 
     return p_value
 
