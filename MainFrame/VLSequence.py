@@ -4,6 +4,8 @@
 日期: 2017-06-22
 描述: 用于获取字符串特征值的模块
 """
+import copy
+import numpy
 
 def string_xor(string1,string2):
     result = ""
@@ -14,10 +16,12 @@ def string_xor(string1,string2):
     return result
 
 def string_right_shift(string,offset):
+    new_string = copy.deepcopy(string)
     if offset == 0:
         return string
-    offset = offset % len(string)
-    return string[-offset:]+string[:-offset]
+    if type(string) == numpy.ndarray:
+        return numpy.concatenate((new_string[-offset:],new_string[:-offset]))
+    return new_string[-offset:]+new_string[:-offset]
 
 def p_q_count(input_str):
     """

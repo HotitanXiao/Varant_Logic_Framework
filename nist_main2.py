@@ -114,8 +114,8 @@ if __name__ == '__main__':
             |各种的函数方法
 
     """
-    file_list = list_file(local_settings.getTestDataPath()+"/2018-03-13")
-    basepath = local_settings.getTestDataPath()+"/2018-03-13/"
+    file_list = list_file(local_settings.getTestDataPath()+"/2018-03/RC4/")
+    basepath = local_settings.getTestDataPath()+"/2018-03/RC4/"
     file_list = list_file(basepath)
     # 先确定读取的文件大小
     for readlenth in readlenth_set:
@@ -139,6 +139,7 @@ if __name__ == '__main__':
                     vlfile.segment_map[segment_type]["results_hist"] = np.histogram(t,np.arange(min(t),max(t)+1,1))
                     # import pdb;pdb.set_trace()
                     plt.plot(vlfile.segment_map[segment_type]["results_hist"][1],np.append(vlfile.segment_map[segment_type]["results_hist"][0],0),".",label=vlfile_name)
+                    plt.xlim(0,segment_type)
                     print vlfile_name,func_name,segment_type,vlfile.segment_map[segment_type]["results_hist"][0][0],len(t)
                 leg = plt.legend(loc='best', ncol=2, mode="expand", shadow=True, fancybox=True)
                 leg.get_frame().set_alpha(0.6)
