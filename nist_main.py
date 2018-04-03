@@ -32,22 +32,21 @@ def list_file(path):
     return result
 
 def process():
-    """
+    """ 
         批量处理文件
     """
     basepath = local_settings.getTestDataPath()+"/2018-03-13/"
     file_list = list_file(basepath)
 
 
-m_set = [8,32,64]
-length_set = [200000,2000000]
+m_set = [2048]
+length_set = [-1]
 def go(basepath="",filename="",read_length=length_set[0]):
     runs_p_value_array = []
     freq_p_value_array = []
     # input_str = open("/home/dm007/TestData/ANU.char", "rb").read()
     # read_length =8000000
     input_str = open(basepath+filename, "rb").read(read_length)
-
 
     segment_size = 1024
 

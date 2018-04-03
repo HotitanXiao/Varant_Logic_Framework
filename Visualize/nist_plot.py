@@ -15,20 +15,20 @@ from multiprocessing import Process,Queue,Pool
 from MainFrame.VLSequence import string_right_shift
 
 func_set = [
-    {"func":runs.runs_all,"args":(None),"func_name":"runs","cache":np.array([])},
-    {"func":blockFrequency.block_frequency_all,"args":(None),"func_name":"BF","cache":np.array([])},
-    {"func":frequency.frequency_all,"args":(None),"func_name":"F","cache":np.array([])},
-    {"func":DFT.DiscreteFourierTransform_all,"args":(None),"func_name":"DFT","cache":np.array([])},
-    {"func":NonOverlappingTemplateMatchings.NonOverlappingTemplateMatchings_all,"args":(None),"func_name":"NoTM","cache":np.array([])},
-    {"func":overlappingTemplateMatchings.OverlappingTemplateMatchings_all,"args":(None),"func_name":"OTM","cache":np.array([])},
+    {"func":runs.runs_all,"args":(None),"func_name":"runs","cache":np.array([]),"uniform_rate":None},
+    {"func":blockFrequency.block_frequency_all,"args":(None),"func_name":"BF","cache":np.array([]),"uniform_rate":None},
+    {"func":frequency.frequency_all,"args":(None),"func_name":"F","cache":np.array([]),"uniform_rate":None},
+    {"func":DFT.DiscreteFourierTransform_all,"args":(None),"func_name":"DFT","cache":np.array([]),"uniform_rate":None},
+    {"func":NonOverlappingTemplateMatchings.NonOverlappingTemplateMatchings_all,"args":(None),"func_name":"NoTM","cache":np.array([]),"uniform_rate":None},
+    {"func":overlappingTemplateMatchings.OverlappingTemplateMatchings_all,"args":(None),"func_name":"OTM","cache":np.array([]),"uniform_rate":None},
     # {"func":universal.universal_all,"args":(None),"func_name":"uni","cache":np.array([])},
-    {"func":linearComplexity.linearComplexity_all,"args":(None),"func_name":"lc","cache":np.array([])},
-    {"func":serial.serial_all,"args":(None),"func_name":"serial","cache":np.array([])},
-    {"func":approximateEntropy.approximateEntropy_all,"args":(None),"func_name":"AE","cache":np.array([])},
-    {"func":cusum.CumulativeSums_all,"args":(None),"func_name":"cusum","cache":np.array([])},
-    {"func":randomExcursions.randomExcursions_all,"args":(None),"func_name":"re","cache":np.array([])},
-    {"func":VL.get_p_array,"args":(None),"func_name":"VL_P","cache":np.array([])},
-    {"func":VL.get_q_array,"args":(None),"func_name":"VL_q","cache":np.array([])},
+    {"func":linearComplexity.linearComplexity_all,"args":(None),"func_name":"lc","cache":np.array([]),"uniform_rate":None},
+    {"func":serial.serial_all,"args":(None),"func_name":"serial","cache":np.array([]),"uniform_rate":None},
+    {"func":approximateEntropy.approximateEntropy_all,"args":(None),"func_name":"AE","cache":np.array([]),"uniform_rate":None},
+    {"func":cusum.CumulativeSums_all,"args":(None),"func_name":"cusum","cache":np.array([]),"uniform_rate":None},
+    {"func":randomExcursions.randomExcursions_all,"args":(None),"func_name":"re","cache":np.array([]),"uniform_rate":None},
+    {"func":VL.get_p_array,"args":(None),"func_name":"VL_P","cache":np.array([]),"uniform_rate":None},
+    {"func":VL.get_q_array,"args":(None),"func_name":"VL_q","cache":np.array([]),"uniform_rate":None},
 ]
 
 func_set_index={}
@@ -144,11 +144,12 @@ def nist_multi_plot(input_str,coordinates,row=len(func_set),col=len(func_set),sa
             if func_set[x-1]["func_name"] == "VL_q" :
                 plot_range[1] = [0,m/2+2]
                 bins[1] = range(0,m/2+2)
-            
+            p_array = np.array(p_array)
+            q_array = np.array(q_array)
             if func_set[y-1]["func_name"] == func_set[x-1]["func_name"]:
-                print q_array.size
                 q_array = np.array(string_right_shift(q_array,1))
-                print q_array.size,p_array.size,len(q_array),len(p_array),bins,plot_range
+                # print q_array.size,p_array.size,len(q_array),len(p_array),bins,plot_range
+                
 
             print plot_range,bins
             matrix,xedges,yedges = np.histogram2d(p_array,q_array,bins=bins,range=plot_range)
@@ -183,6 +184,7 @@ def nist_multi_plot(input_str,coordinates,row=len(func_set),col=len(func_set),sa
         # 保存到文件的
         fig = plt.figure((y-1)*(col+1)+col+1)
         p_array = func_set[y-1]["cache"]
+        
         if func_set[y-1]["func_name"] == "VL_P":
             plt.hist(p_array,bins=range(0,m+2))
         elif func_set[y-1]["func_name"] == "VL_q":
@@ -217,6 +219,8 @@ def nist_multi_plot(input_str,coordinates,row=len(func_set),col=len(func_set),sa
     plt.tight_layout()
     fig.savefig(save_path+"%s.png"% save_filename, dpi=100)
     plt.close('all')
+
+
 
 # def nist_list_plot(input_str,coordinates,**kwargs):
 #     """
