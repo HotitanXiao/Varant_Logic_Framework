@@ -17,6 +17,7 @@ def peak_analyze(input_str,m):
     """
     results_array = []
     for offset in xrange(0,m+1):
+        print "shift offset = ",offset
         new_str = VLSequence.string_right_shift(input_str,offset)
         coordinates = Segmentor.segmentor(new_str,m,m)
         p_array = []
@@ -24,15 +25,21 @@ def peak_analyze(input_str,m):
 
         for coordinate in coordinates:
             p_count,q_count =  VLSequence.p_q_count(new_str[coordinate[0]:coordinate[1]+1])
+            # print p_count,q_count
             q_array.append(q_count)
-            p_array.append(p_array)
+            p_array.append(p_count)
         # 统计完成
-        q_stat_results = np.histogram(q_array,bins=range(0,m/2+2))
-        p_stat_results = np.histogram(p_array,bins=range(0,m+2))
-        results_array.append((p_stat_results,q_stat_results))  
+        print "offset = %s complete count now start stastic"
+        q_stat_results,q_bins = np.histogram(q_array,bins=range(0,m/2+2))
+        p_stat_results,p_bins = np.histogram(p_array,bins=range(0,m+2))
+        results_array.append([p_stat_results,q_stat_results])
+        print "offset = %s complete stats"
+        
     # 完成了所有的统计了
     temp_array = np.array(results_array)
     q_stat_all = temp_array[:,0]
+    # import pdb;pdb.set_trace()
+    # print q_stat_all
     peack_plot.peak_plot(q_stat_all,m)
 
     
@@ -41,7 +48,7 @@ def peak_analyze(input_str,m):
 
 def main():
     base_path = local_settings.getTestDataPath()
-    input_str = open(base_path+"/2018-03/RC4/vrc4_p[4,4,4,4]_q[1,2,3,4].char","rb").read(100000)
+    input_str = open(base_path+"/2018-03/RC4/vrc4_p[4,4,4,4]_q[1,2,3,4].char","rb").read(1000)
     peak_analyze(input_str,32)
 
 if __name__ == '__main__':
