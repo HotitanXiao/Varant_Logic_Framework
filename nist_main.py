@@ -39,8 +39,8 @@ def process():
     file_list = list_file(basepath)
 
 
-m_set = [2048]
-length_set = [-1]
+m_set = [8,9,10,11,12,13,14,15,16]
+length_set = [200000]
 def go(basepath="",filename="",read_length=length_set[0]):
     runs_p_value_array = []
     freq_p_value_array = []
@@ -84,9 +84,8 @@ def go(basepath="",filename="",read_length=length_set[0]):
         
 
 if __name__ == '__main__':
-    file_list = list_file(local_settings.getTestDataPath()+"/2018-03/AES/") 
-    basepath = local_settings.getTestDataPath()+"/2018-03/AES/"
-    print file_list
+    file_list = list_file(local_settings.getTestDataPath()+"/2018-03/RC4/") 
+    basepath = local_settings.getTestDataPath()+"/2018-03/RC4/"
     for file_name in file_list: 
         print file_name
         for read_length in length_set:

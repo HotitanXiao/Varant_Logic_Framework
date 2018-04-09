@@ -16,12 +16,19 @@ def peak_plot(stat_array,m):
             该函数的用途是输出一个图示结果，该结果是所有统计结果最大值（峰值），所在的位置
             最大值的位置，还有拟合优度的变化
     """
-    peaks = [0]*(m+1)
+    peaks_pos = [0]*(m+1)
+    peak_values = [0]*(m+1)
     for row_index in xrange(0,len(stat_array)):
+        # print stat_array[row_index]
         a = np.max(stat_array[row_index])
         t = np.where(stat_array[row_index]==a)
-        peaks[row_index] = t[0][0]
-    plt.plot(range(0,m+1),peaks)
+        peaks_pos[row_index] = t[0][0]
+        peak_values[row_index] = stat_array[row_index][t[0][0]]
+    print peak_values
+    plt.subplot(211)
+    plt.plot(range(0,m+1),peaks_pos)
+    plt.subplot(212)
+    plt.plot(range(0,m+1),peak_values)
     plt.show()
 
     print peaks
