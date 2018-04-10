@@ -12,7 +12,7 @@ from mathUtils import *
 import numpy as np
 MAXNUMOFTEMPLATES = 149.
 
-def NonOverlappingTemplateMatchings(input_str,m):
+def NonOverlappingTemplateMatchings(input_str,m=8):
     """
     参数: 
     输出: 

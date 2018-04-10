@@ -40,7 +40,7 @@ def process():
 
 
 m_set = [8,9,10,11,12,13,14,15,16]
-length_set = [200000]
+length_set = [2000000]
 def go(basepath="",filename="",read_length=length_set[0]):
     runs_p_value_array = []
     freq_p_value_array = []
@@ -67,7 +67,6 @@ def go(basepath="",filename="",read_length=length_set[0]):
     for m in m_set:
         # 创建保存测试文档得路径
         result_path = basepath+"/results/m=%s/" % m
-        print result_path
         if not os.path.exists(result_path):
             os.mkdir(result_path)
         coordinates = Segmentor.segmentor(input_str=input_str, segment_size=m,offset=m)

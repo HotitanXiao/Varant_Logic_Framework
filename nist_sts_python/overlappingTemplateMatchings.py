@@ -114,7 +114,7 @@ def OverlappingTemplateMatchings_house_diy(input_str,m,M=1032):
     return np.average(pvalue_array)
 
 
-def OverlappingTemplateMatchings(input_str,m,M=64):
+def OverlappingTemplateMatchings(input_str,m=8,M=64):
     """
     参数: 
     输出: 

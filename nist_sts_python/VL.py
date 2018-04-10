@@ -30,6 +30,7 @@ def get_q_array(input_str,coordinates,queue=None,func_name=None):
     coordinates = list(coordinates)
     len_of_subsegments = len(coordinates)
     test_str = ""
+    m = coordinates[0][1]+1 - coordinates[0][0]
     for coordinate in coordinates:
         test_str = input_str[coordinate[0]:coordinate[1]+1]
         p,q = VLSequence.p_q_count(test_str)
@@ -37,7 +38,8 @@ def get_q_array(input_str,coordinates,queue=None,func_name=None):
     # result = result/(len(test_str)/2)
     if queue!=None and func_name!=None:
         # queue.put((result,func_name))
-        queue.append((result,func_name))    
+        queue.append((result,func_name))   
+    print get_q_array_chi_square(result,m)
     return (result,func_name)
 
 def get_q_array_chi_square(q_array,m):
