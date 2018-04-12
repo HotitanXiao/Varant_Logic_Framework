@@ -39,8 +39,8 @@ def process():
     file_list = list_file(basepath)
 
 
-m_set = [8,32,64]
-length_set = [200000,2000000]
+m_set = [1024,1500]
+length_set = [-1]
 def go(basepath="",filename="",read_length=length_set[0]):
     runs_p_value_array = []
     freq_p_value_array = []
