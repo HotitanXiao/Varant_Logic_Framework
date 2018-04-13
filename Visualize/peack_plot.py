@@ -18,20 +18,22 @@ def peak_plot(stat_array,m):
     """
     peaks_pos = [0]*(m+1)
     peak_values = [0]*(m+1)
+    chi_square = [0]*len(stat_array)
     for row_index in xrange(0,len(stat_array)):
         # print stat_array[row_index]
         a = np.max(stat_array[row_index])
         t = np.where(stat_array[row_index]==a)
         peaks_pos[row_index] = t[0][0]
         peak_values[row_index] = stat_array[row_index][t[0][0]]
-    print peak_values
-    plt.subplot(211)
+
+    plt.subplot(311)
     plt.plot(range(0,m+1),peaks_pos)
-    plt.subplot(212)
+    plt.subplot(312)
     plt.plot(range(0,m+1),peak_values)
+    plt.subplot(313)
+    plt.plot(range(0,len(stat_array)+1),chi_square)
     plt.show()
 
-    print peaks
 
 def main():
     test_data = np.array([
