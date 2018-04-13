@@ -114,9 +114,25 @@ void ByteSplit(char * filename){
 
 
 }
-
-int main()
+int main(int argc, char **argv)
 {
-    ByteSplit("/Users/houseyoung/TestData/vrc4_std.char");
-    return 0;
+    /*
+        argv：-Z（生成全0的数据）outfilename size(byte), -C（进行转换）infilename outfilename
+    */
+	if (argc >1)
+	{
+        if(strcmp(argv[1],"-S")==0 && argc==3)
+		{
+			char *filename = argv[2];
+			ByteSplit(filename);
+		}else{
+            printf("param errors\n");
+        }
+		
+	}
+	else
+	{
+		printf("params errors %d \n", argc);
+	}
+	return 0;
 }
