@@ -50,7 +50,7 @@ def xor_peak_analyze(basepath,filename,m,all_offset=0):
     """
         进行自我异或以后观察他的结果
     """
-    input_str = open(basepath+filename,"rb").read(100000)
+    input_str = open(basepath+filename,"rb").read(-1)
     results_array = []
     original_string = copy.deepcopy(input_str)
     for offset in xrange(1,all_offset+1):
@@ -88,9 +88,9 @@ def main():
     target_path = base_path + "/2018-03/Quantum/"
     file_set = utils.list_file(target_path)
     # input_str = open(base_path+"/2018-03/Quantum/TYUT.char","rb").read(1000000)
-    filename = "TYUT.char"
+    for file_name in file_set:
     # base_path+"/2018-03/Quantum/"
-    xor_peak_analyze(target_path,filename,64,800)
+        xor_peak_analyze(target_path,file_name,64,100)
     # shift_peak_analyze(input_str,64)
 
 if __name__ == '__main__':
