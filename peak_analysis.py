@@ -5,6 +5,7 @@
 import numpy as np
 from Visualize import peack_plot
 from MainFrame import VLSequence,Segmentor
+from nist_sts_python import VL
 import local_settings
 import copy
 
@@ -67,7 +68,8 @@ def xor_peak_analyze(input_str,m):
         print "offset = %s complete count now start stastic"
         q_stat_results,q_bins = np.histogram(q_array,bins=range(0,m/2+2))
         p_stat_results,p_bins = np.histogram(p_array,bins=range(0,m+2))
-        results_array.append([p_stat_results,q_stat_results])
+        q_chi_square = VL.get_q_array_chi_square(q_array,m)
+        results_array.append([p_stat_results,q_stat_results,q_chi_square])
         print "offset = %s complete stats"
     temp_array = np.array(results_array)
     q_stat_all = temp_array[:,0]
