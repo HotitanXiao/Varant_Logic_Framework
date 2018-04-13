@@ -42,15 +42,20 @@ def get_q_array(input_str,coordinates,queue=None,func_name=None):
     print get_q_array_chi_square(result,m)
     return (result,func_name)
 
-def get_q_array_chi_square(q_array,m):
+def get_q_array_chi_square(q_array=None,q_stat_array=None,m=8):
     """
         计算观察值和我们的标准值之间的差异
         q_array 是观察到的每一条序列中的q值
         m为分段大小
     """
-    stat_hist = np.histogram(q_array,bins=range(0,int(math.floor(m/2))+2))
-    print stat_hist,"111111"
-    array_len = len(q_array)
+    if q_stat_array!=None:
+        stat_hist = np.histogram(q_array,bins=range(0,int(math.floor(m/2))+2))
+        array_len = len(q_array)
+    else:
+        stat_hist = (q_stat_array,range(0,m/2+2))
+        array_len = sum(q_stat_array)
+
+    
     print "array_len=",array_len
     base_distribution = GorilaBasis()
     chi_rate = 0
