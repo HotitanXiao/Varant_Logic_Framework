@@ -89,7 +89,7 @@ void ByteSplit(char * filename){
             file4_cache[x] = input_cache[x*8+4];
             file5_cache[x] = input_cache[x*8+5];
             file6_cache[x] = input_cache[x*8+6];
-            file6_cache[7] = input_cache[x*8+7];
+            file7_cache[x] = input_cache[x*8+7];
         }
         fwrite(file0_cache,BUFFER_SIZE*sizeof(char),1,file0);
         fwrite(file1_cache,BUFFER_SIZE*sizeof(char),1,file1);
