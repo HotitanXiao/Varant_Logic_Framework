@@ -48,7 +48,7 @@ def get_q_array_chi_square(q_array=None,q_stat_array=None,m=8):
         q_array 是观察到的每一条序列中的q值
         m为分段大小
     """
-    if q_stat_array!=None:
+    if not q_stat_array.any():
         stat_hist = np.histogram(q_array,bins=range(0,int(math.floor(m/2))+2))
         array_len = len(q_array)
     else:

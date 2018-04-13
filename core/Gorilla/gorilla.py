@@ -17,10 +17,10 @@ class GorilaBasis(object):
         self.name='GorilaBasis'        
     def chose(self,N,n): #组合数-N选n
         """传说中的组合数学"""
-        print "in chose function N=%s,n=%s" % (N,n)
+        # print "in chose function N=%s,n=%s" % (N,n)
         if n < 0 or N < 0 or N-n <0:
             return 0
-        print N,n
+        # print N,n
         return math.factorial(N)//math.factorial(n)//math.factorial(N-n)
     
     def redundants(self,n,k,c): #一个函数,就是网上的那个
@@ -93,9 +93,6 @@ class GorilaBasis(object):
         return np.array(opcodeArray)
 
 
-                
-        
-        
     def  cRange(self,n,k): #似乎是计算某个区间的
         if ((n-k)<k):
             return self.cRange(n,n-k) #这里和C语言不一样，递归处也要return
@@ -144,7 +141,7 @@ class GorilaBasis(object):
         if N%2==0:
             all_sum += self.redundants(N,int(math.ceil(N/2.)),c)
         alpha = float(Decimal(str(all_sum))/Decimal(2**N))
-        print "in get C View N=%s,k=%s,c=%s,sum=%s,percent=%s" % (N,k,c,all_sum,alpha)
+        # print "in get C View N=%s,k=%s,c=%s,sum=%s,percent=%s" % (N,k,c,all_sum,alpha)
         return alpha
 
     # 得到固定k的映射值
