@@ -33,7 +33,7 @@ def peak_plot(stat_array,m,offset):
     plt.plot(range(0,len(stat_array)),peak_values)
     plt.subplot(313)
     plt.plot(range(0,len(stat_array)),chi_square)
-    plt.show()
+    return plt;
 
 
 def main():

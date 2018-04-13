@@ -10,7 +10,7 @@ import local_settings
 from Visualize import utils
 import copy
 
-def shift_peak_analyze(input_str,m,all_offset):
+def shift_peak_analyze(basepath,filename,m,all_offset):
     """
         对这个东西进行循环移位，然后用滑动窗口判断他的稳定性
         输出两个数组
@@ -18,7 +18,7 @@ def shift_peak_analyze(input_str,m,all_offset):
         peak_value
         可以绘图
     """
-
+    input_str = open(basepath+filename,"rb").read(1000000)
     results_array = []
     for offset in xrange(0,all_offset+1):
         print "shift offset = ",offset
@@ -46,10 +46,11 @@ def shift_peak_analyze(input_str,m,all_offset):
     # print q_stat_all
     peack_plot.peak_plot(q_stat_all,m,all_offset)
 
-def xor_peak_analyze(input_str,m,all_offset=0):
+def xor_peak_analyze(basepath,filename,m,all_offset=0):
     """
         进行自我异或以后观察他的结果
     """
+    input_str = open(basepath+filename,"rb").read(100000)
     results_array = []
     original_string = copy.deepcopy(input_str)
     for offset in xrange(1,all_offset+1):
@@ -75,18 +76,21 @@ def xor_peak_analyze(input_str,m,all_offset=0):
     q_stat_all = temp_array[:,0]
     # import pdb;pdb.set_trace()
     # print q_stat_all 
-    peack_plot.peak_plot(q_stat_all,m,all_offset)
+    plot_hander = peack_plot.peak_plot(q_stat_all,m,all_offset)
+    plot_hander.savefig("file=%s_m=%s_offset=%s.png"%(filename,m,offset))
+
 
 
 
 def main():
     base_path = local_settings.getTestDataPath()
     # input_str = open(base_path+"/2018-03/RC4/vrc4_std.char","rb").read(10000)
-    target_path = base_path + "/2018-03/Quantum/8bit-split/"
+    target_path = base_path + "/2018-03/Quantum/"
     file_set = utils.list_file(target_path)
     # input_str = open(base_path+"/2018-03/Quantum/TYUT.char","rb").read(1000000)
-    input_str = open(base_path+"/2018-03/Quantum/8bit.char","rb").read(1000000)
-    xor_peak_analyze(input_str,32,100)
+    filename = "TYUT.char"
+    # base_path+"/2018-03/Quantum/"
+    xor_peak_analyze(target_path,filename,64,800)
     # shift_peak_analyze(input_str,64)
 
 if __name__ == '__main__':
