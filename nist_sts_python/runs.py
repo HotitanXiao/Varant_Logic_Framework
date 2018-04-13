@@ -5,7 +5,8 @@
 描述: 游程检测
 """
 import math 
-def runs(input_str,n):
+def runs(input_str):
+    n = len(input_str)
     S = 0;
     for k in xrange(0,len(input_str)):
         if (input_str[k] == "1"):
@@ -27,7 +28,7 @@ def runs_all(input_str,coordinates,queue=None,func_name=None):
     result = []
     for coordinate in coordinates:
         test_str = input_str[coordinate[0]:coordinate[1]+1]
-        p_value = runs(input_str[coordinate[0]:coordinate[1]+1],len(test_str))
+        p_value = runs(input_str[coordinate[0]:coordinate[1]+1])
         result.append(p_value)
     if queue!=None and func_name!=None:
         # queue.put((result,func_name))

@@ -14,7 +14,7 @@
 #include "../include/cephes.h"  
 import math
 from mathUtils import *
-def approximateEntropy(intput_str,m):
+def approximateEntropy(intput_str,m=6):
     seqLength = len(intput_str)		
     index = 0
     ApEn = [0] * 2

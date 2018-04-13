@@ -6,12 +6,13 @@
 """
 from mathUtils import *
 
-def block_frequency(input_str,M,n):
+def block_frequency(input_str,M=100):
     """
     参数: 
     输出: 
     描述: 
     """
+    n=len(input_str)
     N = int(n/M)
     all_sum = .0
     for i in xrange(0,N):
@@ -26,11 +27,10 @@ def block_frequency(input_str,M,n):
     return p_value
 
 def block_frequency_all(input_str,coordinates,queue=None,func_name=None,M=100,):
-    print "block_frequency_all"
     result = []
     for coordinate in coordinates:
         test_str = input_str[coordinate[0]:coordinate[1]+1]
-        p_value = block_frequency(test_str,M,len(test_str))
+        p_value = block_frequency(test_str,M)
         result.append(p_value)
     if queue!=None and func_name!=None:
         # queue.put((result,func_name))

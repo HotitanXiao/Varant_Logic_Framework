@@ -14,7 +14,7 @@ import math
 from mathUtils import *
 import numpy as np
 
-def linearComplexity(input_str,M):
+def linearComplexity(input_str,M=8):
     """
     参数: 
     输出: 

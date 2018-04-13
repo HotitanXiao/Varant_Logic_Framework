@@ -12,7 +12,7 @@ from mathUtils import *
 import numpy as np
 MAXNUMOFTEMPLATES = 149.
 
-def NonOverlappingTemplateMatchings(input_str,m):
+def NonOverlappingTemplateMatchings(input_str,m=8):
     """
     参数: 
     输出: 
@@ -91,9 +91,6 @@ def NonOverlappingTemplateMatchings(input_str,m):
                 for j in xrange(0,M-m+1):
                     # 开始滑动窗口
                     match = 1
-                    # print input_str[i*M+j:i*M+j+m]
-                    # if sequence != input_str[i*M+j:i*M+j+m]:
-                    #     match = 0
 
                     if sequence == input_str[i*M+j:i*M+j+m]:
                         W_obs += 1

@@ -16,7 +16,7 @@ m-bit pattern. Note that for m = 1, the Serial test is equivalent to the Frequen
 
 from mathUtils import *
 
-def serial(input_str,m):
+def serial(input_str,m=8):
     """
     参数: 
     输出: 

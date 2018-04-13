@@ -55,11 +55,10 @@ def list_file(path):
     dir_list = os.listdir(path)
     result = []
     for line in dir_list:
-        print line,os.path.splitext(path+line)[1],os.path.splitext(path+line)[1]
+        # print line,os.path.splitext(path+line)[1],os.path.splitext(path+line)[1]
         if os.path.splitext(path+line)[1] and\
             os.path.splitext(path+line)[1] == ".char" :
             result.append(line)
-
     return result
 
 
@@ -72,7 +71,7 @@ def process():
     file_list = list_file(basepath)
 
 
-m_set = [8,16,2048]
+m_set = [2048]
 # readlenth_set = [800000,8000000,40000000]
 readlenth_set = [1000000]
 vlfilelist = {}
@@ -140,8 +139,12 @@ if __name__ == '__main__':
                     vlfile.segment_map[segment_type]["results_hist"] = np.histogram(t,np.arange(min(t),max(t)+1,1))
                     # import pdb;pdb.set_trace()
                     plt.plot(vlfile.segment_map[segment_type]["results"][func_name]["diff_cache"][0],vlfile.segment_map[segment_type]["results"][func_name]["diff_cache"][1],".",label=vlfile_name)
+<<<<<<< HEAD
                     print vlfile_name,func_name,segment_type,vlfile.segment_map[segment_type]["results_hist"][0][0],len(t)
+=======
+                    # print vlfile_name,func_name,segment_type,vlfile.segment_map[segment_type]["results_hist"][0][0],len(t)
                     
+>>>>>>> fd8ad68350c8b3b7b664144165f87f1f24aa3937
                 leg = plt.legend(loc='best', ncol=2, mode="expand", shadow=True, fancybox=True)
                 leg.get_frame().set_alpha(0.6)
                 plt.savefig("%s/results/pq-stat/len=%s/m=%s/%s.png"%(basepath,readlenth/10000,segment_type,func_name),dpi=100)

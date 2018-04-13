@@ -32,14 +32,16 @@ def list_file(path):
     return result
 
 def process():
-    """
+    """ 
         批量处理文件
     """
     basepath = local_settings.getTestDataPath()+"/2018-03-13/"
     file_list = list_file(basepath)
 
 
-m_set = [1024,1500]
+# m_set = [1024,1500]
+# length_set = [-1]
+m_set = [1021,1022,1023,1024,1025,1026,1027]
 length_set = [-1]
 def go(basepath="",filename="",read_length=length_set[0]):
     runs_p_value_array = []
@@ -47,7 +49,6 @@ def go(basepath="",filename="",read_length=length_set[0]):
     # input_str = open("/home/dm007/TestData/ANU.char", "rb").read()
     # read_length =8000000
     input_str = open(basepath+filename, "rb").read(read_length)
-
 
     segment_size = 1024
 
@@ -68,7 +69,6 @@ def go(basepath="",filename="",read_length=length_set[0]):
     for m in m_set:
         # 创建保存测试文档得路径
         result_path = basepath+"/results/m=%s/" % m
-        print result_path
         if not os.path.exists(result_path):
             os.mkdir(result_path)
         coordinates = Segmentor.segmentor(input_str=input_str, segment_size=m,offset=m)
@@ -85,9 +85,8 @@ def go(basepath="",filename="",read_length=length_set[0]):
         
 
 if __name__ == '__main__':
-    file_list = list_file(local_settings.getTestDataPath()+"/2018-03/AES/") 
-    basepath = local_settings.getTestDataPath()+"/2018-03/AES/"
-    print file_list
+    file_list = list_file(local_settings.getTestDataPath()+"/2018-03/Quantum/") 
+    basepath = local_settings.getTestDataPath()+"/2018-03/Quantum/"
     for file_name in file_list: 
         print file_name
         for read_length in length_set:
