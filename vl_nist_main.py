@@ -41,8 +41,8 @@ def process():
 
 # m_set = [500,501,502,1024,1025,1023]
 # length_set = [-1]
-m_set = range(8,17)
-length_set = [4000000,]
+m_set = [9,10]
+length_set = [-1]
 def go(basepath="",filename="",read_length=length_set[0]):
     runs_p_value_array = []
     freq_p_value_array = []
@@ -80,9 +80,11 @@ def go(basepath="",filename="",read_length=length_set[0]):
         for func in nist_plot.func_set:
             nist_prob_file.write("%s,%s,%s\n" %(func["func_name"],np.where(func["cache"] > 0.01)[0].size,np.where(func["cache"] > 0.01)[0].size/float(func["cache"].size)) )
         nist_prob_file.close()
+        print "m=%s for file =%s complete " %(m,filename)
+        nist_plot.clean_cache()
+    
 
             
-        
 
 if __name__ == '__main__':
     file_list = list_file(local_settings.getTestDataPath()+"/2018-03/AES/") 
