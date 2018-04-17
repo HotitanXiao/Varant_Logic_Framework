@@ -6,6 +6,7 @@
 """
 import copy
 import numpy
+import VLTest
 
 def string_xor(string1,string2):
     result = ""
@@ -22,6 +23,10 @@ def string_right_shift(string,offset):
     if type(string) == numpy.ndarray:
         return numpy.concatenate((new_string[-offset:],new_string[:-offset]))
     return new_string[-offset:]+new_string[:-offset]
+
+def VLTest_get_p_q_count(input_str,m):
+    
+    return VLTest.PyVLTestForChar(input_str=input_str,m=m)
 
 def p_q_count(input_str):
     """

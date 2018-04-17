@@ -48,3 +48,29 @@ void VLTestForInt(char* inputStr, int m, int* pArrayCache, int* qArrayCache)
 {
 
 }
+
+
+
+/*
+	Author: H.Y
+	Date: 2018-04-15
+	Input: 两个字符串的数组
+	Output: 异或结果
+	Description:进行异或的
+*/
+
+void VLTowStringXorForChar(char* string1,int len1, char* string2,int len2)
+{
+	int index = 0;
+	if (len1==0||
+		len2 == 0||
+		len1 != len2)
+		return;
+	else 
+	{
+		for (index = 0; index < len1; index++)
+		{
+			*(string1 + index) = *(string1 + index) == *(string2 + index) ? '0' : '1';
+		}
+	}
+}

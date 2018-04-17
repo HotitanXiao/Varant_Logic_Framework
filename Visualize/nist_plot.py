@@ -216,6 +216,9 @@ def nist_multi_plot(input_str,coordinates,row=len(func_set),col=len(func_set),sa
     fig.savefig(save_path+"%s.png"% save_filename, dpi=100)
     plt.close('all')
 
+def clean_cache():
+    for func in func_set:
+        del func["cache"]
 
 
 # def nist_list_plot(input_str,coordinates,**kwargs):
