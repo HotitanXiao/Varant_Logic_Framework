@@ -8,12 +8,14 @@ from MainFrame import VLSequence
 import numpy as np
 from core.Gorilla.gorilla import GorilaBasis
 import math
+from multiprocessing import Pool
 
 def get_p_array(input_str,coordinates,queue=None,func_name=None):
     result = np.array([])
     coordinates = list(coordinates)
     len_of_subsegments = len(coordinates)
     test_str = ""
+    proces_pool = Pool(4)
     for coordinate in coordinates:
         test_str = input_str[coordinate[0]:coordinate[1]+1]
         p,q = VLSequence.p_q_count(test_str)
