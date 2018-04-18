@@ -135,7 +135,6 @@ if __name__ == '__main__':
                     # plt.plot(vlfile.segment_map[segment_type]["results_hist"][1],np.append(vlfile.segment_map[segment_type]["results_hist"][0],0),".",label=vlfile_name)
                     plt.plot(vlfile.segment_map[segment_type]["results"][func_name]["merge_cache"][0],vlfile.segment_map[segment_type]["results"][func_name]["merge_cache"][1],".",label=vlfile_name)
                     print vlfile_name,func_name,segment_type,vlfile.segment_map[segment_type]["results_hist"][0][0],len(t)
-                \# 
                 leg = plt.legend(loc='best', ncol=2, mode="expand", shadow=True, fancybox=True)
                 leg.get_frame().set_alpha(0.6)
                 plt.savefig("%s/results/len=%s/m=%s/%s.png"%(basepath,readlenth/10000,segment_type,func_name),dpi=100)

@@ -98,7 +98,7 @@ def nist_multi_plot(input_str,coordinates,row=len(func_set),col=len(func_set),sa
     log_file = open("log.txt","wb")
     fig = plt.figure(0)
     fig = plt.gcf()
-    fig.set_size_inches(18.5*0.5, 10.5*0.5)
+    fig.set_size_inches(18.5*4, 10.5*4)
 
     for y in xrange(1,row+1):
         """

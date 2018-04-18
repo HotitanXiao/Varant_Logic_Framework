@@ -41,8 +41,8 @@ def process():
 
 # m_set = [1024,1500]
 # length_set = [-1]
-m_set = [1021,1022,1023,1024,1025,1026,1027]
-length_set = [-1]
+m_set = range(8,17)
+length_set = [4000000]
 def go(basepath="",filename="",read_length=length_set[0]):
     runs_p_value_array = []
     freq_p_value_array = []
@@ -85,8 +85,8 @@ def go(basepath="",filename="",read_length=length_set[0]):
         
 
 if __name__ == '__main__':
-    file_list = list_file(local_settings.getTestDataPath()+"/2018-03/Quantum/") 
-    basepath = local_settings.getTestDataPath()+"/2018-03/Quantum/"
+    file_list = list_file(local_settings.getTestDataPath()+"/2018-03/Quantum/8bit-split/") 
+    basepath = local_settings.getTestDataPath()+"/2018-03/Quantum/8bit-split/"
     for file_name in file_list: 
         print file_name
         for read_length in length_set:

@@ -80,9 +80,9 @@ def xor_peak_analyze(input_str,m):
 def main():
     base_path = local_settings.getTestDataPath()
     # input_str = open(base_path+"/2018-03/RC4/vrc4_std.char","rb").read(10000)
-    input_str = open(base_path+"/2018-03/RC4/vrc4_p[4,4,4,4]_q[1,2,3,4].char","rb").read(10000)
+    input_str = open(base_path+"/2018-03/Quantum/8bit-split/8bit.char.split5.char","rb").read(100000)
     #xor_peak_analyze(input_str,64)
-    shift_peak_analyze(input_str,64)
+    shift_peak_analyze(input_str,1000)
 
 if __name__ == '__main__':
     main()
