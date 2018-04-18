@@ -42,7 +42,6 @@ def process():
 
 # m_set = [1024,1500]
 # length_set = [-1]
-
 m_set = [200,201,256]
 length_set = [-1]
 def go(basepath="",filename="",read_length=length_set[0]):
@@ -84,9 +83,7 @@ def go(basepath="",filename="",read_length=length_set[0]):
         nist_prob_file.close()
         print "m=%s for file =%s complete " %(m,filename)
         nist_plot.clean_cache()
-    
 
-            
 
 if __name__ == '__main__':
     file_list = list_file(local_settings.getTestDataPath()+"/2018-03/AES/") 
