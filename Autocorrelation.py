@@ -28,7 +28,9 @@ def auto_correlateion(input_str,lags):
 
 def main():
     test_data_path = local_settings.getTestDataPath()
-    input_str = open(test_data_path+"vrc4_std.char").read(1000000)
+    # input_str = open(test_data_path+"/2018-03/Quantum/8bit-split/8bit.char.split0").read(1000000)
+    # input_str = open(test_data_path+"/2018-03/Quantum/8bit.char").read(1000000)
+    input_str = open(test_data_path+"/2018-03/RC4/vrc4_std.char").read(1000000)
     offset_range = 1000
     correlateion_result = auto_correlateion(input_str,offset_range)
     
