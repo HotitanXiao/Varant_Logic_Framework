@@ -42,7 +42,7 @@ def process():
 
 # m_set = [1024,1500]
 # length_set = [-1]
-m_set = [500,501,502,503]
+m_set = [200,201,256]
 length_set = [-1]
 def go(basepath="",filename="",read_length=length_set[0]):
     runs_p_value_array = []

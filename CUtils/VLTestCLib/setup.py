@@ -2,7 +2,7 @@
 from distutils.core import setup, Extension
 
 module1 = Extension('VLTest',
-                    sources = ['src/VLTestCLib.c','src/VLTestCLibWrap.c'])
+                    sources = ['src/VLTestClib.c','src/VLTestCLibWrap.c'])
 
 setup (name = 'VLTest',
        version = '1.0',
