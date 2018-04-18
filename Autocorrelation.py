@@ -7,6 +7,7 @@ Descripthon:本文件是用于测量一个01序列的自相关特性的
 """
 import numpy as np
 import local_settings
+from Visualize import utils
 from matplotlib import pyplot as plt
 
 def auto_correlateion(input_str,lags):
@@ -28,19 +29,22 @@ def auto_correlateion(input_str,lags):
 
 def main():
     test_data_path = local_settings.getTestDataPath()
-
+    target_path =  test_data_path+"/2018-03/AES/"
     # input_str = open(test_data_path+"/2018-03/Quantum/8bit-split/8bit.char.split0").read(1000000)
     # input_str = open(test_data_path+"/2018-03/Quantum/8bit.char").read(1000000)
-    input_str = open(test_data_path+"/2018-03/RC4/vrc4_std.char").read(1000000)
+    files = utils.list_file(target_path)
+    for filename in files:
+        input_str = open(target_path+filename).read(1000000)
+        offset_range = 1000
+        correlateion_result = auto_correlateion(input_str,offset_range)
+        plt.plot(range(1,offset_range+1),correlateion_result)
+        plt.ylim(-0.2,0.2)
+        plt.savefig("filename=%s,offset=%s"%(filename,offset_range))
 
     # input_str = open(test_data_path+"/2018-03/RC4/8bit-split/"+"vrc4_nist_8bit.txt.split6").read()
-    input_str = open(test_data_path+"/2018-03/Quantum/8bit-split/"+"8bit.char.split7").read()
-    offset_range = 1000
-    correlateion_result = auto_correlateion(input_str,offset_range)
-    
-    plt.plot(range(1,offset_range+1),correlateion_result)
-    plt.ylim(-0.2,0.2)
-    plt.show()
+    # input_str = open(test_data_path+"/2018-03/Quantum/8bit-split/"+"8bit.char.split7").read()
+
+
 
 if __name__ == '__main__':
     main()
