@@ -4,8 +4,9 @@
 """
 import numpy as np
 from matplotlib import pyplot as plt
+from nist_sts_python import VL
 
-def peak_plot(stat_array,m):
+def peak_plot(stat_array,m,offset):
     """
         stat_array是一个统计结果的集合，其数据结构是一个二位数组
         [x*m]*N, m x N维的一个二维数组
@@ -16,22 +17,24 @@ def peak_plot(stat_array,m):
             该函数的用途是输出一个图示结果，该结果是所有统计结果最大值（峰值），所在的位置
             最大值的位置，还有拟合优度的变化
     """
-    peaks_pos = [0]*(m+1)
-    peak_values = [0]*(m+1)
+    peaks_pos = [0]*(len(stat_array))
+    peak_values = [0]*(len(stat_array))
+    chi_square = [0]*len(stat_array)
     for row_index in xrange(0,len(stat_array)):
         # print stat_array[row_index]
         a = np.max(stat_array[row_index])
         t = np.where(stat_array[row_index]==a)
         peaks_pos[row_index] = t[0][0]
         peak_values[row_index] = stat_array[row_index][t[0][0]]
-    print peak_values
-    plt.subplot(211)
-    plt.plot(range(0,m+1),peaks_pos)
-    plt.subplot(212)
-    plt.plot(range(0,m+1),peak_values)
-    plt.show()
+        chi_square[row_index] = VL.get_q_array_chi_square(q_stat_array=stat_array[row_index],m=m)
+    plt.subplot(311)
+    plt.plot(range(0,len(stat_array)),peaks_pos)
+    plt.subplot(312)
+    plt.plot(range(0,len(stat_array)),peak_values)
+    plt.subplot(313)
+    plt.plot(range(0,len(stat_array)),chi_square)
+    return plt;
 
-    print peaks
 
 def main():
     test_data = np.array([

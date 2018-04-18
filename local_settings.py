@@ -9,7 +9,7 @@ from nist_sts_python import runs,blockFrequency,frequency,matrix,DFT,VL,\
             universal,linearComplexity,serial,approximateEntropy,cusum,randomExcursions
 import numpy as np
 base_path_config = {
-    "windows":"D:/TestData/",
+    "windows":"F:/TestData/",
     "linux":"/home/dm007/TestData/",
     "macos":"/Users/houseyoung/TestData/"
 }

@@ -39,10 +39,12 @@ def process():
     file_list = list_file(basepath)
 
 
+
 # m_set = [1024,1500]
 # length_set = [-1]
-m_set = range(8,17)
-length_set = [4000000]
+
+m_set = [500,501,502,503]
+length_set = [-1]
 def go(basepath="",filename="",read_length=length_set[0]):
     runs_p_value_array = []
     freq_p_value_array = []
@@ -80,13 +82,16 @@ def go(basepath="",filename="",read_length=length_set[0]):
         for func in nist_plot.func_set:
             nist_prob_file.write("%s,%s,%s\n" %(func["func_name"],np.where(func["cache"] > 0.01)[0].size,np.where(func["cache"] > 0.01)[0].size/float(func["cache"].size)) )
         nist_prob_file.close()
+        print "m=%s for file =%s complete " %(m,filename)
+        nist_plot.clean_cache()
+    
 
             
-        
 
 if __name__ == '__main__':
-    file_list = list_file(local_settings.getTestDataPath()+"/2018-03/Quantum/8bit-split/") 
-    basepath = local_settings.getTestDataPath()+"/2018-03/Quantum/8bit-split/"
+    file_list = list_file(local_settings.getTestDataPath()+"/2018-03/AES/") 
+    basepath = local_settings.getTestDataPath()+"/2018-03/AES/"
+
     for file_name in file_list: 
         print file_name
         for read_length in length_set:
