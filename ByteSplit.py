@@ -26,7 +26,13 @@ def byte_split(file_name):
         file_set[t].close()
 
 def main():
-    byte_split("/Users/houseyoung/TestData/vrc4_std.char")
+    input_file = open("/Users/houseyoung/TestData/vrc4_std.char.split7")
+    input_str = input_file.read(100000)
+    print input_str
+    # while len(input_str)!=None:
+    #     if len(input_str)<100000:
+    #         print input_str
+    #     input_str = input_file.read(100000)
 
 if __name__ == '__main__':
     main()
