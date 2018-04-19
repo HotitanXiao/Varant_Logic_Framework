@@ -39,9 +39,10 @@ def process():
     file_list = list_file(basepath)
 
 
-# m_set = [500,501,502,1024,1025,1023]
+
+# m_set = [1024,1500]
 # length_set = [-1]
-m_set = [9,10]
+m_set = [500]
 length_set = [-1]
 def go(basepath="",filename="",read_length=length_set[0]):
     runs_p_value_array = []
@@ -82,14 +83,14 @@ def go(basepath="",filename="",read_length=length_set[0]):
         nist_prob_file.close()
         print "m=%s for file =%s complete " %(m,filename)
         nist_plot.clean_cache()
-    
 
-            
 
 if __name__ == '__main__':
-    file_list = list_file(local_settings.getTestDataPath()+"/2018-03/AES/") 
-    basepath = local_settings.getTestDataPath()+"/2018-03/AES/"
-    for file_name in file_list: 
-        print file_name
-        for read_length in length_set:
-            go(basepath,file_name,read_length)
+    target_path_set = ["Quantum/"]
+    for t in target_path_set:
+        file_list = list_file(local_settings.getTestDataPath()+"/2018-03/"+t) 
+        basepath = local_settings.getTestDataPath()+"/2018-03/"+t
+        for file_name in file_list: 
+            print file_name
+            for read_length in length_set:
+                go(basepath,file_name,read_length)

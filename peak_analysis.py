@@ -92,15 +92,19 @@ def xor_peak_analyze(basepath,filename,m,all_offset=0):
 def main():
     base_path = local_settings.getTestDataPath()
     # input_str = open(base_path+"/2018-03/RC4/vrc4_std.char","rb").read(10000)
-    target_path = base_path + "/2018-03/RC4/"
+    target_path = base_path + "/2018-03/AES/"
     file_set = utils.list_file(target_path)
     # input_str = open(base_path+"/2018-03/Quantum/TYUT.char","rb").read(1000000)
     for file_name in file_set:
     # base_path+"/2018-03/Quantum/"
-        xor_peak_analyze(target_path,file_name,64,1000)
+        xor_peak_analyze(target_path,file_name,64,100)
         print "HOuse=------------1"
-        shift_peak_analyze(target_path,file_name,503,503)
+        shift_peak_analyze(target_path,file_name,64,64)
         print "HOuse=------------2"
+        xor_peak_analyze(target_path,file_name,64,1000)
+        print "HOuse=------------4"
+        shift_peak_analyze(target_path,file_name,503,503)
+        print "HOuse=------------4"
     # target_path = base_path + "/2018-03/RC4/"
     # file_set = utils.list_file(target_path)
     # # input_str = open(base_path+"/2018-03/Quantum/TYUT.char","rb").read(1000000)
@@ -110,5 +114,6 @@ def main():
     #     print "HOuse=------------1"
     #     # shift_peak_analyze(target_path,file_name,64,64)
     #     # print "HOuse=------------2"
+
 if __name__ == '__main__':
     main()
