@@ -34,12 +34,13 @@ def main():
     # input_str = open(test_data_path+"/2018-03/Quantum/8bit.char").read(1000000)
     files = utils.list_file(target_path)
     for filename in files:
-        input_str = open(target_path+filename).read(1000000)
+        input_str = open(target_path+filename).read(10000000)
         offset_range = 1000
         correlateion_result = auto_correlateion(input_str,offset_range)
         plt.plot(range(1,offset_range+1),correlateion_result)
         plt.ylim(-0.2,0.2)
-        plt.savefig("filename=%s,offset=%s"%(filename,offset_range))
+        plt.savefig(target_path+"filename=%s,offset=%s.png"%(filename,offset_range))
+        plt.close("all")
 
     # input_str = open(test_data_path+"/2018-03/RC4/8bit-split/"+"vrc4_nist_8bit.txt.split6").read()
     # input_str = open(test_data_path+"/2018-03/Quantum/8bit-split/"+"8bit.char.split7").read()
