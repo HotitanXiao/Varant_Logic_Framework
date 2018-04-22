@@ -16,12 +16,13 @@ from MainFrame.VLSequence import string_right_shift
  
 func_set = [
     {"func":runs.runs_all,"args":(None),"func_name":"runs","cache":np.array([]),"uniform_rate":None},
-    {"func":blockFrequency.block_frequency_all,"args":(None),"func_name":"BF","cache":np.array([]),"uniform_rate":None},
-    # {"func":frequency.frequency_all,"args":(None),"func_name":"F","cache":np.array([]),"uniform_rate":None},
+
+    # {"func":blockFrequency.block_frequency_all,"args":(None),"func_name":"BF","cache":np.array([]),"uniform_rate":None},
+    {"func":frequency.frequency_all,"args":(None),"func_name":"F","cache":np.array([]),"uniform_rate":None},
     # {"func":DFT.DiscreteFourierTransform_all,"args":(None), "func_name":"DFT","cache":np.array([]),"uniform_rate":None},
     {"func":NonOverlappingTemplateMatchings.NonOverlappingTemplateMatchings_all,"args":(None),"func_name":"NoTM","cache":np.array([]),"uniform_rate":None},
     # {"func":overlappingTemplateMatchings.OverlappingTemplateMatchings_all,"args":(None),"func_name":"OTM","cache":np.array([]),"uniform_rate":None},
-    # {"func":universal.universal_all,"args":(None),"func_name":"uni","cache":np.array([])},
+    # # {"func":universal.universal_all,"args":(None),"func_name":"uni","cache":np.array([])},
     {"func":linearComplexity.linearComplexity_all,"args":(None),"func_name":"lc","cache":np.array([]),"uniform_rate":None},
     # {"func":serial.serial_all,"args":(None),"func_name":"serial","cache":np.array([]),"uniform_rate":None},
     {"func":approximateEntropy.approximateEntropy_all,"args":(None),"func_name":"AE","cache":np.array([]),"uniform_rate":None},
