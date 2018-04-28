@@ -46,7 +46,9 @@ def process():
 # m_set = range(13,17)
 
 # m_set = [2048]
-m_set = [16]
+# m_set = [16]
+m_set = [256,500,1000,2000]
+
 length_set = [-1]
 def go(basepath="",filename="",read_length=length_set[0]):
     runs_p_value_array = []
@@ -90,15 +92,7 @@ def go(basepath="",filename="",read_length=length_set[0]):
 
 
 if __name__ == '__main__':
-# <<<<<<< HEAD
-#     file_list = list_file(local_settings.getTestDataPath()+"/2018-03/Quantum/") 
-#     basepath = local_settings.getTestDataPath()+"/2018-03/Quantum/"
-
-#     for file_name in file_list: 
-#         for read_length in length_set:
-#             go(basepath,file_name,read_length)
-# =======
-    target_path_set = ["RC4/"]
+    target_path_set = ["AES/"]
     for t in target_path_set:
         file_list = list_file(local_settings.getTestDataPath()+"/2018-03/"+t) 
         basepath = local_settings.getTestDataPath()+"/2018-03/"+t
