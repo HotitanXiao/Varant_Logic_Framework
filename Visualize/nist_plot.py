@@ -21,7 +21,7 @@ func_set = [
     # {"func":DFT.DiscreteFourierTransform_all,"args":(None), "func_name":"DFT","cache":np.array([]),"uniform_rate":None},
     # {"func":NonOverlappingTemplateMatchings.NonOverlappingTemplateMatchings_all,"args":(None),"func_name":"NoTM","cache":np.array([]),"uniform_rate":None},
     # {"func":overlappingTemplateMatchings.OverlappingTemplateMatchings_all,"args":(None),"func_name":"OTM","cache":np.array([]),"uniform_rate":None},
-    # # {"func":universal.universal_all,"args":(None),"func_name":"uni","cache":np.array([])},
+    # {"func":universal.universal_all,"args":(None),"func_name":"uni","cache":np.array([])},
     # {"func":linearComplexity.linearComplexity_all,"args":(None),"func_name":"lc","cache":np.array([]),"uniform_rate":None},
     # {"func":serial.serial_all,"args":(None),"func_name":"serial","cache":np.array([]),"uniform_rate":None},
     # {"func":approximateEntropy.approximateEntropy_all,"args":(None),"func_name":"AE","cache":np.array([]),"uniform_rate":None},

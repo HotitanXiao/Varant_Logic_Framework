@@ -6,12 +6,12 @@ import numpy as np
 from matplotlib import pyplot as plt
 from nist_sts_python import VL
 
-def peak_plot(stat_array,m,offset):
+def peak_plot(stat_array,m,offset,mod="p"):
     """
         stat_array是一个统计结果的集合，其数据结构是一个二位数组
         [x*m]*N, m x N维的一个二维数组
         m是关注的template、变值分布的一个基本区间
-
+        mod 是当前是p还是q，主要是用在拟合优度部分
 
         说明：
             该函数的用途是输出一个图示结果，该结果是所有统计结果最大值（峰值），所在的位置
