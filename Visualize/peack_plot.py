@@ -35,24 +35,25 @@ def peak_plot(stat_array,m,offset,mod="p"):
     plt.subplot(311)
     Max = np.max(peaks_pos)
     Min = np.min(peaks_pos)
-    top = Max*0.7
-    plt.text(right, top,"Max=%s\nMin=%s\nDelta=%s\n" %(Max,Min,Max-Min), {'color': 'r', 'fontsize': 5})
+    top = Max-(Max-Min)*.5
+
+    plt.text(1, top,"Max=%s\nMin=%s\nDelta=%s\n" %(Max,Min,Max-Min), {'fontsize':6})
     plt.plot(range(0,len(stat_array)),peaks_pos)
-    # import pdb;pdb.set_trace()
+    # 
     
     plt.subplot(312)
     Max = np.max(peak_values)
     Min = np.min(peak_values)
-    top = Max*0.7
+    top = Max-(Max-Min)*.5
     
-    plt.text(right, top,"Max=%s\nMin=%s\nDelta=%s\n" %(Max,Min,Max-Min), {'color': 'r', 'fontsize': 5})
+    plt.text(1, top,"Max=%s\nMin=%s\nDelta=%s\n" %(Max,Min,Max-Min), { 'fontsize': 6})
     plt.plot(range(0,len(stat_array)),peak_values)
 
     plt.subplot(313)
     Max = np.max(chi_square)
     Min = np.min(chi_square)
-    top = Max*0.7
-    plt.text(right, top,"Max=%s\nMin=%s\nDelta=%s\n" %(Max,Min,Max-Min), {'color': 'r', 'fontsize': 5})
+    top = Max-(Max-Min)*.5
+    plt.text(1, top,"Max=%s\nMin=%s\nDelta=%s\n" %(Max,Min,Max-Min), { 'fontsize': 6})
     plt.plot(range(0,len(stat_array)),chi_square)
     return plt;
 
