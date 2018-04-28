@@ -80,7 +80,10 @@ def xor_peak_analyze(basepath,filename,m,all_offset=0,mod="p"):
         results_array.append([p_stat_results,q_stat_results])
         print "offset = %s complete stats"
     temp_array = np.array(results_array)
-    q_stat_all = temp_array[:,1]
+    if mod == "p":
+        q_stat_all = temp_array[:,0]
+    else:
+        q_stat_all = temp_array[:,1]
     # import pdb;pdb.set_trace()
     # print q_stat_all 
     plot_hander = peack_plot.peak_plot(q_stat_all,m,all_offset,mod)
