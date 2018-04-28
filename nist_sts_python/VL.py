@@ -54,6 +54,37 @@ def get_q_array(input_str,coordinates,queue=None,func_name=None):
     # print get_q_array_chi_square(result,m)
     return (result,func_name)
 
+def get_p_array_chi_square(p_array=None,p_stat_array=None,m=8):
+    """
+    Author: H.Y
+    Date: 2018-04-18
+    Params: 
+    Descripthon: 该方法是算p的拟合优度的，p就是二项式系数，所以里面用组合函数来计算就可以了
+    """
+    if not p_stat_array.any():
+        stat_hist = np.histogram(p_array,bins=range(0,int(math.floor(m/2))+2))
+        array_len = len(p_array)
+    else:
+        stat_hist = (p_stat_array,range(0,m/2+2))
+        array_len = sum(p_stat_array)
+    print "array_len=",array_len
+
+    base_distribution = GorilaBasis()
+    chi_rate = 0
+    observed_stat_array = []
+    for q in xrange(0,m+1):
+        alpha = base_distribution.getKview(m,q) #理论值 在2^N下产生的
+        if alpha == 0:
+            print "******---***"*10
+            print "in get_p_array_chi_square zeros occur N=%s,q=%s" % (m,q)
+        else:
+            observed_stat = stat_hist[0][q]/float(array_len)
+            observed_stat_array.append(observed_stat)
+            print "p = %s,observed_count=%s observed_stat=%s,base_distibute=%s" % (q,stat_hist[0][q],observed_stat,alpha)
+            chi_rate += ( observed_stat - alpha )**2 / alpha
+    print sum(observed_stat_array),observed_stat_array
+    return chi_rate    
+
 def get_q_array_chi_square(q_array=None,q_stat_array=None,m=8):
     """
         计算观察值和我们的标准值之间的差异

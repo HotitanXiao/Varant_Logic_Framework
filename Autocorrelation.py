@@ -29,7 +29,7 @@ def auto_correlateion(input_str,lags):
 
 def main():
     test_data_path = local_settings.getTestDataPath()
-    target_path =  test_data_path+"/2018-03/AES/"
+    target_path =  test_data_path+"/2018-03/RC4/"
     # input_str = open(test_data_path+"/2018-03/Quantum/8bit-split/8bit.char.split0").read(1000000)
     # input_str = open(test_data_path+"/2018-03/Quantum/8bit.char").read(1000000)
     files = utils.list_file(target_path)
@@ -41,6 +41,7 @@ def main():
         plt.ylim(-0.2,0.2)
         plt.savefig(target_path+"filename=%s,offset=%s.png"%(filename,offset_range))
         plt.close("all")
+
 
     # input_str = open(test_data_path+"/2018-03/RC4/8bit-split/"+"vrc4_nist_8bit.txt.split6").read()
     # input_str = open(test_data_path+"/2018-03/Quantum/8bit-split/"+"8bit.char.split7").read()
