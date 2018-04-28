@@ -26,7 +26,10 @@ def peak_plot(stat_array,m,offset,mod="p"):
         t = np.where(stat_array[row_index]==a)
         peaks_pos[row_index] = t[0][0]
         peak_values[row_index] = stat_array[row_index][t[0][0]]
-        chi_square[row_index] = VL.get_q_array_chi_square(q_stat_array=stat_array[row_index],m=m)
+        if mod == "p":
+            chi_square[row_index] = VL.get_p_array_chi_square(p_stat_array=stat_array[row_index],m=m)
+        else:
+            chi_square[row_index] = VL.get_q_array_chi_square(q_stat_array=stat_array[row_index],m=m)
     plt.subplot(311)
     plt.plot(range(0,len(stat_array)),peaks_pos)
     plt.subplot(312)
@@ -42,7 +45,7 @@ def main():
         [5,4,3,2,1],
         [4,5,3,2,1]
     ])
-    peak_plot(test_data,4)
+    # peak_plot(test_data,4)
 
 if __name__ == '__main__':
     main()
