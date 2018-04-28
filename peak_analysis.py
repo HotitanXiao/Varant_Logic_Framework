@@ -10,7 +10,7 @@ import local_settings
 from Visualize import utils
 import copy
 import VLTest
-def shift_peak_analyze(basepath,filename,m,all_offset):
+def shift_peak_analyze(basepath,filename,m,all_offset,mod="p"):
     """
         对这个东西进行循环移位，然后用滑动窗口判断他的稳定性
         输出两个数组
@@ -45,12 +45,12 @@ def shift_peak_analyze(basepath,filename,m,all_offset):
     # import pdb;pdb.set_trace()
     # print q_stat_all
     # peack_plot.peak_plot(q_stat_all,m,all_offset)
-    plot_hander = peack_plot.peak_plot(q_stat_all,m,all_offset)
-    plot_hander.savefig(basepath+"/results/%s/q_shift_file=%s_m=%s_offset=%s.png"%(filename,filename,m,offset))
+    plot_hander = peack_plot.peak_plot(q_stat_all,m,all_offset,mod)
+    plot_hander.savefig(basepath+"/results/%s/%s_shift_file=%s_m=%s_offset=%s.png"%(mod,filename,filename,m,offset))
     plot_hander.close("all")
 
 
-def xor_peak_analyze(basepath,filename,m,all_offset=0):
+def xor_peak_analyze(basepath,filename,m,all_offset=0,mod="p"):
     """
         进行自我异或以后观察他的结果
     """
@@ -83,8 +83,8 @@ def xor_peak_analyze(basepath,filename,m,all_offset=0):
     q_stat_all = temp_array[:,1]
     # import pdb;pdb.set_trace()
     # print q_stat_all 
-    plot_hander = peack_plot.peak_plot(q_stat_all,m,all_offset)
-    plot_hander.savefig(basepath+"/results/%s/q_xor_file=%s_m=%s_offset=%s.png"%(filename,filename,m,offset))
+    plot_hander = peack_plot.peak_plot(q_stat_all,m,all_offset,mod)
+    plot_hander.savefig(basepath+"/results/%s/%s_xor_file=%s_m=%s_offset=%s.png"%(mod,filename,filename,m,offset))
     plot_hander.close("all")
 
 
@@ -93,7 +93,7 @@ def xor_peak_analyze(basepath,filename,m,all_offset=0):
 def main():
     base_path = local_settings.getTestDataPath()
     # input_str = open(base_path+"/2018-03/RC4/vrc4_std.char","rb").read(10000)
-    target_path = base_path + "/2018-03/Quantum/"
+    target_path = base_path + "/2018-03/AES/"
     file_set = utils.list_file(target_path)
     # input_str = open(base_path+"/2018-03/Quantum/TYUT.char","rb").read(1000000)
     for file_name in file_set:
