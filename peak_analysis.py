@@ -41,12 +41,12 @@ def shift_peak_analyze(basepath,filename,m,all_offset):
         
     # 完成了所有的统计了
     temp_array = np.array(results_array)
-    q_stat_all = temp_array[:,0]
+    q_stat_all = temp_array[:,1]
     # import pdb;pdb.set_trace()
     # print q_stat_all
     # peack_plot.peak_plot(q_stat_all,m,all_offset)
     plot_hander = peack_plot.peak_plot(q_stat_all,m,all_offset)
-    plot_hander.savefig(basepath+"/results/%s/shift_file=%s_m=%s_offset=%s.png"%(filename,filename,m,offset))
+    plot_hander.savefig(basepath+"/results/%s/q_shift_file=%s_m=%s_offset=%s.png"%(filename,filename,m,offset))
     plot_hander.close("all")
 
 
@@ -63,6 +63,7 @@ def xor_peak_analyze(basepath,filename,m,all_offset=0):
         p_array = []
         q_array = []
         p_array,q_array = VLTest.PyVLTowStringXorForChar(input_str1=original_string,input_str2=shift_str,m=m)
+        print filename,np.var(q_array)
         # new_str = VLSequence.string_xor(original_string,shift_str)
         # coordinates = Segmentor.segmentor(new_str,m,m)
 
@@ -79,11 +80,11 @@ def xor_peak_analyze(basepath,filename,m,all_offset=0):
         results_array.append([p_stat_results,q_stat_results])
         print "offset = %s complete stats"
     temp_array = np.array(results_array)
-    q_stat_all = temp_array[:,0]
+    q_stat_all = temp_array[:,1]
     # import pdb;pdb.set_trace()
     # print q_stat_all 
     plot_hander = peack_plot.peak_plot(q_stat_all,m,all_offset)
-    plot_hander.savefig(basepath+"/results/%s/xor_file=%s_m=%s_offset=%s.png"%(filename,filename,m,offset))
+    plot_hander.savefig(basepath+"/results/%s/q_xor_file=%s_m=%s_offset=%s.png"%(filename,filename,m,offset))
     plot_hander.close("all")
 
 
