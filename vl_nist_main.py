@@ -42,7 +42,10 @@ def process():
 
 # m_set = [1024,1500]
 # length_set = [-1]
-m_set = [256,500,1000,2000]
+m_set = [10]
+# m_set = [200,1021]
+# m_set = [8,9,10,11,12]
+# m_set = [13]
 length_set = [-1]
 def go(basepath="",filename="",read_length=length_set[0]):
     runs_p_value_array = []
@@ -86,7 +89,7 @@ def go(basepath="",filename="",read_length=length_set[0]):
 
 
 if __name__ == '__main__':
-    target_path_set = ["AES/"]
+    target_path_set = ["RC4/"]
     for t in target_path_set:
         file_list = list_file(local_settings.getTestDataPath()+"/2018-03/"+t) 
         basepath = local_settings.getTestDataPath()+"/2018-03/"+t
@@ -94,3 +97,4 @@ if __name__ == '__main__':
             print file_name
             for read_length in length_set:
                 go(basepath,file_name,read_length)
+
