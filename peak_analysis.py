@@ -18,7 +18,7 @@ def shift_peak_analyze(basepath,filename,m,all_offset,mod="p"):
         peak_value
         可以绘图
     """
-    input_str = open(basepath+filename,"rb").read(1000000)
+    input_str = open(basepath+filename,"rb").read()
     results_array = []
     for offset in xrange(0,all_offset+1):
         print "shift offset = ",offset
