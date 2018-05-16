@@ -87,7 +87,7 @@ def xor_peak_analyze(basepath,filename,m,all_offset=0):
     # print q_stat_all 
     plot_hander,peak_value,peak_pos,chi_square = peack_plot.peak_plot(p_stat_all,m,all_offset,'p')
     plot_hander.savefig(basepath+"/results/%s/%s_xor_file=%s_m=%s_offset=%s.png"%(filename,'p',filename,m,offset))
-    np.save(basepath+"/results/%s/%s_xor_file=%s_m=%s_offset=%s.bin"%(filename,'p',filename,m,offset),q_stat_all);
+    np.save(basepath+"/results/%s/%s_xor_file=%s_m=%s_offset=%s.bin"%(filename,'p',filename,m,offset),p_stat_all);
     np.save(basepath+"/results/%s/peak_value_%s_xor_file=%s_m=%s_offset=%s.bin"%(filename,'p',filename,m,offset),peak_value)
     np.save(basepath+"/results/%s/peak_pos_%s_xor_file=%s_m=%s_offset=%s.bin"%(filename,'p',filename,m,offset),peak_pos)
     np.save(basepath+"/results/%s/chi_square_%s_xor_file=%s_m=%s_offset=%s.bin"%(filename,'p',filename,m,offset),chi_square)
