@@ -51,6 +51,7 @@ def shift_peak_analyze(basepath,filename,m,all_offset,mod="p"):
     # peack_plot.peak_plot(q_stat_all,m,all_offset)
     plot_hander = peack_plot.peak_plot(q_stat_all,m,all_offset,mod)
     plot_hander.savefig(basepath+"/results/%s/%s_shift_file=%s_m=%s_offset=%s.png"%(filename,mod,filename,m,offset))
+    q_stat_all.tofile(basepath+"/results/%s/%s_shift_file=%s_m=%s_offset=%s.bin"%(filename,mod,filename,m,offset))
     plot_hander.close("all")
 
 
@@ -82,6 +83,7 @@ def xor_peak_analyze(basepath,filename,m,all_offset=0,mod="p"):
     # print q_stat_all 
     plot_hander = peack_plot.peak_plot(q_stat_all,m,all_offset,mod)
     plot_hander.savefig(basepath+"/results/%s/%s_xor_file=%s_m=%s_offset=%s.png"%(filename,mod,filename,m,offset))
+    q_stat_all.tofile(basepath+"/results/%s/%s_xor_file=%s_m=%s_offset=%s.bin"%(filename,mod,filename,m,offset));
     plot_hander.close("all")
 
 
