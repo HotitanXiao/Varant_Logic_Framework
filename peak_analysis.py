@@ -18,7 +18,7 @@ def shift_peak_analyze(basepath,filename,m,all_offset,mod="p"):
         peak_value
         可以绘图
     """
-    input_str = open(basepath+filename,"rb").read(1000000)
+    input_str = open(basepath+filename,"rb").read()
     results_array = []
     for offset in xrange(0,all_offset+1):
         print "shift offset = ",offset
@@ -67,17 +67,6 @@ def xor_peak_analyze(basepath,filename,m,all_offset=0,mod="p"):
         p_array = []
         q_array = []
         p_array,q_array = VLTest.PyVLTowStringXorForChar(input_str1=original_string,input_str2=shift_str,m=m)
-        print filename,np.var(q_array)
-        # new_str = VLSequence.string_xor(original_string,shift_str)
-        # coordinates = Segmentor.segmentor(new_str,m,m)
-
-        # p_array,q_array = VLSequence.VLTest_get_p_q_count(new_str,m)
-        # for coordinate in coordinates:
-        #     p_count,q_count =  VLSequence.p_q_count(new_str[coordinate[0]:coordinate[1]+1])
-        #     # print p_count,q_count
-        #     q_array.append(q_count)
-        #     p_array.append(p_count)
-        # 统计完成
         print "offset = %s complete count now start stastic"
         q_stat_results,q_bins = np.histogram(q_array,bins=range(0,m/2+2))
         p_stat_results,p_bins = np.histogram(p_array,bins=range(0,m+2))
@@ -101,7 +90,7 @@ def xor_peak_analyze(basepath,filename,m,all_offset=0,mod="p"):
 def main():
     base_path = local_settings.getTestDataPath()
     # input_str = open(base_path+"/2018-03/RC4/vrc4_std.char","rb").read(10000)
-    target_path = base_path + "/2018-03/AES/"
+    target_path = base_path + "/2018-03/Quantum/"
     file_set = utils.list_file(target_path)
     # input_str = open(base_path+"/2018-03/Quantum/TYUT.char","rb").read(1000000)
     for file_name in file_set:
