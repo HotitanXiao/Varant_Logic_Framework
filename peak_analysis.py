@@ -46,14 +46,20 @@ def shift_peak_analyze(basepath,filename,m,all_offset,mod="p"):
     # import pdb;pdb.set_trace()
     # print q_stat_all
     # peack_plot.peak_plot(q_stat_all,m,all_offset)
-    plot_hander = peack_plot.peak_plot(p_stat_all,m,all_offset,'p')
+    plot_hander,peak_value,peak_pos,chi_square = peack_plot.peak_plot(p_stat_all,m,all_offset,'p')
     plot_hander.savefig(basepath+"/results/%s/%s_shift_file=%s_m=%s_offset=%s.png"%(filename,'p',filename,m,offset))
     np.save(basepath+"/results/%s/%s_shift_file=%s_m=%s_offset=%s.bin"%(filename,'p',filename,m,offset),q_stat_all)
+    np.save(basepath+"/results/%s/peak_value_%s_shift_file=%s_m=%s_offset=%s.bin"%(filename,'p',filename,m,offset),peak_value)
+    np.save(basepath+"/results/%s/peak_pos_%s_shift_file=%s_m=%s_offset=%s.bin"%(filename,'p',filename,m,offset),peak_pos)
+    np.save(basepath+"/results/%s/chi_square_%s_shift_file=%s_m=%s_offset=%s.bin"%(filename,'p',filename,m,offset),chi_square)
     plot_hander.close("all")
 
-    plot_hander = peack_plot.peak_plot(q_stat_all,m,all_offset,'q')
+    plot_hander,peak_value,peak_pos,chi_square = peack_plot.peak_plot(q_stat_all,m,all_offset,'q')
     plot_hander.savefig(basepath+"/results/%s/%s_shift_file=%s_m=%s_offset=%s.png"%(filename,'q',filename,m,offset))
     np.save(basepath+"/results/%s/%s_shift_file=%s_m=%s_offset=%s.bin"%(filename,'q',filename,m,offset),q_stat_all)
+    np.save(basepath+"/results/%s/peak_pos_%s_shift_file=%s_m=%s_offset=%s.bin"%(filename,'q',filename,m,offset),peak_pos)
+    np.save(basepath+"/results/%s/peak_value_%s_shift_file=%s_m=%s_offset=%s.bin"%(filename,'q',filename,m,offset),peak_value)
+    np.save(basepath+"/results/%s/chi_square_%s_shift_file=%s_m=%s_offset=%s.bin"%(filename,'q',filename,m,offset),chi_square)
     plot_hander.close("all")
 
 

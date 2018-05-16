@@ -55,7 +55,7 @@ def peak_plot(stat_array,m,offset,mod="p"):
     top = Max-(Max-Min)*.5
     plt.text(1, top,"Max=%s\nMin=%s\nDelta=%s\n" %(Max,Min,Max-Min), { 'fontsize': 6})
     plt.plot(range(0,len(stat_array)),chi_square)
-    return plt;
+    return (plt,peaks_pos,peak_values,chi_square);
 
 
 def main():
