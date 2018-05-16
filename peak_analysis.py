@@ -62,7 +62,6 @@ def shift_peak_analyze(basepath,filename,m,all_offset,mod="p"):
     np.save(basepath+"/results/%s/chi_square_%s_shift_file=%s_m=%s_offset=%s.bin"%(filename,'q',filename,m,offset),chi_square)
     plot_hander.close("all")
 
-
 def xor_peak_analyze(basepath,filename,m,all_offset=0):
     """
         进行自我异或以后观察他的结果
