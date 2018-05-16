@@ -41,21 +41,23 @@ def shift_peak_analyze(basepath,filename,m,all_offset,mod="p"):
         
     # 完成了所有的统计了
     temp_array = np.array(results_array)
-    if mod == "p":
-        q_stat_all = temp_array[:,0]
-        print "mod = %s" % mod
-    else:
-        q_stat_all = temp_array[:,1]
+    p_stat_all = temp_array[:,0]
+    q_stat_all = temp_array[:,1]
     # import pdb;pdb.set_trace()
     # print q_stat_all
     # peack_plot.peak_plot(q_stat_all,m,all_offset)
-    plot_hander = peack_plot.peak_plot(q_stat_all,m,all_offset,mod)
-    plot_hander.savefig(basepath+"/results/%s/%s_shift_file=%s_m=%s_offset=%s.png"%(filename,mod,filename,m,offset))
-    q_stat_all.tofile(basepath+"/results/%s/%s_shift_file=%s_m=%s_offset=%s.bin"%(filename,mod,filename,m,offset))
+    plot_hander = peack_plot.peak_plot(p_stat_all,m,all_offset,'p')
+    plot_hander.savefig(basepath+"/results/%s/%s_shift_file=%s_m=%s_offset=%s.png"%(filename,'p',filename,m,offset))
+    q_stat_all.tofile(basepath+"/results/%s/%s_shift_file=%s_m=%s_offset=%s.bin"%(filename,'p',filename,m,offset))
+    plot_hander.close("all")
+
+    plot_hander = peack_plot.peak_plot(q_stat_all,m,all_offset,'q')
+    plot_hander.savefig(basepath+"/results/%s/%s_shift_file=%s_m=%s_offset=%s.png"%(filename,'q',filename,m,offset))
+    q_stat_all.tofile(basepath+"/results/%s/%s_shift_file=%s_m=%s_offset=%s.bin"%(filename,'q',filename,m,offset))
     plot_hander.close("all")
 
 
-def xor_peak_analyze(basepath,filename,m,all_offset=0,mod="p"):
+def xor_peak_analyze(basepath,filename,m,all_offset=0):
     """
         进行自我异或以后观察他的结果
     """
@@ -74,16 +76,18 @@ def xor_peak_analyze(basepath,filename,m,all_offset=0,mod="p"):
         results_array.append([p_stat_results,q_stat_results])
         print "offset = %s complete stats"
     temp_array = np.array(results_array)
-    if mod == "p":
-        q_stat_all = temp_array[:,0]
-        print "mod = %s" % mod
-    else:
-        q_stat_all = temp_array[:,1]
+    p_stat_all = temp_array[:,0]
+    q_stat_all = temp_array[:,1]
     # import pdb;pdb.set_trace()
     # print q_stat_all 
-    plot_hander = peack_plot.peak_plot(q_stat_all,m,all_offset,mod)
-    plot_hander.savefig(basepath+"/results/%s/%s_xor_file=%s_m=%s_offset=%s.png"%(filename,mod,filename,m,offset))
-    q_stat_all.tofile(basepath+"/results/%s/%s_xor_file=%s_m=%s_offset=%s.bin"%(filename,mod,filename,m,offset));
+    plot_hander = peack_plot.peak_plot(p_stat_all,m,all_offset,'p')
+    plot_hander.savefig(basepath+"/results/%s/%s_xor_file=%s_m=%s_offset=%s.png"%(filename,'p',filename,m,offset))
+    q_stat_all.tofile(basepath+"/results/%s/%s_xor_file=%s_m=%s_offset=%s.bin"%(filename,'p',filename,m,offset));
+    plot_hander.close("all")
+
+    plot_hander = peack_plot.peak_plot(q_stat_all,m,all_offset,'q')
+    plot_hander.savefig(basepath+"/results/%s/%s_xor_file=%s_m=%s_offset=%s.png"%(filename,'q',filename,m,offset))
+    q_stat_all.tofile(basepath+"/results/%s/%s_xor_file=%s_m=%s_offset=%s.bin"%(filename,'q',filename,m,offset));
     plot_hander.close("all")
 
 
