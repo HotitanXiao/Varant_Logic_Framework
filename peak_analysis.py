@@ -107,7 +107,7 @@ def xor_peak_analyze(basepath,filename,m,all_offset=0):
 def main():
     base_path = local_settings.getTestDataPath()
     # input_str = open(base_path+"/2018-03/RC4/vrc4_std.char","rb").read(10000)
-    target_path = base_path + "/2018-03/Quantum/"
+    target_path = base_path + "/2018-03/RC4/"
     file_set = utils.list_file(target_path)
     # input_str = open(base_path+"/2018-03/Quantum/TYUT.char","rb").read(1000000)
     for file_name in file_set:
