@@ -26,7 +26,7 @@ def array_right_shift(string,offset):
     offset = offset % len(string)
     return string[-offset:]+string[:-offset]
 
-def list_file(path):
+def list_file(path,end=".char"):
     """
         获取路径下已.char结尾的文件
     """
@@ -35,7 +35,7 @@ def list_file(path):
     for line in dir_list:
         print line,os.path.splitext(path+line)[1],os.path.splitext(path+line)[1]
         if os.path.splitext(path+line)[1] and\
-            os.path.splitext(path+line)[1] == ".char" :
+            os.path.splitext(path+line)[1] == end :
             result.append(line)
 
     return result
